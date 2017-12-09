@@ -8,7 +8,8 @@
  */
 
 var baseUrl = 'http://localhost/vue-admin-php/public/index.php'
-var routerMode = 'history'
+// var routerMode = 'history'
+var routerMode = ''
 var imgBaseUrl = 'http://localhost/vue-admin-php/public'
 if (process.env.NODE_ENV === 'development') {
     imgBaseUrl = 'http://localhost/vue-admin-php/public'

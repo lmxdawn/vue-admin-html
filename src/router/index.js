@@ -34,32 +34,21 @@ export const constantRouterMap = [
     {
         path: '/',
         component: home,
-        redirect: '/home',
+        redirect: '/readme',
         name: '首页',
-        hidden: true,
-        children: [
-            {
-                path: 'home',
-                component: home
-            }
-        ]
+        hidden: true
     },
     {
-        path: '/test',
+        path: '/readme',
         component: home,
-        redirect: '/test/index',
-        icon: 'el-icon-setting',
-        name: '测试1',
+        redirect: '/readme/index',
+        icon: 'shouye',
+        noDropdown: true,
         children: [
             {
                 path: 'index',
-                component: resolve => require(['../pages/profile/index.vue'], resolve),
-                name: '测试11'
-            },
-            {
-                path: 'index2',
-                component: resolve => require(['../pages/profile/index.vue'], resolve),
-                name: '测试12'
+                name: '前言',
+                component: resolve => require(['../pages/home/main.vue'], resolve)
             }
         ]
     }
@@ -78,7 +67,7 @@ export const asyncRouterMap = [
         path: '/user_manage',
         redirect: '/user_manage/admin/index',
         component: home,
-        icon: 'el-icon-setting',
+        icon: 'guanlizuyuan',
         name: '用户管理',
         meta: {
             authRule: ['user_manage']

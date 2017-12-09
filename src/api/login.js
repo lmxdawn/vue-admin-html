@@ -27,3 +27,11 @@ export function logout (uid, token) {
         data: { uid, token }
     })
 }
+
+export function password (data) {
+    return fetch({
+        url: '/admin/login/password',
+        method: 'post',
+        data: data
+    })
+}

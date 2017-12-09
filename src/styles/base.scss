@@ -21,7 +21,6 @@ body {
 }
 
 a {
-    color: #fff;
     text-decoration: none;
     &:hover {
         text-decoration: none;
@@ -40,9 +39,9 @@ input {
 }
 
 .svg-icon {
-    width: 14px;
-    height: 14px;
-    vertical-align: -.05em;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
     fill: currentColor;
     overflow: hidden;
     -webkit-transition: font-size 0.25s ease-out 0s;
@@ -96,3 +95,12 @@ input {
 //.el-dialog .el-form-item{
 //    margin-bottom: 0 !important;
 //}
+.el-dialog{
+    margin-top: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 22em;
+}

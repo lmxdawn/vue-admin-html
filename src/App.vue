@@ -22,7 +22,9 @@
     #app {
         height: 100%;
     }
-    .sidebar-container .svg-icon {
-        margin-right: 16px;
+
+    .menu .svg-icon {
+        font-size: 20px;
+        margin-right: 5px;
     }
 </style>

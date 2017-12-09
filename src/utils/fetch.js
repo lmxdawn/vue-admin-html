@@ -39,16 +39,8 @@ service.interceptors.response.use(
                     })
                 })
             }
-            Message({
-                message: res.errmsg,
-                type: 'error',
-                duration: 5 * 1000
-            })
-            var error = new Error('error')
-            return Promise.reject(error)
-        } else {
-            return response.data
         }
+        return response.data
     },
     error => {
         console.log('err' + error)// for debug

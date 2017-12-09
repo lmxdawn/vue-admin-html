@@ -123,7 +123,7 @@
             border: 0;
             -webkit-appearance: none;
             border-radius: 0;
-            padding: .16rem .0666rem .16rem .2rem;
+            padding: .46rem .0666rem .16rem .2rem;
             color: $light_gray;
             height: 100%;
         }
@@ -154,7 +154,7 @@
         .login-form {
             @include fxied-center;
             top: 40%;
-            width: 8rem;
+            width: 22em;
             padding: .4666rem .4666rem .2rem .4666rem;
         }
         .el-form-item {
@@ -180,6 +180,6 @@
     .el-dialog{
         @include fxied-center;
         top: 20%;
-        width: 8rem;
+        width: 22em;
     }
 </style>

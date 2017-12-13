@@ -1,3 +1,4 @@
+import 'babel-polyfill' // 兼容ie9
 import Vue from 'vue'
 // import '../theme/index.css'
 import App from './App.vue'

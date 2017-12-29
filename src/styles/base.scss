@@ -98,7 +98,7 @@ input {
 .el-dialog{
     margin-top: 0 !important;
     position: absolute;
-    top: 50%;
+    top: 50%!important;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);

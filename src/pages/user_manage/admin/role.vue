@@ -81,6 +81,7 @@
                 default-expand-all
                 node-key="id"
                 ref="tree"
+                check-strictly="true"
                 highlight-current
                 :props="defaultProps">
             </el-tree>
@@ -406,8 +407,5 @@
 
 <style lang="scss">
 
-    .dialog .el-dialog{
-        margin-top: 3vh !important;
-    }
 
 </style>

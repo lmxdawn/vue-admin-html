@@ -52,11 +52,11 @@
             </el-table-column>
             <el-table-column
                 label="登录时间"
-                with="300">
+                with="300"
+                :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.last_login_time | parseTime('{y}-{m}-{d} {h}:{i}')
-                        }}</span>
+                    <span>{{ scope.row.last_login_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
                 </template>
             </el-table-column>
             <el-table-column
@@ -137,7 +137,7 @@
             var validatePass2 = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请再次输入密码'))
-                } else if (value !== this.addFormData.password) {
+                } else if (value !== this.formData.password) {
                     callback(new Error('两次输入密码不一致!'))
                 } else {
                     callback()
@@ -164,7 +164,8 @@
                 formLoading: false,
                 formVisible: false,
                 formData: formJson,
-                formRules: {
+                formRules: {},
+                addRules: {
                     username: [
                         {required: true, message: '请输入姓名', trigger: 'blur'}
                     ],
@@ -175,6 +176,14 @@
                     checkPassword: [
                         {required: true, message: '请再次输入密码', trigger: 'blur'},
                         {validator: validatePass2, trigger: 'blur'}
+                    ],
+                    status: [
+                        {required: true, message: '请选择状态', trigger: 'change'}
+                    ]
+                },
+                editRules: {
+                    username: [
+                        {required: true, message: '请输入姓名', trigger: 'blur'}
                     ],
                     status: [
                         {required: true, message: '请选择状态', trigger: 'change'}
@@ -222,9 +231,11 @@
                 }
                 this.formData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
                 this.formName = 'add'
+                this.formRules = this.addRules
                 if (index !== null) {
                     this.index = index
                     this.formName = 'edit'
+                    this.formRules = this.editRules
                 }
                 // 清空验证信息表单
                 if (this.$refs['dataForm']) {
@@ -235,7 +246,7 @@
                 this.$refs['dataForm'].validate(valid => {
                     if (valid) {
                         this.formLoading = true
-                        let data = Object.assign({}, this.formormData)
+                        let data = Object.assign({}, this.formData)
                         adminSave(data, this.formName).then(res => {
                             this.formLoading = false
                             if (res.errcode) {
@@ -252,7 +263,7 @@
                                 // this.list.unshift(res)
                                 // 刷新表单
                                 this.$refs['dataForm'].resetFields()
-                                this.formormVisible = false
+                                this.formVisible = false
                                 if (this.formName === 'add') {
                                     // 向头部添加数据
                                     this.list.unshift(res)

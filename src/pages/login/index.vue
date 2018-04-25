@@ -14,7 +14,7 @@
             </el-form-item>
             <el-form-item prop="password" class="item">
                 <!--<span class="svg-container">-->
-                    <!--<icon-svg icon-class="pwd"/>-->
+                <!--<icon-svg icon-class="pwd"/>-->
                 <!--</span>-->
                 <el-input
                     placeholder="密码"

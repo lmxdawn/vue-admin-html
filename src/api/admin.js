@@ -12,20 +12,12 @@ export function getAdminList (query) {
     })
 }
 
-// 添加管理员
-export function adminSave (data) {
+// 保存
+export function adminSave (data, formName, method = 'post') {
+    var url = formName === 'add' ? '/admin/admin/save' : '/admin/admin/edit'
     return fetch({
-        url: '/admin/admin/save',
-        method: 'post',
-        data: data
-    })
-}
-
-// 编辑管理员
-export function adminEdit (data) {
-    return fetch({
-        url: '/admin/admin/edit',
-        method: 'post',
+        url: url,
+        method: method,
         data: data
     })
 }

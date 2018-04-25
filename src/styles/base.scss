@@ -92,15 +92,9 @@ input {
 }
 
 //去掉弹出框的下边距
-//.el-dialog .el-form-item{
-//    margin-bottom: 0 !important;
-//}
-.el-dialog{
-    margin-top: 0 !important;
-    position: absolute;
-    top: 50%!important;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    width: 22em;
+.el-dialog__wrapper{
+    overflow-y: hidden !important;
+}
+.el-dialog {
+    margin-top: 2% !important;
 }

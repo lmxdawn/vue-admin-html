@@ -3,15 +3,15 @@
     <div>
         <el-form :inline="true" :model="query" class="query-form" size="mini">
             <!--<el-form-item class="query-form-item">-->
-                <!--<el-select v-model="query.pid" placeholder="父级">-->
-                    <!--<el-option-->
-                        <!--v-for="item in treeList"-->
-                        <!--:key="item.id"-->
-                        <!--:label="item.title"-->
-                        <!--:value="item.id">-->
-                        <!--<span style="float: left"><span v-html="item.html"></span>{{ item.title }}</span>-->
-                    <!--</el-option>-->
-                <!--</el-select>-->
+            <!--<el-select v-model="query.pid" placeholder="父级">-->
+            <!--<el-option-->
+            <!--v-for="item in treeList"-->
+            <!--:key="item.id"-->
+            <!--:label="item.title"-->
+            <!--:value="item.id">-->
+            <!--<span style="float: left"><span v-html="item.html"></span>{{ item.title }}</span>-->
+            <!--</el-option>-->
+            <!--</el-select>-->
             <!--</el-form-item>-->
             <el-form-item class="query-form-item">
                 <el-input v-model="query.name" placeholder="角色名称"></el-input>
@@ -30,7 +30,7 @@
                 <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click.native="handleAdd">新增</el-button>
+                <el-button type="primary" @click.native="handleForm(null, 'add')">新增</el-button>
             </el-form-item>
         </el-form>
 
@@ -43,11 +43,11 @@
             :render-content="renderContent">
         </el-tree>
 
-        <!--编辑界面-->
-        <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-            <el-form :model="editFormData" :rules="editFormRules" ref="editFormData">
+        <!--表单界面-->
+        <el-dialog :title="formMap[formName]" :visible.sync="formVisible">
+            <el-form :model="formData" :rules="formRules" ref="dataForm">
                 <el-form-item label="父ID" prop="pid">
-                    <el-select v-model="editFormData.pid" placeholder="父级">
+                    <el-select v-model="formData.pid" placeholder="顶级">
                         <el-option
                             v-for="item in treeList"
                             :key="item.id"
@@ -58,67 +58,27 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="规则名" prop="name">
-                    <el-input type="" v-model="editFormData.name" auto-complete="off"></el-input>
+                    <el-input type="" v-model="formData.name" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="规则标题" prop="title">
-                    <el-input type="" v-model="editFormData.title" auto-complete="off"></el-input>
+                    <el-input type="" v-model="formData.title" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="editFormData.status">
+                    <el-radio-group v-model="formData.status">
                         <el-radio label="0">禁用</el-radio>
                         <el-radio label="1">正常</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="额外的规则表达式">
-                    <el-input type="textarea" v-model="editFormData.condition"></el-input>
+                    <el-input type="textarea" v-model="formData.condition"></el-input>
                 </el-form-item>
                 <el-form-item label="排序" prop="listorder">
-                    <el-input type="" v-model="editFormData.listorder" auto-complete="off"></el-input>
+                    <el-input type="" v-model="formData.listorder" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click.native="editFormVisible = !editFormVisible">取消</el-button>
-                <el-button type="primary" @click.native="editSubmit('editFormData')" :loading="editLoading">提交
-                </el-button>
-            </div>
-        </el-dialog>
-
-        <!--新增界面-->
-        <el-dialog title="新增" :visible.sync="addFormVisible">
-            <el-form :model="addFormData" :rules="addFormDataRules" ref="addFormData">
-                <el-form-item label="父ID" prop="pid">
-                    <el-select v-model="addFormData.pid" placeholder="父级">
-                        <el-option
-                            v-for="item in treeList"
-                            :key="item.id"
-                            :label="item.title"
-                            :value="item.id">
-                            <span style="float: left"><span v-html="item.html"></span>{{ item.title }}</span>
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="规则名" prop="name">
-                    <el-input type="" v-model="addFormData.name" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="规则标题" prop="title">
-                    <el-input type="" v-model="addFormData.title" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="addFormData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="额外的规则表达式">
-                    <el-input type="textarea" v-model="addFormData.condition"></el-input>
-                </el-form-item>
-                <el-form-item label="排序" prop="listorder">
-                    <el-input type="" v-model="addFormData.listorder" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click.native="addFormVisible = !addFormVisible">取消</el-button>
-                <el-button type="primary" @click.native="addSubmit('addFormData')" :loading="addLoading">提交</el-button>
+                <el-button @click.native="formVisible = !formVisible">取消</el-button>
+                <el-button type="primary" @click.native="formSubmit()" :loading="formLoading">提交</el-button>
             </div>
         </el-dialog>
     </div>
@@ -126,7 +86,16 @@
 </template>
 
 <script>
-    import { authRuleList, authRuleSave, authRuleEdit, authRuleDelete } from '../../../api/authRule'
+    import { authRuleList, authRuleSave, authRuleDelete } from '../../../api/authRule'
+    const formJson = {
+        id: '',
+        pid: '2',
+        name: '',
+        title: '',
+        status: '1',
+        condition: '',
+        listorder: 999
+    }
     export default {
         data () {
             return {
@@ -142,18 +111,16 @@
                 },
                 treeList: [],
                 loading: true,
-                addLoading: false,
-                addFormVisible: false,
-                addFormData: {
-                    pid: '',
-                    name: '',
-                    title: '',
-                    status: '',
-                    condition: '',
-                    listorder: 999
+                index: null,
+                formName: null,
+                formMap: {
+                    add: '新增',
+                    edit: '编辑'
                 },
-                addPidData: null,
-                addFormDataRules: {
+                formLoading: false,
+                formVisible: false,
+                formData: formJson,
+                formRules: {
                     name: [
                         {required: true, message: '请输入规则名', trigger: 'blur'}
                     ],
@@ -164,29 +131,7 @@
                         {required: true, message: '请选择状态', trigger: 'change'}
                     ]
                 },
-                editLoading: false,
-                editFormVisible: false,
-                editFormData: {
-                    id: '',
-                    pid: '',
-                    name: '',
-                    title: '',
-                    status: '',
-                    condition: '',
-                    listorder: ''
-                },
-                editPidData: null,
-                editFormRules: {
-                    name: [
-                        {required: true, message: '请输入规则名', trigger: 'blur'}
-                    ],
-                    title: [
-                        {required: true, message: '请输入标题', trigger: 'blur'}
-                    ],
-                    status: [
-                        {required: true, message: '请选择状态', trigger: 'change'}
-                    ]
-                },
+                pidData: {},
                 deleteLoading: false
             }
         },
@@ -198,9 +143,9 @@
                     <span title={ data.name }>{node.label}</span>
                 </span>
                 <span>
-                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleAdd(data) }>添加子菜单</el-button>
-                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleEdit(data) }>编辑</el-button>
-                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleDel(data) }>删除</el-button>
+                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleForm(data, 'add') }>添加子菜单</el-button>
+                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleForm(data, 'edit') }>编辑</el-button>
+                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleDel(node, data) }>删除</el-button>
                 </span>
                 </span>)
             },
@@ -219,10 +164,70 @@
                     this.treeList = []
                 })
             },
+            // 显示界面
+            handleForm (data, formName) {
+                this.formVisible = true
+                this.pidData = data || null
+                formJson.pid = (data && parseInt(data.id)) || ''
+                this.formData = Object.assign({}, formJson)
+                if (formName === 'edit') {
+                    this.formData = Object.assign({}, data)
+                }
+                this.formData.pid = !this.formData.pid ? '' : this.formData.pid
+                this.formData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
+                this.formName = formName
+                // 清空验证信息表单
+                if (this.$refs['dataForm']) {
+                    this.$refs['dataForm'].clearValidate()
+                }
+                if (data && data.id) {
+                    this.index = this.mergeList.findIndex(d => d.id === data.id)
+                }
+            },
+            formSubmit () {
+                this.$refs['dataForm'].validate(valid => {
+                    if (valid) {
+                        this.formLoading = true
+                        let data = Object.assign({}, this.formData)
+                        authRuleSave(data, this.formName).then(res => {
+                            this.formLoading = false
+                            if (res.errcode) {
+                                this.$message({
+                                    message: res.errmsg,
+                                    type: 'error'
+                                })
+                            } else {
+                                this.$message({
+                                    message: '操作成功',
+                                    type: 'success'
+                                })
+                                // 刷新表单
+                                this.$refs['dataForm'].resetFields()
+                                this.formVisible = false
+                                if (this.formName === 'add') {
+                                    const newChild = res || {}
+                                    if (this.pidData) {
+                                        if (!this.pidData.children) {
+                                            this.$set(this.pidData, 'children', [])
+                                        }
+                                        this.pidData.children.push(newChild)
+                                    } else {
+                                        this.mergeList.push(newChild)
+                                    }
+                                } else {
+                                    this.mergeList.splice(this.index, 1, data)
+                                }
+                            }
+                        }).catch(() => {
+                            this.formLoading = false
+                        })
+                    }
+                })
+            },
             // 删除
-            handleDel (data) {
+            handleDel (node, data) {
                 if (data.children && data.children.length > 0) {
-                    this.$alert('存在子节点', '提示', {
+                    this.$alert('请先删除子节点', '提示', {
                         confirmButtonText: '确定'
                     })
                     return false
@@ -245,8 +250,10 @@
                                     message: '删除成功',
                                     type: 'success'
                                 })
-                                // 刷新数据
-                                this.getList()
+                                const parent = node.parent
+                                const children = parent.data.children || parent.data
+                                const index = children.findIndex(d => d.id === data.id)
+                                children.splice(index, 1)
                             }
                         }).catch(() => {
                             this.deleteLoading = false
@@ -258,90 +265,6 @@
                         })
                     })
                 }
-            },
-            // 显示编辑界面
-            handleEdit (data) {
-                this.editFormVisible = true
-                this.editFormData = Object.assign({}, data)
-                this.editFormData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
-                this.editPidData = data
-            },
-            editSubmit (formName) {
-                this.$refs[formName].validate(valid => {
-                    if (valid) {
-                        this.editLoading = true
-                        let data = Object.assign({}, this.editFormData)
-                        authRuleEdit(data).then(res => {
-                            this.editLoading = false
-                            if (res.errcode) {
-                                this.$message({
-                                    message: res.errmsg,
-                                    type: 'error'
-                                })
-                            } else {
-                                this.$message({
-                                    message: '编辑成功',
-                                    type: 'success'
-                                })
-                                // 刷新表单
-                                this.$refs['editFormData'].resetFields()
-                                this.editFormVisible = false
-                                this.editPidData = res || {}
-                                // 刷新数据
-                                this.getList()
-                            }
-                        }).catch(() => {
-                            this.editLoading = false
-                        })
-                    }
-                })
-            },
-            // 显示新增界面
-            handleAdd (data) {
-                this.addFormVisible = true
-                this.addPidData = data || {}
-                this.addFormData = {
-                    pid: data.id || '',
-                    name: '',
-                    title: '',
-                    status: '1',
-                    condition: '',
-                    listorder: 999
-                }
-            },
-            addSubmit (formName) {
-                this.$refs[formName].validate(valid => {
-                    if (valid) {
-                        this.addLoading = true
-                        let data = Object.assign({}, this.addFormData)
-                        authRuleSave(data).then(res => {
-                            this.addLoading = false
-                            if (res.errcode) {
-                                this.$message({
-                                    message: res.errmsg,
-                                    type: 'error'
-                                })
-                            } else {
-                                this.$message({
-                                    message: '添加成功',
-                                    type: 'success'
-                                })
-                                // 刷新表单
-                                this.$refs['addFormData'].resetFields()
-                                this.addFormVisible = false
-                                const newChild = res || {}
-                                if (!this.addPidData.children) {
-                                    this.$set(this.addPidData, 'children', [])
-                                }
-                                this.addPidData.children.push(newChild)
-                                // 刷新数据
-                                this.getList()
-                            }
-                        }).catch(() => {
-                            this.addLoading = false
-                        })
-                    }
-                })
             }
         },
         filters: {

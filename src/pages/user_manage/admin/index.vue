@@ -26,7 +26,7 @@
                 <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click.native="handleAdd">新增</el-button>
+                <el-button type="primary" @click.native="handleForm(null,null)">新增</el-button>
             </el-form-item>
         </el-form>
         <el-table
@@ -55,7 +55,8 @@
                 with="300">
                 <template slot-scope="scope">
                     <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.last_login_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+                    <span style="margin-left: 10px">{{ scope.row.last_login_time | parseTime('{y}-{m}-{d} {h}:{i}')
+                        }}</span>
                 </template>
             </el-table-column>
             <el-table-column
@@ -68,7 +69,7 @@
                 label="操作"
                 fixed="right">
                 <template slot-scope="scope">
-                    <el-button size="small" @click.native="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
                     <el-button type="danger" size="small" @click.native="handleDel(scope.$index, scope.row)"
                                style="margin-left: 0;">删除
                     </el-button>
@@ -76,75 +77,35 @@
             </el-table-column>
         </el-table>
 
-        <!-- 分页-->
-        <div v-show="!loading" class="pagination-container">
-            <el-pagination
-                layout="prev, pager, next"
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :page-size="query.limit"
-                :current-page.sync="query.page"
-                :total="total">
-            </el-pagination>
-        </div>
 
-        <!--编辑界面-->
-        <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-            <el-form :model="editFormData" :rules="editFormRules" ref="editFormData">
+        <!--表单-->
+        <el-dialog :title="formMap[formName]" :visible.sync="formVisible">
+            <el-form :model="formData" :rules="formRules" ref="dataForm">
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model="editFormData.username" auto-complete="off"></el-input>
+                    <el-input v-model="formData.username" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="登录密码" prop="password">
-                    <el-input type="password" v-model="editFormData.password" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="editFormData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
-                        <el-radio label="2">未验证</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="角色">
-                    <el-checkbox-group v-model="editFormData.roles">
-                        <el-checkbox v-for="item in roles" :key="item.id" :label="item.id">{{item.name}}</el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click.native="editFormVisible = !editFormVisible">取消</el-button>
-                <el-button type="primary" @click.native="editSubmit('editFormData')" :loading="editLoading">提交
-                </el-button>
-            </div>
-        </el-dialog>
-
-        <!--新增界面-->
-        <el-dialog title="新增" :visible.sync="addFormVisible">
-            <el-form :model="addFormData" :rules="addFormDataRules" ref="addFormData">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="addFormData.username" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="登录密码" prop="password">
-                    <el-input type="password" v-model="addFormData.password" auto-complete="off"></el-input>
+                    <el-input type="password" v-model="formData.password" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="确认密码" prop="checkPassword">
-                    <el-input type="password" v-model="addFormData.checkPassword" auto-complete="off"></el-input>
+                    <el-input type="password" v-model="formData.checkPassword" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="addFormData.status">
+                    <el-radio-group v-model="formData.status">
                         <el-radio label="0">禁用</el-radio>
                         <el-radio label="1">正常</el-radio>
                         <el-radio label="2">未验证</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="角色">
-                    <el-checkbox-group v-model="addFormData.roles">
+                    <el-checkbox-group v-model="formData.roles">
                         <el-checkbox v-for="item in roles" :key="item.id" :label="item.id">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click.native="addFormVisible = !addFormVisible">取消</el-button>
-                <el-button type="primary" @click.native="addSubmit('addFormData')" :loading="addLoading">提交</el-button>
+                <el-button @click.native="formVisible = !formVisible">取消</el-button>
+                <el-button type="primary" @click.native="formSubmit()" :loading="formLoading">提交</el-button>
             </div>
         </el-dialog>
     </div>
@@ -152,15 +113,23 @@
 </template>
 
 <script>
-    import { getAdminList, adminSave, adminEdit, adminDelete } from '../../../api/admin'
+    import { getAdminList, adminSave, adminDelete } from '../../../api/admin'
+    const formJson = {
+        id: '',
+        username: '',
+        password: '',
+        checkPassword: '',
+        status: '1',
+        roles: []
+    }
     export default {
         data () {
             var validatePass = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入密码'))
                 } else {
-                    if (this.addFormData.checkPassword !== '') {
-                        this.$refs.addFormData.validateField('checkPassword')
+                    if (this.formData.checkPassword !== '') {
+                        this.$refs.formData.validateField('checkPassword')
                     }
                     callback()
                 }
@@ -186,16 +155,16 @@
                 list: [],
                 total: 0,
                 loading: true,
-                addLoading: false,
-                addFormVisible: false,
-                addFormData: {
-                    username: '',
-                    password: '',
-                    checkPassword: '',
-                    status: 1,
-                    roles: []
+                index: null,
+                formName: null,
+                formMap: {
+                    add: '新增',
+                    edit: '编辑'
                 },
-                addFormDataRules: {
+                formLoading: false,
+                formVisible: false,
+                formData: formJson,
+                formRules: {
                     username: [
                         {required: true, message: '请输入姓名', trigger: 'blur'}
                     ],
@@ -211,28 +180,15 @@
                         {required: true, message: '请选择状态', trigger: 'change'}
                     ]
                 },
-                editLoading: false,
-                editFormVisible: false,
-                editFormData: {
-                    id: '',
-                    username: '',
-                    password: '',
-                    status: 0,
-                    roles: []
-                },
-                editIndex: '', // 当前编辑数组下标
-                editFormRules: {
-                    username: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'}
-                    ],
-                    status: [
-                        {required: true, message: '请选择状态', trigger: 'change'}
-                    ]
-                }
+                deleteLoading: false
             }
         },
         methods: {
             onSubmit () {
+                this.$router.push({
+                    path: '',
+                    query: this.query
+                })
                 this.getList()
             },
             handleSizeChange (val) {
@@ -255,6 +211,57 @@
                     this.list = []
                     this.total = 0
                     this.roles = []
+                })
+            },
+            // 显示界面
+            handleForm (index, row) {
+                this.formVisible = true
+                this.formData = Object.assign({}, formJson)
+                if (row !== null) {
+                    this.formData = Object.assign({}, row)
+                }
+                this.formData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
+                this.formName = 'add'
+                if (index !== null) {
+                    this.index = index
+                    this.formName = 'edit'
+                }
+                // 清空验证信息表单
+                if (this.$refs['dataForm']) {
+                    this.$refs['dataForm'].clearValidate()
+                }
+            },
+            formSubmit () {
+                this.$refs['dataForm'].validate(valid => {
+                    if (valid) {
+                        this.formLoading = true
+                        let data = Object.assign({}, this.formormData)
+                        adminSave(data, this.formName).then(res => {
+                            this.formLoading = false
+                            if (res.errcode) {
+                                this.$message({
+                                    message: res.errmsg,
+                                    type: 'error'
+                                })
+                            } else {
+                                this.$message({
+                                    message: '操作成功',
+                                    type: 'success'
+                                })
+                                // 向头部添加数据
+                                // this.list.unshift(res)
+                                // 刷新表单
+                                this.$refs['dataForm'].resetFields()
+                                this.formormVisible = false
+                                if (this.formName === 'add') {
+                                    // 向头部添加数据
+                                    this.list.unshift(res)
+                                } else {
+                                    this.list.splice(this.index, 1, data)
+                                }
+                            }
+                        })
+                    }
                 })
             },
             // 删除
@@ -289,80 +296,6 @@
                         })
                     })
                 }
-            },
-            // 显示编辑界面
-            handleEdit (index, row) {
-                this.editFormVisible = true
-                this.editFormData = Object.assign({}, row)
-                this.editFormData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
-                this.editIndex = index
-            },
-            editSubmit (formName) {
-                this.$refs[formName].validate(valid => {
-                    if (valid) {
-                        this.editLoading = true
-                        let data = Object.assign({}, this.editFormData)
-                        adminEdit(data).then(res => {
-                            this.editLoading = false
-                            if (res.errcode) {
-                                this.$message({
-                                    message: res.errmsg,
-                                    type: 'error'
-                                })
-                            } else {
-                                this.$message({
-                                    message: '编辑成功',
-                                    type: 'success'
-                                })
-                                // 刷新表单
-                                this.$refs['editFormData'].resetFields()
-                                this.editFormVisible = false
-                                // 编辑数组
-                                this.list.splice(this.editIndex, 1, data)
-                            }
-                        })
-                    }
-                })
-            },
-            // 显示新增界面
-            handleAdd () {
-                this.addFormVisible = true
-                this.addFormData = {
-                    username: '',
-                    password: '',
-                    checkPassword: '',
-                    status: '',
-                    roles: []
-                }
-            },
-            addSubmit (formName) {
-                this.$refs[formName].validate(valid => {
-                    if (valid) {
-                        this.addLoading = true
-                        let data = Object.assign({}, this.addFormData)
-                        adminSave(data).then(res => {
-                            this.addLoading = false
-                            if (res.errcode) {
-                                this.$message({
-                                    message: res.errmsg,
-                                    type: 'error'
-                                })
-                            } else {
-                                this.$message({
-                                    message: '添加成功',
-                                    type: 'success'
-                                })
-                                // 刷新表单
-                                this.$refs['addFormData'].resetFields()
-                                this.addFormVisible = false
-                                // 向头部添加数据
-                                // this.list.unshift(res)
-                                // 刷新数据
-                                this.getList()
-                            }
-                        })
-                    }
-                })
             }
         },
         filters: {
@@ -386,6 +319,9 @@
         mounted () {
         },
         created () {
+            // 将参数拷贝进查询对象
+            let query = this.$route.query
+            this.query = Object.assign(this.query, query)
             // 加载表格数据
             this.getList()
         }

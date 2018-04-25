@@ -362,7 +362,9 @@
     }
 
     .app-levelbar {
-        margin-bottom: 25px;
+        height: 25px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #d8dce5;
     }
 
     @media screen and (min-width: 768px) {

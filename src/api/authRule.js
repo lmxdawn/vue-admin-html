@@ -3,39 +3,47 @@
  */
 import fetch from '../utils/fetch'
 
-// 权限管理
-
 // 获取列表
-export function authRuleList (query) {
+export function getRoleList (query) {
     return fetch({
-        url: '/admin/auth_rule/index',
+        url: '/admin/role/index',
+        method: 'get',
+        params: query
+    })
+}
+
+// 编辑
+export function roleAuthList (query) {
+    return fetch({
+        url: '/admin/role/auth',
         method: 'get',
         params: query
     })
 }
 
 // 添加
-export function authRuleSave (data) {
+export function roleAuth (data) {
     return fetch({
-        url: '/admin/auth_rule/save',
+        url: '/admin/role/auth',
         method: 'post',
         data: data
     })
 }
 
-// 编辑
-export function authRuleEdit (data) {
+// 保存
+export function roleSave (data, formName, method = 'post') {
+    var url = formName === 'add' ? '/admin/role/save' : '/admin/role/edit'
     return fetch({
-        url: '/admin/auth_rule/edit',
-        method: 'post',
+        url: url,
+        method: method,
         data: data
     })
 }
 
 // 删除
-export function authRuleDelete (data) {
+export function roleDelete (data) {
     return fetch({
-        url: '/admin/auth_rule/delete',
+        url: '/admin/role/delete',
         method: 'post',
         data: data
     })

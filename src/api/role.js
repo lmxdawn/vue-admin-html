@@ -30,20 +30,12 @@ export function roleAuth (data) {
     })
 }
 
-// 添加
-export function roleSave (data) {
+// 保存
+export function roleSave (data, formName, method = 'post') {
+    var url = formName === 'add' ? '/admin/role/save' : '/admin/role/edit'
     return fetch({
-        url: '/admin/role/save',
-        method: 'post',
-        data: data
-    })
-}
-
-// 编辑
-export function roleEdit (data) {
-    return fetch({
-        url: '/admin/role/edit',
-        method: 'post',
+        url: url,
+        method: method,
         data: data
     })
 }

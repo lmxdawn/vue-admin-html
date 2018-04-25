@@ -81,7 +81,7 @@
                 default-expand-all
                 node-key="id"
                 ref="tree"
-                check-strictly="true"
+                :check-strictly="true"
                 highlight-current
                 :props="defaultProps">
             </el-tree>
@@ -92,54 +92,28 @@
             </div>
         </el-dialog>
 
-        <!--编辑界面-->
-        <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-            <el-form :model="editFormData" :rules="editFormRules" ref="editFormData">
+        <!--表单-->
+        <el-dialog :title="formMap[formName]" :visible.sync="formVisible">
+            <el-form :model="formData" :rules="formRules" ref="dataForm">
                 <el-form-item label="角色名称" prop="name">
-                    <el-input v-model="editFormData.name" auto-complete="off"></el-input>
+                    <el-input v-model="formData.name" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="排序" prop="listorder">
-                    <el-input type="" v-model="editFormData.listorder" auto-complete="off"></el-input>
+                    <el-input type="" v-model="formData.listorder" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="editFormData.status">
+                    <el-radio-group v-model="formData.status">
                         <el-radio label="0">禁用</el-radio>
                         <el-radio label="1">正常</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="描述">
-                    <el-input type="textarea" v-model="editFormData.remark"></el-input>
+                    <el-input type="textarea" v-model="formData.remark"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click.native="editFormVisible = !editFormVisible">取消</el-button>
-                <el-button type="primary" @click.native="editSubmit('editFormData')" :loading="editLoading">提交
-                </el-button>
-            </div>
-        </el-dialog>
-
-        <!--新增界面-->
-        <el-dialog title="新增" :visible.sync="addFormVisible">
-            <el-form :model="addFormData" :rules="addFormDataRules" ref="addFormData">
-                <el-form-item label="角色名称" prop="name">
-                    <el-input v-model="addFormData.name" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="排序" prop="listorder">
-                    <el-input type="" v-model="addFormData.listorder" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="addFormData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="描述">
-                    <el-input type="textarea" v-model="addFormData.remark"></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click.native="addFormVisible = !addFormVisible">取消</el-button>
-                <el-button type="primary" @click.native="addSubmit('addFormData')" :loading="addLoading">提交</el-button>
+                <el-button @click.native="formVisible = !formVisible">取消</el-button>
+                <el-button type="primary" @click.native="formSubmit()" :loading="formLoading">提交</el-button>
             </div>
         </el-dialog>
     </div>
@@ -147,7 +121,14 @@
 </template>
 
 <script>
-    import { getRoleList, roleAuthList, roleAuth, roleSave, roleEdit, roleDelete } from '../../../api/role'
+    import { getRoleList, roleAuthList, roleAuth, roleSave, roleDelete } from '../../../api/role'
+    const formJson = {
+        id: '',
+        name: '',
+        status: '1',
+        remark: '',
+        listorder: 999
+    }
     export default {
         data () {
             return {
@@ -168,41 +149,17 @@
                     role_id: '',
                     auth_rules: []
                 },
-                authFormRules: {
-                    name: [
-                        {required: true, message: '请输入名称', trigger: 'blur'}
-                    ],
-                    status: [
-                        {required: true, message: '请选择状态', trigger: 'change'}
-                    ]
+
+                index: null,
+                formName: null,
+                formMap: {
+                    add: '新增',
+                    edit: '编辑'
                 },
-                addLoading: false,
-                addFormVisible: false,
-                addFormData: {
-                    name: '',
-                    status: '',
-                    remark: '',
-                    listorder: 999
-                },
-                addFormDataRules: {
-                    name: [
-                        {required: true, message: '请输入名称', trigger: 'blur'}
-                    ],
-                    status: [
-                        {required: true, message: '请选择状态', trigger: 'change'}
-                    ]
-                },
-                editLoading: false,
-                editFormVisible: false,
-                editFormData: {
-                    id: '',
-                    name: '',
-                    status: '',
-                    remark: '',
-                    listorder: ''
-                },
-                editIndex: '', // 当前编辑数组下标
-                editFormRules: {
+                formLoading: false,
+                formVisible: false,
+                formData: formJson,
+                formRules: {
                     name: [
                         {required: true, message: '请输入名称', trigger: 'blur'}
                     ],
@@ -226,40 +183,6 @@
                     this.loading = false
                     this.list = []
                 })
-            },
-            // 删除
-            handleDel (index, row) {
-                if (row.id) {
-                    this.$confirm('确认删除该记录吗?', '提示', {
-                        type: 'warning'
-                    }).then(() => {
-                        this.deleteLoading = true
-                        let para = {id: row.id}
-                        roleDelete(para).then((res) => {
-                            this.deleteLoading = false
-                            if (res.errcode) {
-                                this.$message({
-                                    message: res.errmsg,
-                                    type: 'error'
-                                })
-                            } else {
-                                this.$message({
-                                    message: '删除成功',
-                                    type: 'success'
-                                })
-                                // 刷新数据
-                                this.list.splice(index, 1)
-                            }
-                        }).catch(() => {
-                            this.deleteLoading = false
-                        })
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '取消删除'
-                        })
-                    })
-                }
             },
             // 显示授权界面
             handleAuth (roleId) {
@@ -302,59 +225,31 @@
                     this.editLoading = false
                 })
             },
-            // 显示编辑界面
-            handleEdit (index, row) {
-                this.editFormVisible = true
-                this.editFormData = Object.assign({}, row)
-                this.editFormData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
-                this.editIndex = index
-            },
-            editSubmit (formName) {
-                this.$refs[formName].validate(valid => {
-                    if (valid) {
-                        this.editLoading = true
-                        let data = Object.assign({}, this.editFormData)
-                        roleEdit(data).then(res => {
-                            this.editLoading = false
-                            if (res.errcode) {
-                                this.$message({
-                                    message: res.errmsg,
-                                    type: 'error'
-                                })
-                            } else {
-                                this.$message({
-                                    message: '编辑成功',
-                                    type: 'success'
-                                })
-                                // 刷新表单
-                                this.$refs['editFormData'].resetFields()
-                                this.editFormVisible = false
-                                // 编辑数组
-                                this.list.splice(this.editIndex, 1, data)
-                            }
-                        }).catch(() => {
-                            this.editLoading = false
-                        })
-                    }
-                })
-            },
             // 显示新增界面
-            handleAdd () {
-                this.addFormVisible = true
-                this.addFormData = {
-                    name: '',
-                    status: '',
-                    remark: '',
-                    listorder: 999
+            handleAdd (index, row) {
+                this.formVisible = true
+                this.formData = Object.assign({}, formJson)
+                if (row !== null) {
+                    this.formData = Object.assign({}, row)
+                }
+                this.formData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
+                this.formName = 'add'
+                if (index !== null) {
+                    this.index = index
+                    this.formName = 'edit'
+                }
+                // 清空验证信息表单
+                if (this.$refs['dataForm']) {
+                    this.$refs['dataForm'].clearValidate()
                 }
             },
-            addSubmit (formName) {
-                this.$refs[formName].validate(valid => {
+            formSubmit () {
+                this.$refs['dataForm'].validate(valid => {
                     if (valid) {
-                        this.addLoading = true
-                        let data = Object.assign({}, this.addFormData)
-                        roleSave(data).then(res => {
-                            this.addLoading = false
+                        this.formLoading = true
+                        let data = Object.assign({}, this.formData)
+                        roleSave(data, this.formName).then(res => {
+                            this.formLoading = false
                             if (res.errcode) {
                                 this.$message({
                                     message: res.errmsg,
@@ -362,22 +257,58 @@
                                 })
                             } else {
                                 this.$message({
-                                    message: '添加成功',
+                                    message: '操作成功',
                                     type: 'success'
                                 })
                                 // 刷新表单
-                                this.$refs['addFormData'].resetFields()
-                                this.addFormVisible = false
-                                // 向头部添加数据
-                                // this.list.unshift(res)
-                                // 刷新数据
-                                this.getList()
+                                this.$refs['dataForm'].resetFields()
+                                this.formVisible = false
+                                if (this.formName === 'add') {
+                                    // 向头部添加数据
+                                    this.list.unshift(res)
+                                } else {
+                                    this.list.splice(this.index, 1, data)
+                                }
                             }
                         }).catch(() => {
-                            this.addLoading = false
+                            this.formLoading = false
                         })
                     }
                 })
+            },
+            // 删除
+            handleDel (index, row) {
+                if (row.id) {
+                    this.$confirm('确认删除该记录吗?', '提示', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.deleteLoading = true
+                        let para = {id: row.id}
+                        roleDelete(para).then((res) => {
+                            this.deleteLoading = false
+                            if (res.errcode) {
+                                this.$message({
+                                    message: res.errmsg,
+                                    type: 'error'
+                                })
+                            } else {
+                                this.$message({
+                                    message: '删除成功',
+                                    type: 'success'
+                                })
+                                // 刷新数据
+                                this.list.splice(index, 1)
+                            }
+                        }).catch(() => {
+                            this.deleteLoading = false
+                        })
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '取消删除'
+                        })
+                    })
+                }
             }
         },
         filters: {

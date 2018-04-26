@@ -30,7 +30,7 @@
                 <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click.native="handleForm(null, 'add')">新增</el-button>
+                <el-button type="primary" @click.native="handleForm(null, null, 'add')">新增</el-button>
             </el-form-item>
         </el-form>
 
@@ -105,6 +105,7 @@
                     status: ''
                 },
                 mergeList: [],
+                node: null,
                 defaultProps: {
                     children: 'children',
                     label: 'title'
@@ -143,8 +144,8 @@
                     <span title={ data.name }>{node.label}</span>
                 </span>
                 <span>
-                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleForm(data, 'add') }>添加子菜单</el-button>
-                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleForm(data, 'edit') }>编辑</el-button>
+                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleForm(node, data, 'add') }>添加子菜单</el-button>
+                <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleForm(node, data, 'edit') }>编辑</el-button>
                 <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleDel(node, data) }>删除</el-button>
                 </span>
                 </span>)
@@ -165,13 +166,14 @@
                 })
             },
             // 显示界面
-            handleForm (data, formName) {
+            handleForm (node, data, formName) {
                 this.formVisible = true
                 this.pidData = data || null
                 formJson.pid = (data && parseInt(data.id)) || ''
                 this.formData = Object.assign({}, formJson)
                 if (formName === 'edit') {
                     this.formData = Object.assign({}, data)
+                    this.node = node
                 }
                 this.formData.pid = !this.formData.pid ? '' : this.formData.pid
                 this.formData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
@@ -215,7 +217,10 @@
                                         this.mergeList.push(newChild)
                                     }
                                 } else {
-                                    this.mergeList.splice(this.index, 1, data)
+                                    const parent = this.node.parent
+                                    const children = parent.data.children || parent.data
+                                    const index = children.findIndex(d => d.id === data.id)
+                                    children.splice(index, 1, data)
                                 }
                             }
                         }).catch(() => {

@@ -49,7 +49,7 @@ input {
     transition: font-size 0.25s ease-out 0s;
 }
 
-.el-message-box{
+.el-message-box {
     width: auto;
     min-width: 40%;
 }
@@ -70,7 +70,7 @@ input {
     }
 }
 
-.pagination-container{
+.pagination-container {
     margin-top: 10px;
 }
 
@@ -89,12 +89,17 @@ input {
     .el-dialog {
         width: 80%;
     }
+
+    .el-message {
+        min-width: 70% !important;
+    }
 }
 
 //去掉弹出框的下边距
-.el-dialog__wrapper{
+.el-dialog__wrapper {
     overflow-y: hidden !important;
 }
+
 .el-dialog {
     margin-top: 2% !important;
 }

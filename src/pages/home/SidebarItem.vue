@@ -90,7 +90,7 @@
 
                     <router-link v-else :to="item.path+'/'+child.path">
                         <el-menu-item :index="item.path+'/'+child.path">
-                            <icon-svg v-if='item.icon' :icon-class="item.icon"></icon-svg><span>{{child.name}}</span>
+                            <icon-svg v-if='child.icon' :icon-class="child.icon"></icon-svg><span>{{child.name}}</span>
                         </el-menu-item>
                     </router-link>
 

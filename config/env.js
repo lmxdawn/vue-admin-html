@@ -6,16 +6,16 @@
  * imgBaseUrl: 图片所在域名地址
  *
  */
-
-var baseUrl = 'http://localhost/vue-admin-php/public/index.php'
+var baseUrl = process.env.API_BASE
+var uploadBaseUrl = baseUrl
+var uploadImgUrl = uploadBaseUrl + '/admin/upload/img'
 // var routerMode = 'history'
 var routerMode = ''
-var imgBaseUrl = 'http://localhost/vue-admin-php/public'
-if (process.env.NODE_ENV === 'development') {
-    imgBaseUrl = 'http://localhost/vue-admin-php/public'
-}
+var imgBaseUrl = baseUrl
 export {
     baseUrl,
+    uploadBaseUrl,
+    uploadImgUrl,
     routerMode,
     imgBaseUrl
 }

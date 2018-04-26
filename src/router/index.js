@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { routerMode } from '../config/env'
+import { routerMode } from '../../config/env'
 
 Vue.use(Router)
 

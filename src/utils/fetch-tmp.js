@@ -1,5 +1,5 @@
 /* eslint-disable one-var */
-import { baseUrl } from '../config/env'
+import { baseUrl } from '../../config/env'
 
 export default (url = '', data = {}, type = 'GET', cb, method = 'fetch') => {
     type = type.toUpperCase()

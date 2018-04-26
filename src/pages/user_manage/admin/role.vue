@@ -19,7 +19,7 @@
                 <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click.native="handleAdd">新增</el-button>
+                <el-button type="primary" @click.native="handleForm(null, null)">新增</el-button>
             </el-form-item>
         </el-form>
         <el-table
@@ -29,13 +29,11 @@
             max-height="500">
             <el-table-column
                 label="角色 ID"
-                prop="id"
-                fixed>
+                prop="id">
             </el-table-column>
             <el-table-column
                 label="角色名称"
-                prop="name"
-                fixed>
+                prop="name">
             </el-table-column>
             <el-table-column
                 label="状态">
@@ -44,25 +42,19 @@
                 </template>
             </el-table-column>
             <el-table-column
-                label="创建时间"
-                with="300">
-                <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column
-                label="描述">
+                label="描述"
+                :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <span>{{ scope.row.remark }}</span>
                 </template>
             </el-table-column>
             <el-table-column
                 label="操作"
-                fixed="right">
+                fixed="right"
+                width="200">
                 <template slot-scope="scope">
                     <el-button size="small" style="margin-left: 0;" @click.native="handleAuth(scope.row.id)">授权</el-button>
-                    <el-button size="small" style="margin-left: 0;" @click.native="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button size="small" style="margin-left: 0;" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
                     <el-button type="danger" size="small" @click.native="handleDel(scope.$index, scope.row)"
                                style="margin-left: 0;"
                                :loading="deleteLoading">删除
@@ -191,27 +183,23 @@
                 roleAuthList({id: roleId}).then(response => {
                     this.authList = response.auth_list || []
                     const checkedKeys = response.checked_keys || []
-                    var getTreeNode = function (arr, id) {
-                        var node = null
-                        for (var i in arr) {
-                            node = arr[i]
-                            if (node.id === id) {
-                                // 找到了，就不找了
-                                return node
-                            }
-                            if (node.children.length > 0) {
-                                // 如果还有子节点，再继续找
-                                node = getTreeNode(node.children, id)
-                            }
-                        }
-                        return node
-                    }
                     var tempCheckedKeys = []
                     var id = null
                     var node = null
+                    var getTreeNode = function (arr, id) {
+                        for (var i in arr) {
+                            var tempNode = arr[i]
+                            if (tempNode.id === id) {
+                                // 找到了，就不找了
+                                node = tempNode
+                            }
+                            // 如果还有子节点，再继续找
+                            getTreeNode(tempNode.children, id)
+                        }
+                    }
                     for (var i in checkedKeys) {
                         id = checkedKeys[i]
-                        node = getTreeNode(this.authList, id)
+                        getTreeNode(this.authList, id)
                         if (node && node.children.length <= 0) {
                             // 如果下面没有子节点，则加入
                             tempCheckedKeys.push(id)
@@ -268,7 +256,7 @@
                 })
             },
             // 显示新增界面
-            handleAdd (index, row) {
+            handleForm (index, row) {
                 this.formVisible = true
                 this.formData = Object.assign({}, formJson)
                 if (row !== null) {

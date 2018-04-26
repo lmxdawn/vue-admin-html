@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
             if (!store.getters.userName && (!store.getters.authRules || store.getters.authRules.length === 0)) { // 判断当前用户是否已拉取完用户信息
                 store.dispatch('userInfo').then(res => { // 拉取user_info
                     const authRules = res.authRules || []
-                    if (authRules.length === 0) {
+                    if (!(authRules instanceof Array) || authRules.length === 0) {
                         Message.error('权限验证失败，请联系管理员~')
                         store.dispatch('loginOut').then(() => {
                             next('/login')

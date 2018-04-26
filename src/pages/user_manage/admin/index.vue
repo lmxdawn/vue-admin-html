@@ -128,9 +128,6 @@
                 if (value === '') {
                     callback(new Error('请输入密码'))
                 } else {
-                    if (this.formData.checkPassword !== '') {
-                        this.$refs.formData.validateField('checkPassword')
-                    }
                     callback()
                 }
             }

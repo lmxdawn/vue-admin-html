@@ -77,12 +77,10 @@
             <el-tree
                 style="max-height: 75vh;overflow-y: auto;"
                 :data="authList"
-                show-checkbox
-                default-expand-all
+                show-checkbox=""
+                default-expand-all=""
                 node-key="id"
                 ref="tree"
-                :check-strictly="true"
-                highlight-current
                 :props="defaultProps">
             </el-tree>
             <div slot="footer" class="dialog-footer">
@@ -193,13 +191,57 @@
                 roleAuthList({id: roleId}).then(response => {
                     this.authList = response.auth_list || []
                     const checkedKeys = response.checked_keys || []
-                    this.$refs.tree.setCheckedKeys(checkedKeys)
+                    var getTreeNode = function (arr, id) {
+                        var node = null
+                        for (var i in arr) {
+                            node = arr[i]
+                            if (node.id === id) {
+                                // 找到了，就不找了
+                                return node
+                            }
+                            if (node.children.length > 0) {
+                                // 如果还有子节点，再继续找
+                                node = getTreeNode(node.children, id)
+                            }
+                        }
+                        return node
+                    }
+                    var tempCheckedKeys = []
+                    var id = null
+                    var node = null
+                    for (var i in checkedKeys) {
+                        id = checkedKeys[i]
+                        node = getTreeNode(this.authList, id)
+                        if (node && node.children.length <= 0) {
+                            // 如果下面没有子节点，则加入
+                            tempCheckedKeys.push(id)
+                        }
+                    }
+                    this.$refs.tree.setCheckedKeys(tempCheckedKeys)
                 }).catch(() => {
                 })
             },
             authSubmit () {
                 this.authLoading = true
-                this.authFormData.auth_rules = this.$refs.tree.getCheckedKeys()
+                var getNodeParents = function (node) {
+                    var arr = []
+                    var id = node.data.id || null
+                    if (id) {
+                        arr.push(node.data.id)
+                    }
+                    if (node.parent) {
+                        arr = arr.concat(getNodeParents(node.parent))
+                    }
+                    return arr
+                }
+                var checkedKeys = this.$refs.tree.getCheckedKeys()
+                var arr = []
+                for (var key in checkedKeys) {
+                    var node = this.$refs.tree.getNode(checkedKeys[key])
+                    arr = arr.concat(getNodeParents(node))
+                }
+                var setArr = new Set(arr)
+                this.authFormData.auth_rules = [...setArr]
                 if (!this.authFormData) {
                     this.$alert('请至少选择一个权限', '提示', {
                         confirmButtonText: '确定'

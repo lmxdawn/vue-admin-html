@@ -35,7 +35,7 @@
 
 
             <!--新增界面-->
-            <el-dialog title="修改密码" :visible.sync="passwordFormVisible">
+            <el-dialog title="修改密码" :visible.sync="passwordFormVisible" width="85%">
                 <el-form :model="passwordFormData" :rules="passwordFormDataRules" ref="passwordFormData">
                     <el-form-item label="原始密码" prop="old_password">
                         <el-input type="password" v-model="passwordFormData.old_password" auto-complete="off"></el-input>

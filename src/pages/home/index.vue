@@ -375,8 +375,7 @@
 
     @media screen and (max-width: 768px) {
         .menu {
-            left: 0;
-            margin-left: -60%;
+            left: -60%;
             margin-right: 0;
             opacity: 1;
             position: absolute;
@@ -392,7 +391,8 @@
             min-width: 0;
             opacity: 1;
             -webkit-transform: translate3d(60%, 0, 0);
-            transform: translate3d(60%, 0, 0)
+            transform: translate3d(60%, 0, 0);
+            overflow: initial;
         }
 
         .header-toggle {

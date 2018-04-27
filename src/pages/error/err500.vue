@@ -1,11 +1,13 @@
 <template>
-    <div class="error401">
-        <div class="error401-body-con">
-            <div class="error401-body-con-title">4<span class="error401-0-span">0</span><span class="error401-key-span">3</span></div>
-            <p class="error401-body-con-message">You don't have permission</p>
-            <div class="error401-btn-con">
-                <div class="error401-home-button" @click="goHome">返回首页</div>
-                <div class="error401-block-button" @click="backPage">返回上一页</div>
+    <div class="error500">
+        <div class="error500-body-con">
+            <div class="error500-body-con-title">
+                5<span class="error500-0-span">0</span><span class="error500-0-span">0</span>
+            </div>
+            <p class="error500-body-con-message">Oops! the server is wrong</p>
+            <div class="error500-btn-con">
+                <div class="error500-home-button" @click="goHome">返回首页</div>
+                <div class="error500-block-button" @click="backPage">返回上一页</div>
             </div>
         </div>
     </div>
@@ -13,7 +15,7 @@
 
 <script>
     export default {
-        name: 'Error401',
+        name: 'Error500',
         methods: {
             backPage () {
                 this.$router.go(-1)
@@ -29,30 +31,27 @@
 </script>
 
 <style lang="scss" scoped>
-    @keyframes error401animation {
+    @keyframes error500animation {
         0% {
             transform: rotateZ(0deg);
         }
+        20% {
+            transform: rotateZ(-10deg);
+        }
         40% {
-            transform: rotateZ(-20deg);
-        }
-        45% {
-            transform: rotateZ(-15deg);
-        }
-        50% {
-            transform: rotateZ(-20deg);
-        }
-        55% {
-            transform: rotateZ(-15deg);
+            transform: rotateZ(5deg);
         }
         60% {
-            transform: rotateZ(-20deg);
+            transform: rotateZ(-5deg);
+        }
+        80% {
+            transform: rotateZ(10deg);
         }
         100% {
             transform: rotateZ(0deg);
         }
     }
-    .error401{
+    .error500{
         &-body-con{
             width: 700px;
             height: 500px;
@@ -68,7 +67,7 @@
                 height: 260px;
                 line-height: 260px;
                 margin-top: 40px;
-                .error401-0-span{
+                .error500-0-span{
                     display: inline-block;
                     position: relative;
                     width: 170px;
@@ -81,26 +80,10 @@
                         display: inline-block;
                         font-size: 120px;
                         position: absolute;
-                        left: 50%;
-                        top: 50%;
-                        transform: translate(-50%,-50%);
-                    }
-                }
-                .error401-key-span{
-                    display: inline-block;
-                    position: relative;
-                    width: 100px;
-                    height: 190px;
-                    border-radius: 50%;
-                    margin-right: 10px;
-                    i{
-                        display: inline-block;
-                        font-size: 190px;
-                        position: absolute;
-                        left: 20px;
-                        transform: translate(-50%,-60%);
+                        bottom: -10px;
+                        left: 10px;
                         transform-origin: center bottom;
-                        animation: error401animation 2.8s ease 0s infinite;
+                        animation: error500animation 3s ease 0s infinite alternate;
                     }
                 }
             }

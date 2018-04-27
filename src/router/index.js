@@ -9,10 +9,16 @@ const login = r => require.ensure([], () => r(require('../pages/login/index.vue'
 // 错误页面
 const err401 = r => require.ensure([], () => r(require('../pages/error/err401.vue')), 'err401')
 const err404 = r => require.ensure([], () => r(require('../pages/error/err404.vue')), 'err404')
+const err500 = r => require.ensure([], () => r(require('../pages/error/err500.vue')), 'err500')
 // 首页
 const home = r => require.ensure([], () => r(require('../pages/home/index.vue')), 'home')
 
 export const constantRouterMap = [
+    {
+        path: '*',
+        component: err404,
+        hidden: true
+    },
     {
         path: '/login',
         component: login,
@@ -29,6 +35,12 @@ export const constantRouterMap = [
         path: '/404',
         component: err404,
         name: '404',
+        hidden: true
+    },
+    {
+        path: '/500',
+        component: err500,
+        name: '500',
         hidden: true
     },
     {

@@ -79,7 +79,7 @@ export const asyncRouterMap = [
         path: '/user_manage',
         redirect: '/user_manage/admin/index',
         component: home,
-        icon: 'guanlizuyuan',
+        icon: 'guanliyuan1',
         name: '用户管理',
         meta: {
             authRule: ['user_manage']

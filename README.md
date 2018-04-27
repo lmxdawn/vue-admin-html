@@ -12,7 +12,7 @@
 </p>
 # vue-admin-html
 
-> 基于Vue.js 2.x系列 + Element UI + RBAC/AUTH权限 的后台管理系统
+> 基于Vue.js 2.x系列 + Element UI + RBAC/AUTH权限 的响应式后台管理系统
 
 ## 前言 ##
 
@@ -21,6 +21,13 @@
 **项目后端地址：** https://github.com/lmxdawn/vue-admin-php
 
 欢迎大家的star
+
+## PC版
+![donate](https://lmxdawn.github.io/images/pc.png)
+## 手机版
+![donate](https://lmxdawn.github.io/images/phone.png)
+![donate](https://lmxdawn.github.io/images/phone-1.png)
+
 
 ## 功能 ##
 - [x] 管理员登录

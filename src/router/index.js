@@ -13,6 +13,7 @@ const err500 = r => require.ensure([], () => r(require('../pages/error/err500.vu
 // 首页
 const home = r => require.ensure([], () => r(require('../pages/home/index.vue')), 'home')
 
+// 注意 权限字段 authRule （严格区分大小写）
 export const constantRouterMap = [
     {
         path: '*',
@@ -116,7 +117,7 @@ export const asyncRouterMap = [
                         component: resolve => require(['../pages/user_manage/admin/authRule.vue'], resolve),
                         name: '权限管理',
                         meta: {
-                            authRule: ['admin/authRule/index']
+                            authRule: ['admin/authrule/index']
                         }
                     }
                 ]

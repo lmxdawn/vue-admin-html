@@ -12,6 +12,8 @@ import './element'
 import './assets/icons/iconfont'
 import IconSvg from './components/common/IconSvg.vue'// svg组件
 
+import './mock' // 模拟数据
+
 // 注册全局组件（register globally）
 Vue.component('icon-svg', IconSvg)
 

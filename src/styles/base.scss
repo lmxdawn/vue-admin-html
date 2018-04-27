@@ -94,12 +94,3 @@ input {
         min-width: 70% !important;
     }
 }
-
-//去掉弹出框的下边距
-.el-dialog__wrapper {
-    overflow-y: hidden !important;
-}
-
-.el-dialog {
-    margin-top: 12em !important;
-}

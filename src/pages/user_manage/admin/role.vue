@@ -83,7 +83,7 @@
         </el-dialog>
 
         <!--表单-->
-        <el-dialog :title="formMap[formName]" :visible.sync="formVisible">
+        <el-dialog :title="formMap[formName]" :visible.sync="formVisible" width="85%" top="5vh">
             <el-form :model="formData" :rules="formRules" ref="dataForm">
                 <el-form-item label="角色名称" prop="name">
                     <el-input v-model="formData.name" auto-complete="off"></el-input>

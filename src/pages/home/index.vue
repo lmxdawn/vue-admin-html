@@ -56,8 +56,19 @@
         </el-header>
 
         <el-container class="container-box" v-bind:class="{ 'slide-in-left': menuShow }">
-            <el-aside style="background-color: rgb(238, 241, 246)" class="menu" width="">
-                <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router>
+            <el-aside style="background-color: rgb(238, 241, 246)" class="menu" width="" :class="{'slide-hide': isCollapse}">
+                <div class="slide-toggle" @click="toggleSideBar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <el-menu
+                    :default-active="onRoutes"
+                    :collapse="isCollapse"
+                    class="el-menu-vertical-demo"
+                    theme="dark"
+                    unique-opened
+                    router>
                     <sidebar-item :routes='routers'></sidebar-item>
                 </el-menu>
             </el-aside>
@@ -154,11 +165,17 @@
             username () {
                 let username = this.$store.state.admin.userName
                 return !username ? this.name : username
+            },
+            isCollapse () {
+                return this.$store.state.app.sidebar.opened
             }
         },
         mounted () {
         },
         methods: {
+            toggleSideBar () {
+                this.$store.dispatch('ToggleSideBar')
+            },
             getBreadcrumb () {
                 let matched = this.$route.matched.filter(item => item.name)
                 const first = matched[0]
@@ -367,11 +384,46 @@
         border-bottom: 1px solid #d8dce5;
     }
 
+    .slide-hide {
+        width: 64px;
+        .el-menu--collapse {
+            .menu-wrapper {
+                .el-menu-item {
+                    &>span {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
     @media screen and (min-width: 768px) {
         .main-mask{
             display: none;
         }
+        /*宽屏时出现*/
+        .slide-toggle {
+            display: block;
+            /*background-color: #26a2ff;*/
+            border-radius: 4px;
+            /*border: 1px solid #fff;*/
+            height: 40px;
+            margin: 10px 0;
+            padding: 2px 6px;
+            outline: none;
+            width: 40px;
+            z-index: 10;
+        }
+
+        .slide-toggle span {
+            display: block;
+            width: 100%;
+            height: 4px;
+            margin: 5px auto;
+            background-color: rgba(135,141,153,.8);
+        }
     }
+
 
     @media screen and (max-width: 768px) {
         .menu {

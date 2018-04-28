@@ -94,3 +94,34 @@ input {
         min-width: 70% !important;
     }
 }
+
+// 左侧导航栏的折叠后的样式
+.slide-hide {
+    .el-menu--collapse {
+        .el-submenu {
+            .el-submenu__title {
+                span {
+                    height: 0;
+                    width: 0;
+                    overflow: hidden;
+                    visibility: hidden;
+                    display: inline-block;
+                }
+                .el-submenu__icon-arrow {
+                    display: none;
+                }
+            }
+        }
+        .el-menu-item {
+            .el-tooltip {
+                span {
+                    height: 0;
+                    width: 0;
+                    overflow: hidden;
+                    visibility: hidden;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

@@ -55,9 +55,9 @@
 
         </el-header>
 
-        <el-container class="container-box" v-bind:class="{ 'slide-in-left': menuShow }">
-            <el-aside style="background-color: rgb(238, 241, 246)" class="menu" width="" :class="{'slide-hide': isCollapse}">
-                <div class="slide-toggle" @click="toggleSideBar">
+        <el-container class="container-box" v-bind:class="{ 'slide-in-left': menuShow,'slide-hide': isCollapse}">
+            <el-aside style="background-color: rgb(238, 241, 246)" class="menu" width="">
+                <div class="slide-toggle" :class="{'slide-toggle-open': isCollapse}" @click="toggleSideBar">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -384,48 +384,60 @@
         border-bottom: 1px solid #d8dce5;
     }
 
-    .slide-hide {
-        width: 64px;
-        .el-menu--collapse {
-            .menu-wrapper {
-                .el-menu-item {
-                    &>span {
-                        display: none;
-                    }
-                }
-            }
-        }
+    /*宽屏时出现*/
+    .slide-toggle {
+        display: block;
+        border-radius: 4px;
+        height: 30px;
+        line-height: 30px;
+        outline: none;
+        width: 100%;
+        z-index: 10;
+        text-align: center;
+        cursor: pointer;
+        box-sizing: border-box;
+        padding: 0 5px;
+    }
+
+    .slide-toggle span {
+        display: inline-block;
+        width: 1px;
+        height: 12px;
+        background-color: rgba(135, 141, 153, 0.8);
+    }
+    .slide-toggle-open span{
+        display: block;
+        margin: 5px auto;
+        width: 12px;
+        height: 1px;
+    }
+    .slide-toggle-open {
+        padding-top: 5px;
     }
 
     @media screen and (min-width: 768px) {
         .main-mask{
             display: none;
         }
-        /*宽屏时出现*/
-        .slide-toggle {
-            display: block;
-            /*background-color: #26a2ff;*/
-            border-radius: 4px;
-            /*border: 1px solid #fff;*/
-            height: 40px;
-            margin: 10px 0;
-            padding: 2px 6px;
-            outline: none;
-            width: 40px;
-            z-index: 10;
-        }
+    }
 
-        .slide-toggle span {
-            display: block;
-            width: 100%;
-            height: 4px;
-            margin: 5px auto;
-            background-color: rgba(135,141,153,.8);
+    .slide-hide {
+        .menu{
+            width: 64px !important;
         }
     }
 
-
     @media screen and (max-width: 768px) {
+        .slide-hide {
+            .menu{
+                left: -64px !important;
+            }
+        }
+        .slide-hide.slide-in-left {
+            -webkit-transform: translate3d(64px, 0, 0)!important;
+            transform: translate3d(64px, 0, 0)!important;
+        }
+
         .menu {
             left: -60%;
             margin-right: 0;

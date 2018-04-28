@@ -1,11 +1,14 @@
 <template>
     <div class='tabs-view-container'>
-        <router-link class="tabs-view" v-for="tag in Array.from(visitedViews)" :to="tag.path" :key="tag.path">
-            <el-tag :closable="true" :type="isActive(tag.path) ? '' : 'info'" @close='closeViewTabs(tag,$event)'>
-                {{tag.name}}
-            </el-tag>
-        </router-link>
+        <span v-for="tag in Array.from(visitedViews)" class="tag-box" @contextmenu.prevent="closeViewTabs(tag, $event)">
+            <router-link class="tabs-view"  :to="tag.path" :key="tag.path">
+                <el-tag :closable="true" :type="isActive(tag.path) ? '' : 'info'" @close='closeViewTabs(tag,$event)'>
+                    {{tag.name}}
+                </el-tag>
+            </router-link>
+        </span>
     </div>
+
 </template>
 
 <script>
@@ -30,7 +33,9 @@
                         }
                     }
                 })
-                $event.preventDefault()
+                if ($event) {
+                    $event.preventDefault()
+                }
             },
             generateRoute () {
                 if (this.$route.name) {
@@ -61,11 +66,13 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
     .tabs-view-container {
         height: 100%;
-        .tabs-view {
+        .tag-box {
             margin-left: 10px;
             &:first-child{
                 margin-left: 0;
             }
+        }
+        .tabs-view {
             .el-tag{
                 display: inline;
                 padding: 10px;

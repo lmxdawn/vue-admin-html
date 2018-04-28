@@ -74,14 +74,14 @@
     <div class='menu-wrapper'>
         <template v-for="item in routes" v-if="!item.hidden && item.children">
 
-            <router-link v-if="hasFilterChildrenHidden(item.children) && !item.hidden&&item.noDropdown&&!item.children[0].children" :to="item.path+'/'+item.children[0].path">
+            <router-link v-if="!item.hidden&&item.noDropdown&&!item.children[0].children" :to="item.path+'/'+item.children[0].path">
                 <el-menu-item :index="item.path+'/'+item.children[0].path">
                     <icon-svg v-if='item.icon' :icon-class="item.icon"></icon-svg>
                     <span slot="title">{{item.children[0].name}}</span>
                 </el-menu-item>
             </router-link>
 
-            <el-submenu v-else :index="item.path" v-if="!item.noDropdown&&!item.hidden">
+            <el-submenu :index="item.path" v-else-if="!item.noDropdown&&!item.hidden">
                 <template slot="title">
                     <icon-svg v-if='item.icon' :icon-class="item.icon"></icon-svg>
                     <span v-if='item.name' slot="title">{{item.name}}</span>

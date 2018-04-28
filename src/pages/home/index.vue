@@ -368,6 +368,7 @@
         margin-left: 10px;
         .el-dropdown{
             display: flex;
+            cursor: pointer;
         }
         span {
             display: inline-block;

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <upload-image-list :list="list" @uploadImageListImageSelect="uploadImageSelect"></upload-image-list>
+        <upload-image-list :uploadQuery="uploadQuery" @uploadImageListImageSelect="uploadImageSelect"></upload-image-list>
     </div>
 </template>
 
@@ -11,23 +11,11 @@
         data () {
             return {
                 msg: '我的',
-                list: [
-                    {
-                        'baseUrl': 'http://www.shuangkai.com/',
-                        'url': 'ueditor/php/upload/image/20170825/1503632707138910.png',
-                        'mtime': 1503632707
-                    },
-                    {
-                        'baseUrl': 'http://www.shuangkai.com/',
-                        'url': 'ueditor/php/upload/image/20180517/1526555074.png',
-                        'mtime': 1503632700
-                    },
-                    {
-                        'baseUrl': 'http://www.shuangkai.com/',
-                        'url': 'ueditor/php/upload/image/20170825/1503632700266323.png',
-                        'mtime': 1503632700
-                    }
-                ]
+                uploadQuery: {
+                    scene: '', // 上传文件的场景值
+                    page: 0,
+                    limit: 2
+                }
             }
         },
         components: {

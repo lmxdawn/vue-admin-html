@@ -1,24 +1,58 @@
 <template>
-    <div class="common-upload-image-list">
-        <ul class="list">
-            <li v-for="item in list">
-                <img :src="item.baseUrl + item.url" @click="uploadImageSelect(item)">
-            </li>
-        </ul>
+    <div>
+        <div class="common-upload-image-list">
+            <ul class="list">
+                <li v-for="item in uploadList">
+                    <img :src="item.image_url" @click="uploadImageSelect(item)">
+                </li>
+            </ul>
+        </div>
+
+        <el-pagination
+            :page-size="uploadQuery.limit"
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="total">
+        </el-pagination>
     </div>
 </template>
 
 <!--上传的文件资源-->
 <script>
+    import { uploadList } from '../../api/upload'
     export default {
         name: 'upload-image-list',
+        data () {
+            return {
+                total: 0,
+                uploadList: []
+            }
+        },
         props: {
-            list: Array
+            uploadQuery: {
+                scene: String, // 上传文件的场景值
+                page: Number,
+                limit: Number
+            }
         },
         methods: {
+            getList () {
+                uploadList(this.uploadQuery).then(response => {
+                    this.uploadList = response.data || []
+                    this.total = response.total || 0
+                }).catch(() => {
+                })
+            },
+            handleCurrentChange (val) {
+                this.uploadQuery.page = val
+                this.getList()
+            },
             uploadImageSelect (item) {
                 this.$emit('uploadImageListImageSelect', item)
             }
+        },
+        created () {
+            this.getList()
         },
         computed: {
         }

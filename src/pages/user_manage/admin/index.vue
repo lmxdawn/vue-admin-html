@@ -77,9 +77,15 @@
             </el-table-column>
         </el-table>
 
+        <el-pagination
+            :page-size="query.limit"
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="total">
+        </el-pagination>
 
         <!--表单-->
-        <el-dialog :title="formMap[formName]" :visible.sync="formVisible" width="85%" top="5vh">
+        <el-dialog :title="formMap[formName]" :visible.sync="formVisible"  width="85%" top="5vh">
             <el-form :model="formData" :rules="formRules" ref="dataForm">
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="formData.username" auto-complete="off"></el-input>

@@ -64,6 +64,19 @@ export const constantRouterMap = [
                 component: resolve => require(['../pages/home/main.vue'], resolve)
             }
         ]
+    },
+    {
+        path: '/components',
+        redirect: '/components/uploadList',
+        component: home,
+        name: 'components',
+        children: [
+            {
+                path: 'uploadList',
+                name: '上传图片的展示',
+                component: resolve => require(['../pages/components/uploadList.vue'], resolve)
+            }
+        ]
     }
 
 ]

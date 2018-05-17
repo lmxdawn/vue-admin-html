@@ -31,7 +31,13 @@ router.beforeEach((to, from, next) => {
                     if (!(authRules instanceof Array) || authRules.length === 0) {
                         Message.error('权限验证失败，请联系管理员~')
                         store.dispatch('loginOut').then(() => {
-                            next('/login')
+                            var redirect = to.fullPath
+                            store.dispatch('loginOut').then(() => {
+                                next({
+                                    path: '/login',
+                                    query: {redirect: redirect}
+                                })
+                            })
                         })
                         NProgress.done()
                     }
@@ -42,7 +48,13 @@ router.beforeEach((to, from, next) => {
                 }).catch(() => {
                     store.dispatch('fedLogout').then(() => {
                         Message.error('验证失败,请重新登录')
-                        next({path: '/login'})
+                        var redirect = to.fullPath
+                        store.dispatch('loginOut').then(() => {
+                            next({
+                                path: '/login',
+                                query: {redirect: redirect}
+                            })
+                        })
                     })
                 })
             } else {
@@ -63,7 +75,13 @@ router.beforeEach((to, from, next) => {
         if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
             next()
         } else {
-            next('/login') // 否则全部重定向到登录页
+            var redirect = to.fullPath
+            store.dispatch('loginOut').then(() => {
+                next({
+                    path: '/login',
+                    query: {redirect: redirect}
+                })
+            }) // 否则全部重定向到登录页
             NProgress.done() // router在hash模式下 手动改变hash 重定向回来 不会触发afterEach 暂时hack方案 ps：history模式下无问题，可删除该行！
         }
     }

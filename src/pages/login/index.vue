@@ -72,7 +72,8 @@
                 },
                 isShowPwd: false, // 是否显示密码
                 loading: false, // 登录loading
-                showDialog: false // 显示dialog
+                showDialog: false, // 显示dialog
+                redirect: null // 回调地址
             }
         },
         methods: {
@@ -82,8 +83,12 @@
                         this.loading = true
                         this.$store.dispatch('loginName', this.ruleForm).then(() => {
                             this.loading = false
+                            var path = '/'
+                            if (this.redirect) {
+                                path = this.redirect
+                            }
                             this.$router.push({
-                                path: '/'
+                                path: path
                             })
                             // this.showDialog = true
                         }).catch(() => {
@@ -93,6 +98,14 @@
                         return false
                     }
                 })
+            }
+        },
+        created () {
+            // 将参数拷贝进查询对象
+            let query = this.$route.query
+            if (query.redirect) {
+                // URL Encode
+                this.redirect = decodeURIComponent(query.redirect)
             }
         }
     }

@@ -56,11 +56,11 @@ export const constantRouterMap = [
         component: home,
         redirect: '/readme/index',
         icon: 'shouye',
+        name: '前言',
         noDropdown: true,
         children: [
             {
                 path: 'index',
-                name: '前言',
                 component: resolve => require(['../pages/home/main.vue'], resolve)
             }
         ]

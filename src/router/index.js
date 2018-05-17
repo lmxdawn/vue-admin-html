@@ -70,6 +70,7 @@ export const constantRouterMap = [
         redirect: '/components/uploadList',
         component: home,
         name: 'components',
+        icon: 'tongyong',
         children: [
             {
                 path: 'uploadList',

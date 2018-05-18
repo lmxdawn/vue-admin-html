@@ -8,6 +8,7 @@ import login from './login'
 import admin from './admin'
 import authRule from './authRule'
 import role from './role'
+import upload from './upload'
 // 登录相关
 Mock.mock(/\/admin\/login\/index/, 'post', login.index)
 Mock.mock(/\/admin\/login\/userInfo/, 'get', login.userInfo)
@@ -27,5 +28,15 @@ Mock.mock(/\/admin\/role\/save/, 'post', role.save)
 Mock.mock(/\/admin\/role\/edit/, 'post', role.edit)
 Mock.mock(/\/admin\/role\/delete/, 'post', role.del)
 Mock.mock(/\/admin\/role\/auth/, 'post', role.auth)
+
+/**
+ * 上传相关
+ */
+// 获取文件列表
+Mock.mock(/admin\/upload\/imageList/, 'get', upload.index)
+// 上传文件
+Mock.mock(/admin\/upload\/newFile/, 'post', upload.up)
+// 创建文件夹
+Mock.mock(/admin\/upload\/newDir/, 'post', upload.newDir)
 
 export default Mock

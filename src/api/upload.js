@@ -11,3 +11,12 @@ export function uploadList (query) {
         params: query
     })
 }
+
+// 创建文件夹
+export function uploadNewDir (data) {
+    return fetch({
+        url: '/admin/upload/newDir',
+        method: 'post',
+        data: data
+    })
+}

@@ -101,3 +101,20 @@ export function html2Text (val) {
 export function toThousandslsFilter (num) {
     return (+num || 0).toString().replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
+
+/**
+ * 格式化文件大小
+ * @param value
+ * @returns {*}
+ */
+export function renderSize (value) {
+    if (value === null || value === '') {
+        return '0B'
+    }
+    var unitArr = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    var srcsize = parseFloat(value)
+    var index = Math.floor(Math.log(srcsize) / Math.log(1024))
+    var size = srcsize / Math.pow(1024, index)
+    size = size.toFixed(0) // 保留的小数位数
+    return size + unitArr[index]
+}

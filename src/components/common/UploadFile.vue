@@ -48,6 +48,8 @@
             </li>
         </ul>
         <el-table
+            ref="uploadTable"
+            highlight-current-row
             :data="uploadList"
             @scroll="tableScroll"
             @selection="handleSelection"
@@ -151,8 +153,8 @@
                 ],
                 query: {
                     pathName: '',
-                    size: 20,
-                    start: 0
+                    size: 5,
+                    page: 0
                 },
                 selectList: [],
                 multipleSelection: []
@@ -361,7 +363,7 @@
              * @param val
              */
             handleCurrentChange (val) {
-                this.query.start = val
+                this.query.page = val
                 this.getList()
             },
             handlePreview (file) {
@@ -382,7 +384,9 @@
                     }
                 }
                 if (response.path) {
-                    this.uploadList.push(response)
+                    this.uploadList.unshift(response)
+                    this.$refs.uploadTable.setCurrentRow() // 先取消
+                    this.$refs.uploadTable.setCurrentRow(response)
                 }
                 if (fileList.length <= 0) {
                     // 上传完成

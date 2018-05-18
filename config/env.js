@@ -7,15 +7,11 @@
  *
  */
 var baseUrl = process.env.API_BASE
-var uploadBaseUrl = baseUrl
-var uploadImgUrl = uploadBaseUrl + '/admin/upload/img'
 // var routerMode = 'history'
 var routerMode = ''
 var imgBaseUrl = baseUrl
 export {
     baseUrl,
-    uploadBaseUrl,
-    uploadImgUrl,
     routerMode,
     imgBaseUrl
 }

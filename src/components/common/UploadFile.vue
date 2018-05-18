@@ -251,9 +251,15 @@
                     this.query.pathName = path
                     this.uploadData.pathName = row.path
                     this.getList()
+                    return
                 }
-                // 选择单个文件
+                // 选择单个文件，并且文件后缀
                 if (!this.isAll) {
+                    if (this.uploadData.exts.indexOf(row.fileExt) <= 0) {
+                        // 不在允许后缀中
+                        this.$message.error('文件只能为 ' + this.uploadData.exts + '格式!')
+                        return
+                    }
                     this.selectList = [
                         row
                     ]
@@ -261,8 +267,8 @@
                 }
             },
             allOK () {
+                this.selectList = []
                 if (this.multipleSelection.length > 0) {
-                    this.selectList = []
                     var multipleSelection = this.multipleSelection
                     for (var i in multipleSelection) {
                         var item = multipleSelection[i]
@@ -272,6 +278,7 @@
                         }
                     }
                 }
+                console.log(this.selectList)
                 this.uploadFileSelect()
             },
             handleSelection (val) {

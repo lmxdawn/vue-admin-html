@@ -153,7 +153,7 @@
                 ],
                 query: {
                     pathName: '',
-                    size: 5,
+                    size: 15,
                     page: 0
                 },
                 selectList: [],
@@ -163,8 +163,9 @@
         props: {
             uploadUrl: String, // 上传的地址
             isAll: false, // 是否可多选
-            size: Number,
-            fileExt: String
+            size: Number, // 允许上传的文件大小
+            fileExt: String, // 允许上传的文件后缀
+            limit: Number // 没页显示多少
         },
         mounted () {
             window.addEventListener('scroll', this.tableScroll)
@@ -245,9 +246,10 @@
             selectFile (row) {
                 // 文件夹
                 if (row.is_dir === 1) {
-                    this.query.pathName = row.path
+                    var path = row.path
+                    path = path.substring(0, 1) === '/' ? path : '/' + path
+                    this.query.pathName = path
                     this.uploadData.pathName = row.path
-                    console.log(this.query.pathName)
                     this.getList()
                 }
                 // 选择单个文件
@@ -456,6 +458,9 @@
             this.getList()
             if (this.size) {
                 this.uploadData.size = this.size
+            }
+            if (this.limit) {
+                this.query.size = this.limit
             }
             if (this.fileExt && this.fileExt !== '' && this.fileExt !== 'undefined') {
                 this.uploadData.exts = this.fileExt

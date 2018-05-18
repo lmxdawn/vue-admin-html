@@ -11,6 +11,7 @@
                 :isAll="false"
                 :fileExt="fileExt"
                 :size="200000"
+                :limit="6"
                 @uploadFileSelectAll="uploadImageSelect">
             </upload-file>
         </el-dialog>

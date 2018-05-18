@@ -4,7 +4,6 @@
         <el-dialog
             title="上传插件"
             :visible.sync="dialogVisible"
-            top="10px"
             width="80%">
             <upload-file
                 :uploadUrl="uploadUrl"

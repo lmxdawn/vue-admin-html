@@ -10,6 +10,8 @@ import authRule from './authRule'
 import role from './role'
 import upload from './upload'
 // 登录相关
+Mock.mock(/\/admin\/login\/out/, 'post', login.out)
+Mock.mock(/\/admin\/login\/password/, 'post', login.password)
 Mock.mock(/\/admin\/login\/index/, 'post', login.index)
 Mock.mock(/\/admin\/login\/userInfo/, 'get', login.userInfo)
 // 管理员相关

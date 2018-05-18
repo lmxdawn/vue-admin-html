@@ -16,7 +16,17 @@ const userInfo = {
     'token': 'eyJpZHNzIjoiJDJ5JDEwJGNmMVpVb3BxM2lEUUk0bllVZXkxenUzajM0QVJlYmEuS3B4aDZ1MkNkY1J4clF6SE10MTRLIn0=_2018-04-27'
 }
 
+const out = {
+    'success': true
+}
+
+const password = {
+    'success': true
+}
+
 export default {
     index,
-    userInfo
+    userInfo,
+    out,
+    password
 }

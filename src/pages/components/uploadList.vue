@@ -7,7 +7,7 @@
             width="80%">
             <upload-file
                 :uploadUrl="uploadUrl"
-                :isAll="false"
+                :isAll="true"
                 :fileExt="fileExt"
                 :size="200000"
                 :limit="6"
@@ -15,6 +15,7 @@
             </upload-file>
         </el-dialog>
     </div>
+
 </template>
 
 
@@ -26,7 +27,7 @@
             return {
                 uploadUrl: baseUrl + '/admin/upload/newFile',
                 fileExt: 'jpg,png,gif',
-                dialogVisible: false
+                dialogVisible: false,
             }
         },
         components: {
@@ -50,6 +51,6 @@
 </script>
 
 
-<style>
+<style lang="scss">
 
 </style>

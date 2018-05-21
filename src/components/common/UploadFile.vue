@@ -610,8 +610,10 @@
     @import "../../styles/mixin";
     .icon-lists {
         @include size(100%, 100%);
-        display: flex;
         margin-bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         & .icon-list-empty {
             text-align: center;
             width: 100%;

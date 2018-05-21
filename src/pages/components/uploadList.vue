@@ -27,7 +27,7 @@
             return {
                 uploadUrl: baseUrl + '/admin/upload/newFile',
                 fileExt: 'jpg,png,gif',
-                dialogVisible: false,
+                dialogVisible: false
             }
         },
         components: {

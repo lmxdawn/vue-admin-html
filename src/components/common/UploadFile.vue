@@ -269,7 +269,8 @@
                 }
                 // 选择单个文件，并且文件后缀
                 if (!this.isAll) {
-                    if (this.uploadData.exts.indexOf(row.fileExt) <= 0) {
+                    var exts = this.uploadData.exts.split(',')
+                    if (exts.indexOf(row.fileExt) < 0) {
                         // 不在允许后缀中
                         this.$message.error('文件只能为 ' + this.uploadData.exts + '格式!')
                         return
@@ -284,15 +285,15 @@
                 this.selectList = []
                 if (this.multipleSelection.length > 0) {
                     var multipleSelection = this.multipleSelection
+                    var exts = this.uploadData.exts.split(',')
                     for (var i in multipleSelection) {
                         var item = multipleSelection[i]
                         // 如果在扩展列表中，并且不是文件夹
-                        if (item.fileExt && this.uploadData.exts && this.uploadData.exts.length > 0 && this.uploadData.exts.indexOf(item.fileExt) >= 0 && item.is_dir === 0) {
+                        if (item.fileExt && exts.length > 0 && exts.indexOf(item.fileExt) !== -1 && item.is_dir === 0) {
                             this.selectList.push(item)
                         }
                     }
                 }
-                console.log(this.selectList)
                 this.uploadFileSelect()
             },
             handleSelection (val) {

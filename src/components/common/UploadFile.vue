@@ -34,15 +34,18 @@
             </el-popover>
         </div>
         <ul class="breadcrumb-list">
-            <li v-if="query.pathName !== ''">
+            <li v-if="pathBreadcrumbs.length > 0">
                 <a href="javascript:;" @click="breadcrumbGoBack">返回上一级</a>
                 <span class="shufenge">|</span>
             </li>
             <li>
+                <a v-if="pathBreadcrumbs.length > 0" href="javascript:;" title="全部文件"
+                   @click="breadcrumbClick(null)">全部文件</a>
+                <span v-else="" class="none-path" title="全部文件">全部文件</span>
                 <template v-for="(item, index) in pathBreadcrumbs">
-                    <span v-if="index !== 0" class="shufenge">&gt;</span>
-                    <a v-if="query.pathName && query.pathName !== item.path" href="javascript:;" :title="item.title"
-                       @click="breadcrumbClick(item)">{{ item.filename === '' ? '全部文件' : item.filename }}</a>
+                    <span class="shufenge">&gt;</span>
+                    <a v-if="query.pathName && query.pathName !== item.path" href="javascript:;" :title="'全部文件/' + item.title"
+                       @click="breadcrumbClick(index)">{{ item.filename }}</a>
                     <span v-else="" class="none-path" :title="item.title">{{ item.filename }}</span>
                 </template>
             </li>
@@ -127,6 +130,16 @@
     import { uploadList, uploadNewDir } from '../../api/upload'
     import { py } from '../../utils/haiZiToPinYin'
     import { renderSize } from '../../filtres/index'
+
+    function pathBreadcrumbsFormat (pathBreadcrumbs) {
+        var str = ''
+        for (var i in pathBreadcrumbs) {
+            str += pathBreadcrumbs[i].filename + '/'
+        }
+        str = str.substring(0, str.length - 1)
+        return str
+    }
+
     export default {
         name: 'upload-file',
         data () {
@@ -144,13 +157,7 @@
                     size: 0
                 },
                 fileList: [],
-                pathBreadcrumbs: [
-                    {
-                        title: '全部文件',
-                        path: '',
-                        filename: '全部文件'
-                    }
-                ],
+                pathBreadcrumbs: [],
                 query: {
                     pathName: '',
                     size: 15,
@@ -246,10 +253,17 @@
             selectFile (row) {
                 // 文件夹
                 if (row.is_dir === 1) {
-                    var path = row.path
-                    path = path.substring(0, 1) === '/' ? path : '/' + path
+                    var str = pathBreadcrumbsFormat(this.pathBreadcrumbs)
+                    var filename = row.filename
+                    var path = str !== '' ? str + '/' + filename : filename
+                    var obj = {
+                        title: path,
+                        path: path,
+                        filename: filename
+                    }
+                    this.pathBreadcrumbs.push(obj)
                     this.query.pathName = path
-                    this.uploadData.pathName = row.path
+                    this.uploadData.pathName = path
                     this.getList()
                     return
                 }
@@ -288,8 +302,6 @@
                 this.multipleSelection = val
             },
             getList () {
-                // 生成 路径的面包屑导航
-                this.breadcrumbs()
                 uploadList(this.query).then(response => {
                     this.uploadList = response.list || []
                     this.total = response.total || 0
@@ -299,67 +311,37 @@
             /**
              * 选择某个面包屑
              */
-            breadcrumbClick (item) {
-                if (this.query.pathName === item.path) {
-                    return false
+            breadcrumbClick (index) {
+                if (index === null || index === '') {
+                    // 如果不传值表示初始化
+                    this.pathBreadcrumbs = []
+                } else {
+                    var item = []
+                    for (var i in this.pathBreadcrumbs) {
+                        if (i <= index) {
+                            item.push(this.pathBreadcrumbs[i])
+                        }
+                    }
+                    this.pathBreadcrumbs = item
                 }
-                this.query.pathName = item.path
-                this.uploadData.pathName = item.path
+                var str = pathBreadcrumbsFormat(this.pathBreadcrumbs)
+                this.query.pathName = str
+                this.uploadData.pathName = str
                 this.getList()
             },
             // 返回上一级
             breadcrumbGoBack () {
-                var pathName = this.query.pathName
-                if (pathName === '') {
+                if (this.pathBreadcrumbs.length <= 0) {
                     return false
                 }
-                var tempArr = pathName.split('/')
-                tempArr.pop()
-                pathName = '/' + tempArr.join('/')
-                this.query.pathName = pathName.substr(0, 1) === '/' ? pathName.substr(1) : pathName // 去掉第一个 / 符号
-                console.log(this.query.pathName)
+                this.pathBreadcrumbs.pop()
+                var str = ''
+                for (var i in this.pathBreadcrumbs) {
+                    str += i === 0 ? this.pathBreadcrumbs[i].filename + '/' : this.pathBreadcrumbs[i].filename
+                }
+                this.query.pathName = str
+                this.uploadData.pathName = str
                 this.getList()
-            },
-            // 生成面包屑导航数据
-            breadcrumbs () {
-                var pathName = this.query.pathName
-                if (pathName === '') {
-                    this.pathBreadcrumbs = [
-                        {
-                            title: '全部文件',
-                            path: '',
-                            filename: '全部文件'
-                        }
-                    ]
-                    return false
-                }
-                var tempArr = pathName.split('/')
-                var allTitle = ''
-                var allPath = ''
-                var pathArr = [
-                    {
-                        title: '全部文件',
-                        path: '',
-                        filename: '全部文件'
-                    }
-                ]
-                for (var item in tempArr) {
-                    var filename = tempArr[item]
-                    if (filename === '') {
-                        continue
-                    }
-                    var tempTitle = allTitle === '' ? '全部文件/' : '/'
-                    allTitle += tempTitle + filename
-                    var path = '/'
-                    allPath += path + filename
-                    var obj = {
-                        title: allTitle,
-                        path: allPath,
-                        filename: filename
-                    }
-                    pathArr.push(obj)
-                }
-                this.pathBreadcrumbs = pathArr
             },
             uploadFileSelect () {
                 this.$emit('uploadFileSelectAll', this.selectList)

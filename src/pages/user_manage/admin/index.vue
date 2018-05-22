@@ -85,7 +85,12 @@
         </el-pagination>
 
         <!--表单-->
-        <el-dialog :title="formMap[formName]" :visible.sync="formVisible"  width="85%" top="5vh">
+        <el-dialog
+            :title="formMap[formName]"
+            :visible.sync="formVisible"
+            :before-close="hideForm"
+            width="85%"
+            top="5vh">
             <el-form :model="formData" :rules="formRules" ref="dataForm">
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="formData.username" auto-complete="off"></el-input>
@@ -110,7 +115,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click.native="formVisible = !formVisible">取消</el-button>
+                <el-button @click.native="hideForm">取消</el-button>
                 <el-button type="primary" @click.native="formSubmit()" :loading="formLoading">提交</el-button>
             </div>
         </el-dialog>
@@ -225,7 +230,15 @@
                     this.roles = []
                 })
             },
-            // 显示界面
+            // 隐藏表单
+            hideForm () {
+                // 更改值
+                this.formVisible = !this.formVisible
+                // 清空表单
+                this.$refs['dataForm'].resetFields()
+                return true
+            },
+            // 显示表单
             handleForm (index, row) {
                 this.formVisible = true
                 this.formData = Object.assign({}, formJson)

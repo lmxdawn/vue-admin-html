@@ -65,7 +65,11 @@
 
 
         <!--授权界面-->
-        <el-dialog title="授权" :visible.sync="authFormVisible" :close-on-click-modal="false" class="dialog">
+        <el-dialog
+            title="授权"
+            :visible.sync="authFormVisible"
+            :close-on-click-modal="false"
+            class="dialog">
             <el-tree
                 style="max-height: 75vh;overflow-y: auto;"
                 :data="authList"
@@ -83,7 +87,12 @@
         </el-dialog>
 
         <!--表单-->
-        <el-dialog :title="formMap[formName]" :visible.sync="formVisible" width="85%" top="5vh">
+        <el-dialog
+            :title="formMap[formName]"
+            :visible.sync="formVisible"
+            :before-close="hideForm"
+            width="85%"
+            top="5vh">
             <el-form :model="formData" :rules="formRules" ref="dataForm">
                 <el-form-item label="角色名称" prop="name">
                     <el-input v-model="formData.name" auto-complete="off"></el-input>
@@ -102,7 +111,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click.native="formVisible = !formVisible">取消</el-button>
+                <el-button @click.native="hideForm">取消</el-button>
                 <el-button type="primary" @click.native="formSubmit()" :loading="formLoading">提交</el-button>
             </div>
         </el-dialog>
@@ -255,7 +264,15 @@
                     this.editLoading = false
                 })
             },
-            // 显示新增界面
+            // 隐藏表单
+            hideForm () {
+                // 更改值
+                this.formVisible = !this.formVisible
+                // 清空表单
+                this.$refs['dataForm'].resetFields()
+                return true
+            },
+            // 显示表单
             handleForm (index, row) {
                 this.formVisible = true
                 this.formData = Object.assign({}, formJson)

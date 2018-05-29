@@ -631,8 +631,8 @@
             @include f_left;
             background-color: #fff;
             text-align: center;
-            width: 130px;
-            height: 137px;
+            width: 100px;
+            height: 120px;
             float: left;
             margin: 4px 0 0 6px;
             border: 1px solid #fff;
@@ -642,16 +642,14 @@
                 background-color: #f1f5fa;
             }
             & .app-icon {
-                @include square(1.7066rem);
                 border-radius: .154rem;
                 position: relative;
-                margin: 9px auto 0;
-                width: 84px;
-                height: 84px;
+                margin: auto 0;
+                width: 100%;
+                height: 100%;
+                line-height: 120px;
                 overflow: hidden;
-                & img {
-                    visibility: hidden;
-                }
+                background-color: #F5F5F5;
                 &.default-small {
                     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAACLklEQVRoge3by26iUADGcbczrzzzDpPZdV6h225KSZOuLBenm3pATVps660RqGhBuX5dmTTGKBwOHE7Cl/z3/gLiMdFO59uurno/JYX8kxQjkFQDTWgwsX91WE1SyAVv0GHDqcsOea0YHm/QMSAzJG/MKSATJG/MOWBpJG9MHmApJG9MXiA1kjemCJAKyRtTFFgYyRtzLPPNzoP8LSxQH07OAnMjeWOOdaOZ0IcTmG9OeSRvDItaoOi1QNFrgaxTiIXpcoVtGAEAojiBu/ZhjheQdVNcoKybmC5XOLVgF0HpW+IBbzQD9urzJG6/JE2hEnbIWoCj1/dcuO9XktXtWjlQ1k1EcVIICACGNRcD+H/4WhgHAI73KQZw8LKgAu6iuLnAu4cRjPEcLwsXm2BHBcwy4O5h1CygrJmwZjbSLKNCHS5NM1gzG7JG/8BhBrztDfCxCZjADvexCXDbG/AFLhyvEtx+C8fjB9TNcaW4/TRjzAd47gjGatPlig9wF8a1ALdhxAdY17IMfIBxktYCjOKED9Dx8n1TKDub4vjGBEiseS1AYs34AGXNhL8NK8X525DqRMMEKKkG7vvPSCp6LyZJivv+c2EcU6CkGug+PjG/kv42RPfxiQrHHLi/XYk1h7v2EUZ0n49xksJd+yDWrNRBuxJg02qBotcCRa8Fil4LFL0WKHotUPROApv4k+aC2eeAfxrwIulTyN+TwCb+rSBP1yrxJYVcXHa7Pw5NX/eYFZgHqZIAAAAAAElFTkSuQmCC") center no-repeat;
                 }
@@ -667,25 +665,33 @@
                 &.fileicon-small-txt {
                     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAABOElEQVRoge3bQU7CQBTG8W7hRp4BGg+kCZ5Aw8JpXekCMMHEtZ4BQeUcblyAYtt8bowhpClT+vDNw+8l//XML7OaZCaK1iY+Qzt2uIodlnEChNDgFSeR1HQSpNqgzYZzQWTX4V0bVAYUQ2pjqoAiSG3MNmBjpDbGB9gIqY3xBe6M1MbUAe6E1MbUBdZGamPKup5tRw7nODUL7D14Af2Q2piyjlOg9wjcPAsgtTESEWg9Aq1HoPUItJ44cDQBVhlEZpUDt0+BAT++ZHC/yCww4HgK5IUMLi+Au1lgQJ/WZ19rEEgggQQSSCCBBBJIIIEEGgRmP/fFvDhQ4HgKfGbA/cuBAv8yAq1HoPUItB6B1iPQev8bGOKT5lo5vFWfoMOF+iYb1L1EvxoY4LcCL1iCRSdBenSO1qbpG+FZw3jpdRMgAAAAAElFTkSuQmCC") center no-repeat;
                 }
-                &.fileicon-small-pic > img {
-                    /*如果是图片则展示图片*/
-                    visibility: visible;
-                    left: -45px;
-                    top: -44px;
-                    position: absolute;
+                &.fileicon-small-pic {
+                    img {
+                        /*如果是图片则展示图片*/
+                        max-width: 100%;
+                        max-height: 100%;
+                        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAAAAAByaaZbAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfiBR0RGx0qH34fAAAAP0lEQVRIx2P8zwABD6C0AgE+EwOJYFQDMYDlAZShAKUJ8QehH4aDBsbR/DAoNIzmh8GhYTQ/DA4No/lhcGgAANgjFQHywHtPAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTA1LTI5VDE2OjU5OjE4KzA4OjAwfq61WQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOC0wNS0yOVQxNzoyNzoyOSswODowMM1v/QcAAAAASUVORK5CYII=);
+                        background-size: 24px;
+                        transition: all .2s;
+                        vertical-align: middle;
+                    }
                 }
                 &.fileicon-small-zip {
                     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAABeUlEQVRoge3XP0vDQAAF8Awqfh+33FIdC27JYP8QwWKHfoZkqAQ6FIr6LVy6uBSUTiaLSSjF2S4Opm0kHRI6NOciOpxDzztsEt6DNz9+HHdwioIgxYh+93Kgucm17iRvuptSkRrOgm6GJ1w1nIXQpu6mVHeSSHtKbirj10MGqLlJX3hg18Af6C17gm4alwWoOenqN6C0gV0DdTelAAIIIIAAAggggAACCOB/AddGk0prq84NXLfq8vaNJoB/arZcUtFk83l+gbICYB6Am9HZ9nfw8aKAQJ5H5v4UQAABBJATOKptD3w4Lx5QJADuCpiFoTAuC9/zC/xuHn8TcbtBZXXV4Xhgvrrq1KTtx+0GC+xNq1RWB5MqN3Awkbffm1ZZoBUQKqu2R7iBtidv3woIgAACCCCAAAIIIIAA5gdoBiQqEfCDPUGfdEsD9NU+A6yMlT3LJ13TV2dmQCKR2h6JNsNjrtqe2KYZkMj01Znpq1eXz0f7DBApaD4BYPa1eeusGGsAAAAASUVORK5CYII=") center no-repeat;
                 }
             }
             & .title {
+                position: absolute;
+                bottom: 2px;
+                left: 0;
                 display: block;
                 /*截断多出来的字*/
                 @include text-overflow;
                 font-size: 12px;
                 color: #4A4A4A;
                 text-align: center;
-                margin: 6px 5px 5px;
+                margin: auto 0;
+                width: 100%;
                 & .edit-input {
                     padding: 0 0 0 5px;
                     height: 24px;
@@ -739,13 +745,14 @@
             & .big-img {
                 animation: bounce-in .5s;
                 position: absolute;
-                right: -175px;
-                bottom: 140px;
-                width: 500px;
+                right: -40px;
+                top: -100px;
+                width: 200px;
+                height: 200px;
                 display: none;
                 & img {
-                    width: 100%;
-                    max-height: 500px;
+                    max-width: 100%;
+                    max-height: 100%;
                 }
             }
         }

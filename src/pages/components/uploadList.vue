@@ -5,14 +5,14 @@
             title="上传插件"
             :visible.sync="dialogVisible"
             width="80%">
-            <upload-file
+            <file-resource
                 :uploadUrl="uploadUrl"
                 :isAll="true"
                 :fileExt="fileExt"
-                :size="200000"
-                :limit="6"
-                @uploadFileSelectAll="uploadImageSelect">
-            </upload-file>
+                :size="2000000"
+                :limit="15"
+                @resourceSelect="resourceSelect">
+            </file-resource>
         </el-dialog>
     </div>
 
@@ -20,21 +20,21 @@
 
 
 <script>
-    import UploadFile from '../../components/common/UploadFile.vue'
+    import FileResource from '../../components/common/FileResource.vue'
     import { baseUrl } from '../../../config/env'
     export default {
         data () {
             return {
-                uploadUrl: baseUrl + '/admin/upload/newFile',
+                uploadUrl: baseUrl + '/admin/file_resource/add',
                 fileExt: 'jpg,png,gif',
                 dialogVisible: false
             }
         },
         components: {
-            UploadFile
+            FileResource
         },
         methods: {
-            uploadImageSelect (item) {
+            resourceSelect (item) {
                 console.log(item)
             },
             handleClose (done) {

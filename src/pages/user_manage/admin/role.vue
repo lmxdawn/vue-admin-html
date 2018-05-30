@@ -177,7 +177,7 @@
                 this.loading = true
                 getRoleList(this.query).then(response => {
                     this.loading = false
-                    this.list = response || []
+                    this.list = response.data || []
                 }).catch(() => {
                     this.loading = false
                     this.list = []
@@ -190,8 +190,8 @@
                 this.authFormData.auth_rules = []
                 this.authList = []
                 roleAuthList({id: roleId}).then(response => {
-                    this.authList = response.auth_list || []
-                    const checkedKeys = response.checked_keys || []
+                    this.authList = response.data.auth_list || []
+                    const checkedKeys = response.data.checked_keys || []
                     var tempCheckedKeys = []
                     var id = null
                     var node = null
@@ -312,7 +312,7 @@
                                 this.formVisible = false
                                 if (this.formName === 'add') {
                                     // 向头部添加数据
-                                    this.list.unshift(res)
+                                    this.list.unshift(res.data)
                                 } else {
                                     this.list.splice(this.index, 1, data)
                                 }

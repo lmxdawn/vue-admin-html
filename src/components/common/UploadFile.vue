@@ -280,7 +280,7 @@
                             })
                             return
                         }
-                        this.uploadList.splice(this.index, 1, response)
+                        this.uploadList.splice(this.index, 1, response.data)
                     }).catch(() => {
                     })
                 }
@@ -351,8 +351,8 @@
             },
             getList () {
                 uploadList(this.query).then(response => {
-                    this.uploadList = response.list || []
-                    this.total = response.total || 0
+                    this.uploadList = response.data.list || []
+                    this.total = response.data.total || 0
                 }).catch(() => {
                 })
             },
@@ -422,10 +422,11 @@
                         fileList.splice(i, 1)
                     }
                 }
-                if (response.path) {
-                    this.uploadList.unshift(response)
+                var data = response.data
+                if (data.path) {
+                    this.uploadList.unshift(data)
                     this.$refs.uploadTable.setCurrentRow() // 先取消
-                    this.$refs.uploadTable.setCurrentRow(response)
+                    this.$refs.uploadTable.setCurrentRow(data)
                 }
                 if (fileList.length <= 0) {
                     // 上传完成

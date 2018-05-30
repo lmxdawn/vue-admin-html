@@ -220,9 +220,9 @@
                 this.loading = true
                 getAdminList(this.query).then(response => {
                     this.loading = false
-                    this.list = response.admin_list.data || []
-                    this.total = response.admin_list.total || 0
-                    this.roles = response.role_list || []
+                    this.list = response.data.admin_list.data || []
+                    this.total = response.data.admin_list.total || 0
+                    this.roles = response.data.role_list || []
                 }).catch(() => {
                     this.loading = false
                     this.list = []
@@ -282,7 +282,8 @@
                                 this.formVisible = false
                                 if (this.formName === 'add') {
                                     // 向头部添加数据
-                                    this.list.unshift(res)
+                                    var resData = res.data
+                                    this.list.unshift(resData)
                                 } else {
                                     this.list.splice(this.index, 1, data)
                                 }

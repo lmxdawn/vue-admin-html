@@ -162,8 +162,8 @@
                 this.loading = true
                 authRuleList(this.query).then(response => {
                     this.loading = false
-                    this.mergeList = response.merge_list || []
-                    this.treeList = response.tree_list || []
+                    this.mergeList = response.data.merge_list || []
+                    this.treeList = response.data.tree_list || []
                 }).catch(() => {
                     this.loading = false
                     this.mergeList = []
@@ -220,7 +220,7 @@
                                 this.$refs['dataForm'].resetFields()
                                 this.formVisible = false
                                 if (this.formName === 'add') {
-                                    const newChild = res || {}
+                                    const newChild = res.data || {}
                                     if (this.pidData) {
                                         if (!this.pidData.children) {
                                             this.$set(this.pidData, 'children', [])

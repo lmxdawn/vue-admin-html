@@ -67,7 +67,7 @@ const actions = {
         const pwd = userInfo.pwd ? userInfo.pwd : ''
         return new Promise((resolve, reject) => {
             loginName(userName, pwd).then(response => {
-                const data = response || {}
+                const data = response.data || {}
                 if (data.errcode) {
                     Message({
                         message: response.errmsg,
@@ -86,7 +86,7 @@ const actions = {
     userInfo ({commit, state}) {
         return new Promise((resolve, reject) => {
             userInfo(state.id, state.token).then(response => {
-                const data = response || {}
+                const data = response.data || {}
                 commit(types.RECEIVE_USER_INFO, data)
                 resolve(data)
             }).catch(error => {

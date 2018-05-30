@@ -195,7 +195,7 @@
                             })
                             return
                         }
-                        this.tagLists.push(response)
+                        this.tagLists.push(response.data)
                     }).catch(() => {
                     })
                 }).catch(() => {
@@ -258,15 +258,15 @@
             // 获取文件列表
             getList () {
                 fileResourceList(this.query).then(response => {
-                    this.lists = response.data || []
-                    this.total = response.total || 0
+                    this.lists = response.data.data || []
+                    this.total = response.data.total || 0
                 }).catch(() => {
                 })
             },
             // 获取分组列表
             getTagList () {
                 fileResourceTagList(this.query).then(response => {
-                    this.tagLists = response || []
+                    this.tagLists = response.data || []
                 }).catch(() => {
                 })
             },
@@ -301,8 +301,9 @@
                         fileList.splice(i, 1)
                     }
                 }
-                if (response.path) {
-                    this.lists.unshift(response)
+                var data = response.data
+                if (data.path) {
+                    this.lists.unshift(data)
                 }
                 if (fileList.length <= 0) {
                     // 上传完成

@@ -41,7 +41,7 @@
                     <span class="shufenge">|</span>
                     <a v-if="query.tagId !== item.id" href="javascript:;"
                        @click="tagClick(item)">{{ item.tag }}</a>
-                    <span v-else="" class="none-path" :title="item.tag">{{ item.tag }}</span>
+                    <a v-else="" href="javascript:;" class="none-path" :title="item.tag">{{ item.tag }}</a>
                 </template>
             </li>
         </ul>
@@ -233,7 +233,7 @@
                     this.selectList = [
                         row
                     ]
-                    this.uploadFileSelect()
+                    this.resourceSelect()
                     return
                 }
                 this.lists.splice(index, 1, row)

@@ -31,7 +31,8 @@ Mock.mock(/\/admin\/role\/index/, 'get', role.index)
 Mock.mock(/\/admin\/role\/save/, 'post', role.save)
 Mock.mock(/\/admin\/role\/edit/, 'post', role.edit)
 Mock.mock(/\/admin\/role\/delete/, 'post', role.del)
-Mock.mock(/\/admin\/role\/auth/, 'post', role.auth)
+Mock.mock(/\/admin\/role\/auth/, 'get', role.getAuth)
+Mock.mock(/\/admin\/role\/auth/, 'post', role.postAuth)
 
 /**
  * 上传相关

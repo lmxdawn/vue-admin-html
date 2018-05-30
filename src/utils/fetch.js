@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '../store'
 import { baseUrl } from '../../config/env'
-import { $LOGIN_FAILED } from './errorCode'
+import { LOGIN_FAILED } from './errorCode'
 import router from '../router/index'
 
 // 创建axios实例
@@ -30,7 +30,7 @@ service.interceptors.response.use(
     response => {
         const res = response.data
         if (res.errcode) {
-            if (res.errcode === $LOGIN_FAILED) {
+            if (res.errcode === LOGIN_FAILED) {
                 store.dispatch('fedLogout').then(() => {
                     Message.error('验证失败,请重新登录')
                     router.push({

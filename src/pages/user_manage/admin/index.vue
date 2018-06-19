@@ -350,6 +350,7 @@
             // 将参数拷贝进查询对象
             let query = this.$route.query
             this.query = Object.assign(this.query, query)
+            this.query.limit = parseInt(this.query.limit)
             // 加载表格数据
             this.getList()
         }

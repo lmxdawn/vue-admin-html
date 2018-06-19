@@ -298,9 +298,9 @@
                     this.$confirm('确认删除该记录吗?', '提示', {
                         type: 'warning'
                     }).then(() => {
-                        this.loading = true
                         let para = {id: row.id}
                         adminDelete(para).then((res) => {
+                            this.deleteLoading = false
                             if (res.errcode) {
                                 this.$message({
                                     message: res.errmsg,

@@ -216,9 +216,9 @@
                         let data = Object.assign({}, this.passwordFormData)
                         password(data).then(res => {
                             this.passwordLoading = false
-                            if (res.errcode) {
+                            if (res.code) {
                                 this.$message({
-                                    message: res.errmsg,
+                                    message: res.message,
                                     type: 'error'
                                 })
                             } else {

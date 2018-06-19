@@ -273,9 +273,9 @@
                         filename: filename
                     }
                     uploadNewDir(data).then(response => {
-                        if (response.errcode) {
+                        if (response.code) {
                             this.$message({
-                                message: response.errmsg,
+                                message: response.message,
                                 type: 'error'
                             })
                             return
@@ -351,8 +351,8 @@
             },
             getList () {
                 uploadList(this.query).then(response => {
-                    this.uploadList = response.data.list || []
-                    this.total = response.data.total || 0
+                    this.uploadList = response.list || []
+                    this.total = response.total || 0
                 }).catch(() => {
                 })
             },
@@ -410,9 +410,9 @@
             },
             handleSuccess (response, file, fileList) {
                 this.uploadData.pinYinName = ''
-                if (response.errcode) {
+                if (response.code) {
                     this.$message({
-                        message: response.errmsg,
+                        message: response.message,
                         type: 'error'
                     })
                 }
@@ -422,7 +422,7 @@
                         fileList.splice(i, 1)
                     }
                 }
-                var data = response.data
+                var data = response
                 if (data.path) {
                     this.uploadList.unshift(data)
                     this.$refs.uploadTable.setCurrentRow() // 先取消

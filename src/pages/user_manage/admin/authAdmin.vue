@@ -122,7 +122,7 @@
 </template>
 
 <script>
-    import { getAdminList, adminSave, adminDelete } from '../../../api/admin'
+    import { authAdminList, authAdminSave, authAdminDelete } from '../../../api/authAdmin'
     const formJson = {
         id: '',
         username: '',
@@ -216,11 +216,11 @@
             },
             getList () {
                 this.loading = true
-                getAdminList(this.query).then(response => {
+                authAdminList(this.query).then(response => {
                     this.loading = false
-                    this.list = response.data.admin_list.data || []
-                    this.total = response.data.admin_list.total || 0
-                    this.roles = response.data.role_list || []
+                    this.list = response.admin_list.data || []
+                    this.total = response.admin_list.total || 0
+                    this.roles = response.role_list || []
                 }).catch(() => {
                     this.loading = false
                     this.list = []
@@ -261,11 +261,11 @@
                     if (valid) {
                         this.formLoading = true
                         let data = Object.assign({}, this.formData)
-                        adminSave(data, this.formName).then(res => {
+                        authAdminSave(data, this.formName).then(response => {
                             this.formLoading = false
-                            if (res.errcode) {
+                            if (response.code) {
                                 this.$message({
-                                    message: res.errmsg,
+                                    message: response.message,
                                     type: 'error'
                                 })
                             } else {
@@ -280,7 +280,7 @@
                                 this.formVisible = false
                                 if (this.formName === 'add') {
                                     // 向头部添加数据
-                                    var resData = res.data
+                                    var resData = response || {}
                                     this.list.unshift(resData)
                                 } else {
                                     this.list.splice(this.index, 1, data)
@@ -297,11 +297,11 @@
                         type: 'warning'
                     }).then(() => {
                         let para = {id: row.id}
-                        adminDelete(para).then((res) => {
+                        authAdminDelete(para).then((response) => {
                             this.deleteLoading = false
-                            if (res.errcode) {
+                            if (response.code) {
                                 this.$message({
-                                    message: res.errmsg,
+                                    message: response.message,
                                     type: 'error'
                                 })
                             } else {

@@ -91,7 +91,7 @@
 </template>
 
 <script>
-    import { authRuleList, authRuleSave, authRuleDelete } from '../../../api/authRule'
+    import { authPermissionRuleList, authPermissionRuleSave, authPermissionRuleDelete } from '../../../api/authPermissionRule'
     const formJson = {
         id: '',
         pid: '2',
@@ -160,10 +160,10 @@
             },
             getList () {
                 this.loading = true
-                authRuleList(this.query).then(response => {
+                authPermissionRuleList(this.query).then(response => {
                     this.loading = false
-                    this.mergeList = response.data.merge_list || []
-                    this.treeList = response.data.tree_list || []
+                    this.mergeList = response.merge_list || []
+                    this.treeList = response.tree_list || []
                 }).catch(() => {
                     this.loading = false
                     this.mergeList = []
@@ -204,11 +204,11 @@
                     if (valid) {
                         this.formLoading = true
                         let data = Object.assign({}, this.formData)
-                        authRuleSave(data, this.formName).then(res => {
+                        authPermissionRuleSave(data, this.formName).then(response => {
                             this.formLoading = false
-                            if (res.errcode) {
+                            if (response.code) {
                                 this.$message({
-                                    message: res.errmsg,
+                                    message: response.message,
                                     type: 'error'
                                 })
                             } else {
@@ -220,7 +220,7 @@
                                 this.$refs['dataForm'].resetFields()
                                 this.formVisible = false
                                 if (this.formName === 'add') {
-                                    const newChild = res.data || {}
+                                    const newChild = response || {}
                                     if (this.pidData) {
                                         if (!this.pidData.children) {
                                             this.$set(this.pidData, 'children', [])
@@ -256,11 +256,11 @@
                     }).then(() => {
                         this.deleteLoading = true
                         let para = {id: data.id}
-                        authRuleDelete(para).then((res) => {
+                        authPermissionRuleDelete(para).then((response) => {
                             this.deleteLoading = false
-                            if (res.errcode) {
+                            if (response.code) {
                                 this.$message({
-                                    message: res.errmsg,
+                                    message: response.message,
                                     type: 'error'
                                 })
                             } else {

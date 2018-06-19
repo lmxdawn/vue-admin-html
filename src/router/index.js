@@ -107,31 +107,31 @@ export const asyncRouterMap = [
                 redirect: '/user_manage/admin/index',
                 name: '管理组',
                 meta: {
-                    authRule: ['user_manage/admin']
+                    authRule: ['user_manage/auth_admin']
                 },
                 children: [
                     {
                         path: 'index',
-                        component: resolve => require(['../pages/user_manage/admin/index.vue'], resolve),
+                        component: resolve => require(['../pages/user_manage/admin/authAdmin.vue'], resolve),
                         name: '管理员管理',
                         meta: {
-                            authRule: ['admin/admin/index']
+                            authRule: ['admin/authadmin/index']
                         }
                     },
                     {
                         path: 'role',
-                        component: resolve => require(['../pages/user_manage/admin/role.vue'], resolve),
+                        component: resolve => require(['../pages/user_manage/admin/authRole.vue'], resolve),
                         name: '角色管理',
                         meta: {
-                            authRule: ['admin/role/index']
+                            authRule: ['admin/authrole/index']
                         }
                     },
                     {
                         path: 'authRule',
-                        component: resolve => require(['../pages/user_manage/admin/authRule.vue'], resolve),
+                        component: resolve => require(['../pages/user_manage/admin/authPermissionRule.vue'], resolve),
                         name: '权限管理',
                         meta: {
-                            authRule: ['admin/authrule/index']
+                            authRule: ['admin/authpermissionrule/index']
                         }
                     }
                 ]

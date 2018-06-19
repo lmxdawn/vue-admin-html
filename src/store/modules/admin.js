@@ -67,14 +67,15 @@ const actions = {
         const pwd = userInfo.pwd ? userInfo.pwd : ''
         return new Promise((resolve, reject) => {
             loginName(userName, pwd).then(response => {
-                const data = response.data || {}
-                if (data.errcode) {
+                if (response.code) {
                     Message({
-                        message: response.errmsg,
+                        message: response.message,
                         type: 'error',
                         duration: 5 * 1000
                     })
+                    return
                 }
+                const data = response || {}
                 data.roles = [] // 解决登录跳转过去，动态路由不添加的问题
                 commit(types.RECEIVE_USER_INFO, data)
                 resolve()
@@ -86,7 +87,15 @@ const actions = {
     userInfo ({commit, state}) {
         return new Promise((resolve, reject) => {
             userInfo(state.id, state.token).then(response => {
-                const data = response.data || {}
+                if (response.code) {
+                    Message({
+                        message: response.message,
+                        type: 'error',
+                        duration: 5 * 1000
+                    })
+                    return
+                }
+                const data = response || {}
                 commit(types.RECEIVE_USER_INFO, data)
                 resolve(data)
             }).catch(error => {

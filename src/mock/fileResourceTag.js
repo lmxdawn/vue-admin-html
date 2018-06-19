@@ -3,22 +3,18 @@
  */
 
 // 资源分组列表
-const index = {
-    'data': [
-        {
-            'id': 1,
-            'tag': 'sss'
-        }
-    ]
-}
+const index = [
+    {
+        'id': 1,
+        'tag': 'sss'
+    }
+]
 
 // 新建资源分组
 const add = {
-    'data': {
-        'id': 2,
-        'tag': 'ss',
-        'create_time': 1527603722
-    }
+    'id': 2,
+    'tag': 'ss',
+    'create_time': 1527603722
 }
 
 export default {

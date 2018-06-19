@@ -117,7 +117,7 @@
 </template>
 
 <script>
-    import { getRoleList, roleAuthList, roleAuth, roleSave, roleDelete } from '../../../api/role'
+    import { authRoleList, authRoleAuthList, authRoleAuth, authRoleSave, authRoleDelete } from '../../../api/authRole'
     const formJson = {
         id: '',
         name: '',
@@ -172,9 +172,9 @@
             },
             getList () {
                 this.loading = true
-                getRoleList(this.query).then(response => {
+                authRoleList(this.query).then(response => {
                     this.loading = false
-                    this.list = response.data || []
+                    this.list = response || []
                 }).catch(() => {
                     this.loading = false
                     this.list = []
@@ -186,9 +186,9 @@
                 this.authFormData.role_id = roleId
                 this.authFormData.auth_rules = []
                 this.authList = []
-                roleAuthList({id: roleId}).then(response => {
-                    this.authList = response.data.auth_list || []
-                    const checkedKeys = response.data.checked_keys || []
+                authRoleAuthList({id: roleId}).then(response => {
+                    this.authList = response.auth_list || []
+                    const checkedKeys = response.checked_keys || []
                     var tempCheckedKeys = []
                     var id = null
                     var node = null
@@ -242,11 +242,11 @@
                     })
                     return false
                 }
-                roleAuth(this.authFormData).then(res => {
+                authRoleAuth(this.authFormData).then(res => {
                     this.authLoading = false
-                    if (res.errcode) {
+                    if (res.code) {
                         this.$message({
-                            message: res.errmsg,
+                            message: res.message,
                             type: 'error'
                         })
                     } else {
@@ -292,11 +292,11 @@
                     if (valid) {
                         this.formLoading = true
                         let data = Object.assign({}, this.formData)
-                        roleSave(data, this.formName).then(res => {
+                        authRoleSave(data, this.formName).then(response => {
                             this.formLoading = false
-                            if (res.errcode) {
+                            if (response.code) {
                                 this.$message({
-                                    message: res.errmsg,
+                                    message: response.message,
                                     type: 'error'
                                 })
                             } else {
@@ -309,7 +309,7 @@
                                 this.formVisible = false
                                 if (this.formName === 'add') {
                                     // 向头部添加数据
-                                    this.list.unshift(res.data)
+                                    this.list.unshift(response)
                                 } else {
                                     this.list.splice(this.index, 1, data)
                                 }
@@ -328,11 +328,11 @@
                     }).then(() => {
                         this.deleteLoading = true
                         let para = {id: row.id}
-                        roleDelete(para).then((res) => {
+                        authRoleDelete(para).then(response => {
                             this.deleteLoading = false
-                            if (res.errcode) {
+                            if (response.code) {
                                 this.$message({
-                                    message: res.errmsg,
+                                    message: response.message,
                                     type: 'error'
                                 })
                             } else {

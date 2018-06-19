@@ -188,9 +188,9 @@
                         tag: value
                     }
                     fileResourceTagAdd(data).then(response => {
-                        if (response.errcode) {
+                        if (response.code) {
                             this.$message({
-                                message: response.errmsg,
+                                message: response.message,
                                 type: 'error'
                             })
                             return
@@ -258,15 +258,15 @@
             // 获取文件列表
             getList () {
                 fileResourceList(this.query).then(response => {
-                    this.lists = response.data.data || []
-                    this.total = response.data.total || 0
+                    this.lists = response.data || []
+                    this.total = response.total || 0
                 }).catch(() => {
                 })
             },
             // 获取分组列表
             getTagList () {
                 fileResourceTagList(this.query).then(response => {
-                    this.tagLists = response.data || []
+                    this.tagLists = response || []
                 }).catch(() => {
                 })
             },
@@ -289,9 +289,9 @@
                 console.log(file)
             },
             handleSuccess (response, file, fileList) {
-                if (response.errcode) {
+                if (response.code) {
                     this.$message({
-                        message: response.errmsg,
+                        message: response.message,
                         type: 'error'
                     })
                 }

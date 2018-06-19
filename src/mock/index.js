@@ -5,9 +5,9 @@
 import Mock from 'mockjs'
 
 import login from './login'
-import admin from './admin'
-import authRule from './authRule'
-import role from './role'
+import authAdmin from './authAdmin'
+import authPermissionRule from './authPermissionRule'
+import authRole from './authRole'
 import upload from './upload'
 import fileResourceTag from './fileResourceTag'
 import fileResource from './fileResource'
@@ -17,22 +17,22 @@ Mock.mock(/\/admin\/login\/password/, 'post', login.password)
 Mock.mock(/\/admin\/login\/index/, 'post', login.index)
 Mock.mock(/\/admin\/login\/userInfo/, 'get', login.userInfo)
 // 管理员相关
-Mock.mock(/\/admin\/admin\/index/, 'get', admin.index)
-Mock.mock(/\/admin\/admin\/save/, 'post', admin.save)
-Mock.mock(/\/admin\/admin\/edit/, 'post', admin.edit)
-Mock.mock(/\/admin\/admin\/delete/, 'post', admin.del)
+Mock.mock(/\/admin\/auth_admin\/index/, 'get', authAdmin.index)
+Mock.mock(/\/admin\/auth_admin\/save/, 'post', authAdmin.save)
+Mock.mock(/\/admin\/auth_admin\/edit/, 'post', authAdmin.edit)
+Mock.mock(/\/admin\/auth_admin\/delete/, 'post', authAdmin.del)
 // 权限相关
-Mock.mock(/\/admin\/auth_rule\/index/, 'get', authRule.index)
-Mock.mock(/\/admin\/auth_rule\/save/, 'post', authRule.save)
-Mock.mock(/\/admin\/auth_rule\/edit/, 'post', authRule.edit)
-Mock.mock(/\/admin\/auth_rule\/delete/, 'post', authRule.del)
+Mock.mock(/\/admin\/auth_permission_rule\/index/, 'get', authPermissionRule.index)
+Mock.mock(/\/admin\/auth_permission_rule\/save/, 'post', authPermissionRule.save)
+Mock.mock(/\/admin\/auth_permission_rule\/edit/, 'post', authPermissionRule.edit)
+Mock.mock(/\/admin\/auth_permission_rule\/delete/, 'post', authPermissionRule.del)
 // 角色相关
-Mock.mock(/\/admin\/role\/index/, 'get', role.index)
-Mock.mock(/\/admin\/role\/save/, 'post', role.save)
-Mock.mock(/\/admin\/role\/edit/, 'post', role.edit)
-Mock.mock(/\/admin\/role\/delete/, 'post', role.del)
-Mock.mock(/\/admin\/role\/auth/, 'get', role.getAuth)
-Mock.mock(/\/admin\/role\/auth/, 'post', role.postAuth)
+Mock.mock(/\/admin\/auth_role\/index/, 'get', authRole.index)
+Mock.mock(/\/admin\/auth_role\/save/, 'post', authRole.save)
+Mock.mock(/\/admin\/auth_role\/edit/, 'post', authRole.edit)
+Mock.mock(/\/admin\/auth_role\/delete/, 'post', authRole.del)
+Mock.mock(/\/admin\/auth_role\/auth/, 'get', authRole.getAuth)
+Mock.mock(/\/admin\/auth_role\/auth/, 'post', authRole.postAuth)
 
 /**
  * 上传相关

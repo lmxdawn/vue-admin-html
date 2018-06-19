@@ -28,9 +28,9 @@ service.interceptors.request.use(config => {
 // respone拦截器
 service.interceptors.response.use(
     response => {
-        const res = response.data
-        if (res.errcode) {
-            if (res.errcode === LOGIN_FAILED) {
+        const data = response.data
+        if (data.code) {
+            if (data.code === LOGIN_FAILED) {
                 store.dispatch('fedLogout').then(() => {
                     Message.error('验证失败,请重新登录')
                     router.push({
@@ -40,7 +40,7 @@ service.interceptors.response.use(
                 })
             }
         }
-        return response.data
+        return data
     },
     error => {
         console.log('err' + error)// for debug

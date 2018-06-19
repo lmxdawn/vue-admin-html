@@ -53,12 +53,9 @@
                 fixed="right"
                 width="200">
                 <template slot-scope="scope">
-                    <el-button size="small" style="margin-left: 0;" @click.native="handleAuth(scope.row.id)">授权</el-button>
-                    <el-button size="small" style="margin-left: 0;" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="danger" size="small" @click.native="handleDel(scope.$index, scope.row)"
-                               style="margin-left: 0;"
-                               :loading="deleteLoading">删除
-                    </el-button>
+                    <el-button type="text" size="small" @click.native="handleAuth(scope.row.id)">授权</el-button>
+                    <el-button type="text" size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="text" size="small" @click.native="handleDel(scope.$index, scope.row)" :loading="deleteLoading">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>

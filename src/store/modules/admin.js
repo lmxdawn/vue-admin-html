@@ -73,7 +73,6 @@ const actions = {
                         type: 'error',
                         duration: 5 * 1000
                     })
-                    return
                 }
                 const data = response || {}
                 data.roles = [] // 解决登录跳转过去，动态路由不添加的问题
@@ -93,7 +92,6 @@ const actions = {
                         type: 'error',
                         duration: 5 * 1000
                     })
-                    return
                 }
                 const data = response || {}
                 commit(types.RECEIVE_USER_INFO, data)

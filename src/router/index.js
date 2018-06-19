@@ -92,7 +92,7 @@ export default new Router({
 export const asyncRouterMap = [
     {
         path: '/user_manage',
-        redirect: '/user_manage/admin/index',
+        redirect: '/user_manage/admin_manage/index',
         component: home,
         icon: 'guanliyuan1',
         name: '用户管理',
@@ -102,28 +102,28 @@ export const asyncRouterMap = [
         // noDropdown: true,
         children: [
             {
-                path: '/user_manage/admin',
+                path: '/user_manage/admin_manage',
                 component: resolve => require(['../pages/user_manage/router.vue'], resolve),
-                redirect: '/user_manage/admin/index',
+                redirect: '/user_manage/authAdmin/index',
                 name: '管理组',
                 meta: {
-                    authRule: ['user_manage/auth_admin']
+                    authRule: ['user_manage/admin_manage']
                 },
                 children: [
                     {
-                        path: 'index',
+                        path: 'authAdmin',
                         component: resolve => require(['../pages/user_manage/admin/authAdmin.vue'], resolve),
                         name: '管理员管理',
                         meta: {
-                            authRule: ['admin/authadmin/index']
+                            authRule: ['admin/auth_admin/index']
                         }
                     },
                     {
-                        path: 'role',
+                        path: 'authRole',
                         component: resolve => require(['../pages/user_manage/admin/authRole.vue'], resolve),
                         name: '角色管理',
                         meta: {
-                            authRule: ['admin/authrole/index']
+                            authRule: ['admin/auth_role/index']
                         }
                     },
                     {
@@ -131,7 +131,7 @@ export const asyncRouterMap = [
                         component: resolve => require(['../pages/user_manage/admin/authPermissionRule.vue'], resolve),
                         name: '权限管理',
                         meta: {
-                            authRule: ['admin/authpermissionrule/index']
+                            authRule: ['admin/auth_permission_rule/index']
                         }
                     }
                 ]

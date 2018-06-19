@@ -182,11 +182,19 @@
             },
             // 显示授权界面
             handleAuth (roleId) {
-                this.authFormVisible = true
                 this.authFormData.role_id = roleId
                 this.authFormData.auth_rules = []
                 this.authList = []
                 authRoleAuthList({id: roleId}).then(response => {
+                    if (response.code) {
+                        this.authFormVisible = false
+                        this.$message({
+                            message: response.message,
+                            type: 'error'
+                        })
+                        return
+                    }
+                    this.authFormVisible = true
                     this.authList = response.auth_list || []
                     const checkedKeys = response.checked_keys || []
                     var tempCheckedKeys = []

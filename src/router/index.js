@@ -103,7 +103,7 @@ export const asyncRouterMap = [
         children: [
             {
                 path: '/user_manage/admin_manage',
-                component: resolve => require(['../pages/user_manage/router.vue'], resolve),
+                component: resolve => require(['../pages/user_manage/admin/router.vue'], resolve),
                 redirect: '/user_manage/authAdmin/index',
                 name: '管理组',
                 meta: {

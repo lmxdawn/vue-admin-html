@@ -2,17 +2,9 @@
 
     <div>
         <el-form :inline="true" :model="query" class="query-form" size="mini">
-            <!--<el-form-item class="query-form-item">-->
-            <!--<el-select v-model="query.pid" placeholder="父级">-->
-            <!--<el-option-->
-            <!--v-for="item in treeList"-->
-            <!--:key="item.id"-->
-            <!--:label="item.title"-->
-            <!--:value="item.id">-->
-            <!--<span style="float: left"><span v-html="item.html"></span>{{ item.title }}</span>-->
-            <!--</el-option>-->
-            <!--</el-select>-->
-            <!--</el-form-item>-->
+            <div v-if="lastSql !== ''">
+                <el-input type="textarea" placeholder="请输入内容" v-model="lastSql"></el-input>
+            </div>
             <el-form-item class="query-form-item">
                 <el-input v-model="query.name" placeholder="角色名称"></el-input>
             </el-form-item>
@@ -104,6 +96,7 @@
     export default {
         data () {
             return {
+                lastSql: '',
                 query: {
                     // pid: '',
                     name: '',
@@ -219,6 +212,10 @@
                                 // 刷新表单
                                 this.$refs['dataForm'].resetFields()
                                 this.formVisible = false
+                                var lastSql = ''
+                                if (this.lastSql !== '') {
+                                    lastSql += '\n'
+                                }
                                 if (this.formName === 'add') {
                                     const newChild = response || {}
                                     if (this.pidData) {
@@ -229,12 +226,15 @@
                                     } else {
                                         this.mergeList.push(newChild)
                                     }
+                                    lastSql += "INSERT INTO `auth_permission_rule` VALUES ('" + response.id + "', '" + response.pid + "', '" + response.name + "', '" + response.title + "', '" + response.status + "', '" + response.condition + "', '" + response.listorder + "', '" + response.update_time + "', '" + response.create_time + "');"
                                 } else {
                                     const parent = this.node.parent
                                     const children = parent.data.children || parent.data
                                     const index = children.findIndex(d => d.id === data.id)
                                     children.splice(index, 1, data)
+                                    lastSql += "UPDATE `auth_permission_rule` SET `name`='" + data.name + "', `title`='" + data.title + "', `status`='" + data.status + "', `condition`='" + data.condition + "', `listorder`='" + data.listorder + "', `create_time`='" + data.create_time + "', `update_time`='" + data.update_time + "' WHERE (`id`='" + data.id + "') LIMIT 1;"
                                 }
+                                this.lastSql += lastSql
                             }
                         }).catch(() => {
                             this.formLoading = false

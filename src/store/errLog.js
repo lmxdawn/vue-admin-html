@@ -1,4 +1,4 @@
-const errLog = {
+export const errLog = {
     state: {
         errLog: []
     },
@@ -9,5 +9,3 @@ const errLog = {
         this.state.errLog = []
     }
 }
-
-export default errLog

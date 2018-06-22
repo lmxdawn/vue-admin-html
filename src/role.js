@@ -32,11 +32,9 @@ router.beforeEach((to, from, next) => {
                         Message.error('权限验证失败，请联系管理员~')
                         store.dispatch('loginOut').then(() => {
                             var redirect = to.fullPath
-                            store.dispatch('loginOut').then(() => {
-                                next({
-                                    path: '/login',
-                                    query: {redirect: redirect}
-                                })
+                            next({
+                                path: '/login',
+                                query: {redirect: redirect}
                             })
                         })
                         NProgress.done()

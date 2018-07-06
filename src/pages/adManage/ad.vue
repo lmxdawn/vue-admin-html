@@ -54,10 +54,8 @@
                 label="操作"
                 fixed="right">
                 <template slot-scope="scope">
-                    <el-button size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="danger" size="small" @click.native="handleDel(scope.$index, scope.row)"
-                               style="margin-left: 0;">删除
-                    </el-button>
+                    <el-button type="text" size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="text" size="small" @click.native="handleDel(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '../store'
-import { baseUrl } from '../../config/env'
+import { baseUrl } from '../config/env'
 import { LOGIN_FAILED } from './errorCode'
 import router from '../router/index'
 

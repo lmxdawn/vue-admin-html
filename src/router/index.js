@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { routerMode } from '../../config/env'
+import { routerMode } from '../config/env'
 
 Vue.use(Router)
 
@@ -90,6 +90,37 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+    {
+        path: '/adManage',
+        redirect: '/adManage/adSite',
+        component: home,
+        icon: 'gongyongquan1',
+        name: '广告相关',
+        meta: {
+            authRule: ['adManage']
+        },
+        // noDropdown: true,
+        children: [
+            {
+                path: 'adSite',
+                component: resolve => require(['../pages/adManage/adSite.vue'], resolve),
+                name: '广告位管理',
+                icon: 'gongyongquan1',
+                meta: {
+                    authRule: ['admin/ad_site/index']
+                }
+            },
+            {
+                path: 'ad',
+                component: resolve => require(['../pages/adManage/ad.vue'], resolve),
+                name: '广告管理',
+                icon: 'gongyongquan1',
+                meta: {
+                    authRule: ['admin/ad/index']
+                }
+            }
+        ]
+    },
     {
         path: '/user_manage',
         redirect: '/user_manage/admin_manage/index',

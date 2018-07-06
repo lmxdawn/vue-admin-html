@@ -117,7 +117,7 @@
 </template>
 
 <script>
-    import { authRoleList, authRoleAuthList, authRoleAuth, authRoleSave, authRoleDelete } from '../../../api/authRole'
+    import { authRoleList, authRoleAuthList, authRoleAuth, authRoleSave, authRoleDelete } from '../../../api/auth/authRole'
     const formJson = {
         id: '',
         name: '',

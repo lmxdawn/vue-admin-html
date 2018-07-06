@@ -6,6 +6,8 @@
  * imgBaseUrl: 图片所在域名地址
  *
  */
+
+// var baseUrl = 'http://www.nihuawocai.com'
 var baseUrl = process.env.API_BASE
 // var routerMode = 'history'
 var routerMode = ''

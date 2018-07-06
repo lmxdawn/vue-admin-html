@@ -3,21 +3,7 @@
     <div>
         <el-form :inline="true" :model="query" class="query-form" size="mini">
             <el-form-item class="query-form-item">
-                <el-input v-model="query.username" placeholder="用户名"></el-input>
-            </el-form-item>
-            <el-form-item class="query-form-item">
-                <el-select v-model="query.status" placeholder="状态">
-                    <!--<el-option label="状态" value=""></el-option>-->
-                    <el-option label="禁用" value="0"></el-option>
-                    <el-option label="正常" value="1"></el-option>
-                    <el-option label="未验证" value="2"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item class="query-form-item">
-                <el-select v-model="query.role_id" placeholder="角色">
-                    <el-option label="全部角色" value=""></el-option>
-                    <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                <el-input v-model="query.title" placeholder="广告标题"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" icon="el-icon-refresh" @click="getList"></el-button>
@@ -32,17 +18,31 @@
         <el-table
             v-loading="loading"
             :data="list"
-            style="width: 100%;"
-            max-height="500">
+            style="width: 100%;">
             <el-table-column
-                label="用户 ID"
-                prop="id"
+                label="ID"
+                prop="ad_id"
                 fixed>
             </el-table-column>
             <el-table-column
-                label="用户名"
-                prop="username"
+                label="标题"
+                prop="title"
+                with="300"
+                :show-overflow-tooltip="true"
                 fixed>
+            </el-table-column>
+            <el-table-column
+                label="描述"
+                prop="describe"
+                with="300"
+                :show-overflow-tooltip="true">
+            </el-table-column>
+            <el-table-column
+                label="封面"
+                prop="pic_url">
+                <template slot-scope="scope">
+                    <img :src="scope.row.pic_url"/>
+                </template>
             </el-table-column>
             <el-table-column
                 label="状态">
@@ -51,26 +51,13 @@
                 </template>
             </el-table-column>
             <el-table-column
-                label="登录时间"
-                with="300"
-                :show-overflow-tooltip="true">
-                <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{ scope.row.last_login_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column
-                label="登录IP">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.last_login_ip }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column
                 label="操作"
                 fixed="right">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="text" size="small" @click.native="handleDel(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="danger" size="small" @click.native="handleDel(scope.$index, scope.row)"
+                               style="margin-left: 0;">删除
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -90,26 +77,50 @@
             width="85%"
             top="5vh">
             <el-form :model="formData" :rules="formRules" ref="dataForm">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="formData.username" auto-complete="off"></el-input>
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="formData.title" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="登录密码" prop="password">
-                    <el-input type="password" v-model="formData.password" auto-complete="off"></el-input>
+                <el-form-item label="封面图片（上传或填写）" prop="pic">
+                    <div>
+                        <el-input size="small" v-model="formData.pic" auto-complete="off" placeholder="图片路径"></el-input>
+                        <el-button size="small" type="primary" icon="el-icon-upload2" @click="uploadDialogVisible = true">选取文件</el-button>
+                    </div>
+                    <div class="avatar-uploader" v-if="formData.pic_url">
+                        <img :src="formData.pic_url" class="avatar">
+                    </div>
                 </el-form-item>
-                <el-form-item label="确认密码" prop="checkPassword">
-                    <el-input type="password" v-model="formData.checkPassword" auto-complete="off"></el-input>
+                <el-form-item label="描述" prop="describe">
+                    <el-input v-model="formData.describe" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="formData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
-                        <el-radio label="2">未验证</el-radio>
+                <el-form-item label="跳转方式" prop="jump_type">
+                    <el-radio-group v-model="formData.jump_type">
+                        <el-radio :label="1">小程序</el-radio>
+                        <el-radio :label="2">web网页</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="角色">
-                    <el-checkbox-group v-model="formData.roles">
-                        <el-checkbox v-for="item in roles" :key="item.id" :label="item.id">{{item.name}}</el-checkbox>
-                    </el-checkbox-group>
+                <el-form-item label="URL链接（web网页时有效）" prop="link_url">
+                    <el-input v-model="formData.link_url" auto-complete="off"></el-input>
+                </el-form-item>
+
+
+                <el-form-item label="小程序id（小程序时有效）" prop="wxa_appid">
+                    <el-input v-model="formData.wxa_appid" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="跳转路径（小程序时有效）" prop="wxa_path">
+                    <el-input v-model="formData.wxa_path" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="跳转时的参数（小程序时有效）" prop="extra_data">
+                    <el-input v-model="formData.extra_data" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="跳转小程序的版本（小程序时有效）" prop="env_version">
+                    <el-input v-model="formData.env_version" auto-complete="off"></el-input>
+                </el-form-item>
+
+                <el-form-item label="状态" prop="status">
+                    <el-radio-group v-model="formData.status">
+                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="1">正常</el-radio>
+                    </el-radio-group>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -117,46 +128,68 @@
                 <el-button type="primary" @click.native="formSubmit()" :loading="formLoading">提交</el-button>
             </div>
         </el-dialog>
+
+        <el-dialog
+            title="上传插件"
+            :visible.sync="uploadDialogVisible"
+            top="10px"
+            width="80%">
+            <file-resource
+                :uploadUrl="uploadUrl"
+                :isAll="false"
+                :fileExt="fileExt"
+                :size="200000"
+                :limit="10"
+                @resourceSelect="resourceSelect">
+            </file-resource>
+        </el-dialog>
+
     </div>
 
 </template>
 
 <script>
-    import { authAdminList, authAdminSave, authAdminDelete } from '../../../api/auth/authAdmin'
+    import { adList, adSave, adDelete } from '../../api/ad/ad'
+    import { baseUrl } from '../../config/env'
+    import FileResource from '../../components/common/FileResource.vue'
     const formJson = {
-        id: '',
-        username: '',
-        password: '',
-        checkPassword: '',
-        status: '1',
-        roles: []
+        ad_id: '',
+        title: '',
+        describe: '',
+        jump_type: '',
+        link_url: '',
+        pic: '',
+        pic_url: '',
+        wxa_appid: '',
+        wxa_path: '',
+        extra_data: '',
+        env_version: '',
+        status: 1
     }
     export default {
         data () {
-            var validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入密码'))
+            let validateLinkUrl = (rule, value, callback) => {
+                if (this.formData.jump_type === 2 && value === '') {
+                    callback(new Error('请输入跳转地址'))
                 } else {
                     callback()
                 }
             }
-            var validatePass2 = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请再次输入密码'))
-                } else if (value !== this.formData.password) {
-                    callback(new Error('两次输入密码不一致!'))
+            let validateWxaPath = (rule, value, callback) => {
+                if (this.formData.jump_type === 1 && value === '') {
+                    callback(new Error('请输入小程序跳转路径'))
                 } else {
                     callback()
                 }
             }
             return {
-                roles: [],
+                uploadDialogVisible: false,
+                uploadUrl: baseUrl + '/admin/file_resource/add',
+                fileExt: 'jpg,png,gif',
                 query: {
-                    username: '',
-                    status: '',
+                    title: '',
                     page: 1,
-                    limit: 20,
-                    role_id: ''
+                    limit: 20
                 },
                 list: [],
                 total: 0,
@@ -170,26 +203,21 @@
                 formLoading: false,
                 formVisible: false,
                 formData: formJson,
-                formRules: {},
-                addRules: {
-                    username: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'}
+                formRules: {
+                    title: [
+                        {required: true, message: '请输入广告标题', trigger: 'blur'}
                     ],
-                    password: [
-                        {required: true, message: '请输入密码', trigger: 'blur'},
-                        {validator: validatePass, trigger: 'blur'}
+                    pic: [
+                        {required: true, message: '请选择封面图片', trigger: 'change'}
                     ],
-                    checkPassword: [
-                        {required: true, message: '请再次输入密码', trigger: 'blur'},
-                        {validator: validatePass2, trigger: 'blur'}
+                    jump_type: [
+                        {required: true, message: '请选择跳转方式', trigger: 'change'}
                     ],
-                    status: [
-                        {required: true, message: '请选择状态', trigger: 'change'}
-                    ]
-                },
-                editRules: {
-                    username: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'}
+                    link_url: [
+                        {validator: validateLinkUrl, trigger: 'blur'}
+                    ],
+                    wxa_path: [
+                        {validator: validateWxaPath, trigger: 'blur'}
                     ],
                     status: [
                         {required: true, message: '请选择状态', trigger: 'change'}
@@ -197,6 +225,9 @@
                 },
                 deleteLoading: false
             }
+        },
+        components: {
+            FileResource
         },
         methods: {
             onSubmit () {
@@ -216,16 +247,14 @@
             },
             getList () {
                 this.loading = true
-                authAdminList(this.query).then(response => {
+                adList(this.query).then(response => {
                     this.loading = false
-                    this.list = response.admin_list.data || []
-                    this.total = response.admin_list.total || 0
-                    this.roles = response.role_list || []
+                    this.list = response.data || []
+                    this.total = response.total || 0
                 }).catch(() => {
                     this.loading = false
                     this.list = []
                     this.total = 0
-                    this.roles = []
                 })
             },
             // 隐藏表单
@@ -243,13 +272,10 @@
                 if (row !== null) {
                     this.formData = Object.assign({}, row)
                 }
-                this.formData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
                 this.formName = 'add'
-                this.formRules = this.addRules
                 if (index !== null) {
                     this.index = index
                     this.formName = 'edit'
-                    this.formRules = this.editRules
                 }
                 // 清空验证信息表单
                 if (this.$refs['dataForm']) {
@@ -261,11 +287,11 @@
                     if (valid) {
                         this.formLoading = true
                         let data = Object.assign({}, this.formData)
-                        authAdminSave(data, this.formName).then(response => {
+                        adSave(data, this.formName).then(res => {
                             this.formLoading = false
-                            if (response.code) {
+                            if (res.errcode) {
                                 this.$message({
-                                    message: response.message,
+                                    message: res.errmsg,
                                     type: 'error'
                                 })
                             } else {
@@ -280,8 +306,7 @@
                                 this.formVisible = false
                                 if (this.formName === 'add') {
                                     // 向头部添加数据
-                                    var resData = response || {}
-                                    this.list.unshift(resData)
+                                    this.list.unshift(res)
                                 } else {
                                     this.list.splice(this.index, 1, data)
                                 }
@@ -292,16 +317,16 @@
             },
             // 删除
             handleDel (index, row) {
-                if (row.id) {
+                if (row.ad_id) {
                     this.$confirm('确认删除该记录吗?', '提示', {
                         type: 'warning'
                     }).then(() => {
-                        let para = {id: row.id}
-                        authAdminDelete(para).then((response) => {
+                        let para = {ad_id: row.ad_id}
+                        adDelete(para).then((res) => {
                             this.deleteLoading = false
-                            if (response.code) {
+                            if (res.errcode) {
                                 this.$message({
-                                    message: response.message,
+                                    message: res.errmsg,
                                     type: 'error'
                                 })
                             } else {
@@ -322,22 +347,29 @@
                         })
                     })
                 }
+            },
+            resourceSelect (list) {
+                if (!list || list.length <= 0) {
+                    return
+                }
+                var file = list[0]
+                this.formData.pic = file.path
+                this.formData.pic_url = file.url
+                this.uploadDialogVisible = false
             }
         },
         filters: {
             statusFilterType (status) {
                 const statusMap = {
                     0: 'gray',
-                    1: 'success',
-                    2: 'danger'
+                    1: 'success'
                 }
                 return statusMap[status]
             },
             statusFilterName (status) {
                 const statusMap = {
                     0: '禁用',
-                    1: '正常',
-                    2: '未验证'
+                    1: '正常'
                 }
                 return statusMap[status]
             }

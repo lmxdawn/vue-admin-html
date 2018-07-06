@@ -3,24 +3,10 @@
     <div>
         <el-form :inline="true" :model="query" class="query-form" size="mini">
             <el-form-item class="query-form-item">
-                <el-input v-model="query.username" placeholder="用户名"></el-input>
-            </el-form-item>
-            <el-form-item class="query-form-item">
-                <el-select v-model="query.status" placeholder="状态">
-                    <!--<el-option label="状态" value=""></el-option>-->
-                    <el-option label="禁用" value="0"></el-option>
-                    <el-option label="正常" value="1"></el-option>
-                    <el-option label="未验证" value="2"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item class="query-form-item">
-                <el-select v-model="query.role_id" placeholder="角色">
-                    <el-option label="全部角色" value=""></el-option>
-                    <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
-                </el-select>
+                <el-input v-model="query.site_id" placeholder="广告位id"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" icon="el-icon-refresh" @click="getList"></el-button>
+                <el-button type="primary" icon="el-icon-refresh" @click="getList();adList = []"></el-button>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
@@ -32,45 +18,35 @@
         <el-table
             v-loading="loading"
             :data="list"
-            style="width: 100%;"
-            max-height="500">
+            style="width: 100%;">
             <el-table-column
-                label="用户 ID"
-                prop="id"
+                label="ID"
+                prop="site_id"
                 fixed>
             </el-table-column>
             <el-table-column
-                label="用户名"
-                prop="username"
+                label="广告位名称"
+                prop="site_name"
                 fixed>
             </el-table-column>
             <el-table-column
-                label="状态">
-                <template slot-scope="scope">
-                    <el-tag :type="scope.row.status | statusFilterType">{{scope.row.status | statusFilterName}}</el-tag>
-                </template>
+                label="广告位名称"
+                prop="site_name"
+                fixed>
             </el-table-column>
             <el-table-column
-                label="登录时间"
-                with="300"
-                :show-overflow-tooltip="true">
-                <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span>{{ scope.row.last_login_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column
-                label="登录IP">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.last_login_ip }}</span>
-                </template>
+                label="广告位描述"
+                prop="describe"
+                fixed>
             </el-table-column>
             <el-table-column
                 label="操作"
                 fixed="right">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="text" size="small" @click.native="handleDel(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="small" @click.native="handleForm(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="danger" size="small" @click.native="handleDel(scope.$index, scope.row)"
+                               style="margin-left: 0;">删除
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -90,26 +66,33 @@
             width="85%"
             top="5vh">
             <el-form :model="formData" :rules="formRules" ref="dataForm">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="formData.username" auto-complete="off"></el-input>
+                <el-form-item label="广告位名称" prop="site_name">
+                    <el-input v-model="formData.site_name" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="登录密码" prop="password">
-                    <el-input type="password" v-model="formData.password" auto-complete="off"></el-input>
+                <el-form-item label="描述" prop="describe">
+                    <el-input v-model="formData.describe" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="确认密码" prop="checkPassword">
-                    <el-input type="password" v-model="formData.checkPassword" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="formData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
-                        <el-radio label="2">未验证</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="角色">
-                    <el-checkbox-group v-model="formData.roles">
-                        <el-checkbox v-for="item in roles" :key="item.id" :label="item.id">{{item.name}}</el-checkbox>
-                    </el-checkbox-group>
+                <el-form-item label="描述" prop="ad_ids">
+                    <el-transfer
+                        style="text-align: left;display: inline-block;width: 100%;"
+                        v-model="formData.ad_ids"
+                        filterable
+                        :left-default-checked="[2, 3]"
+                        :right-default-checked="[1]"
+                        :titles="['备选', '已选']"
+                        :button-texts="['到左边', '到右边']"
+                        :format="{
+                            noChecked: '${total}',
+                            hasChecked: '${checked}/${total}'
+                         }"
+                        @left-check-change="handleAdListLeftChange"
+                        @right-check-change="handleAdListRightChange"
+                        :data="adList">
+                        <span slot-scope="{ option }" :title="option.label">{{ option.key }} - {{ option.label }}</span>
+                        <el-button class="transfer-footer" slot="left-footer" size="small" @click.native="leftMore()">加载更多</el-button>
+                        <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button>
+                    </el-transfer>
+
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -117,46 +100,30 @@
                 <el-button type="primary" @click.native="formSubmit()" :loading="formLoading">提交</el-button>
             </div>
         </el-dialog>
+
     </div>
 
 </template>
 
 <script>
-    import { authAdminList, authAdminSave, authAdminDelete } from '../../../api/auth/authAdmin'
+    import { adSiteList, adSiteAdList, adSiteSave, adSiteDelete } from '../../api/ad/adSite'
     const formJson = {
-        id: '',
-        username: '',
-        password: '',
-        checkPassword: '',
-        status: '1',
-        roles: []
+        site_id: '',
+        site_name: '',
+        describe: '',
+        ad_ids: []
     }
     export default {
         data () {
-            var validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入密码'))
-                } else {
-                    callback()
-                }
-            }
-            var validatePass2 = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请再次输入密码'))
-                } else if (value !== this.formData.password) {
-                    callback(new Error('两次输入密码不一致!'))
-                } else {
-                    callback()
-                }
-            }
             return {
-                roles: [],
+                adList: [],
                 query: {
-                    username: '',
-                    status: '',
+                    site_id: '',
+                    ad_ids: '',
+                    adPage: 1,
+                    adLimit: 100,
                     page: 1,
-                    limit: 20,
-                    role_id: ''
+                    limit: 20
                 },
                 list: [],
                 total: 0,
@@ -170,29 +137,9 @@
                 formLoading: false,
                 formVisible: false,
                 formData: formJson,
-                formRules: {},
-                addRules: {
-                    username: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'}
-                    ],
-                    password: [
-                        {required: true, message: '请输入密码', trigger: 'blur'},
-                        {validator: validatePass, trigger: 'blur'}
-                    ],
-                    checkPassword: [
-                        {required: true, message: '请再次输入密码', trigger: 'blur'},
-                        {validator: validatePass2, trigger: 'blur'}
-                    ],
-                    status: [
-                        {required: true, message: '请选择状态', trigger: 'change'}
-                    ]
-                },
-                editRules: {
-                    username: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'}
-                    ],
-                    status: [
-                        {required: true, message: '请选择状态', trigger: 'change'}
+                formRules: {
+                    site_name: [
+                        {required: true, message: '请输入广告位名称', trigger: 'blur'}
                     ]
                 },
                 deleteLoading: false
@@ -216,17 +163,61 @@
             },
             getList () {
                 this.loading = true
-                authAdminList(this.query).then(response => {
+                adSiteList(this.query).then(response => {
                     this.loading = false
-                    this.list = response.admin_list.data || []
-                    this.total = response.admin_list.total || 0
-                    this.roles = response.role_list || []
+                    this.list = response.data || []
+                    this.total = response.total || 0
                 }).catch(() => {
                     this.loading = false
                     this.list = []
                     this.total = 0
-                    this.roles = []
                 })
+            },
+            getAdList () {
+                adSiteAdList(this.query).then(response => {
+                    let adList = response || []
+                    for (let item of adList) {
+                        let isPush = true
+                        for (let i in this.adList) {
+                            if (this.adList[i].key === item.key) {
+                                isPush = false
+                            }
+                        }
+                        if (isPush) {
+                            this.adList.push(item)
+                        }
+                    }
+                }).catch(() => {
+                    this.adList = []
+                })
+            },
+            leftMore () {
+                this.query.adPage += 1
+                this.getAdList()
+            },
+            handleAdListLeftChange (keys) {
+                let adIds = this.formData.ad_ids
+                for (let item of keys) {
+                    let isPush = true
+                    for (let i in adIds) {
+                        if (adIds[i] === item) {
+                            isPush = false
+                        }
+                    }
+                    if (isPush) {
+                        this.formData.ad_ids.push(item)
+                    }
+                }
+            },
+            handleAdListRightChange (keys) {
+                let adIds = this.formData.ad_ids
+                for (let i in adIds) {
+                    for (let item of keys) {
+                        if (adIds[i] === item) {
+                            this.formData.ad_ids.splice(i, 1)
+                        }
+                    }
+                }
             },
             // 隐藏表单
             hideForm () {
@@ -243,13 +234,17 @@
                 if (row !== null) {
                     this.formData = Object.assign({}, row)
                 }
-                this.formData.status += '' // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
+                let adIds = this.formData.ad_ids
+                this.query.ad_ids = adIds.join(',')
+                this.query.adPage = 1
+                // 加载广告列表
+                if (this.adList.length === 0) {
+                    this.getAdList()
+                }
                 this.formName = 'add'
-                this.formRules = this.addRules
                 if (index !== null) {
                     this.index = index
                     this.formName = 'edit'
-                    this.formRules = this.editRules
                 }
                 // 清空验证信息表单
                 if (this.$refs['dataForm']) {
@@ -261,11 +256,11 @@
                     if (valid) {
                         this.formLoading = true
                         let data = Object.assign({}, this.formData)
-                        authAdminSave(data, this.formName).then(response => {
+                        adSiteSave(data, this.formName).then(res => {
                             this.formLoading = false
-                            if (response.code) {
+                            if (res.errcode) {
                                 this.$message({
-                                    message: response.message,
+                                    message: res.errmsg,
                                     type: 'error'
                                 })
                             } else {
@@ -280,8 +275,7 @@
                                 this.formVisible = false
                                 if (this.formName === 'add') {
                                     // 向头部添加数据
-                                    var resData = response || {}
-                                    this.list.unshift(resData)
+                                    this.list.unshift(res)
                                 } else {
                                     this.list.splice(this.index, 1, data)
                                 }
@@ -292,16 +286,16 @@
             },
             // 删除
             handleDel (index, row) {
-                if (row.id) {
+                if (row.site_id) {
                     this.$confirm('确认删除该记录吗?', '提示', {
                         type: 'warning'
                     }).then(() => {
-                        let para = {id: row.id}
-                        authAdminDelete(para).then((response) => {
+                        let para = {site_id: row.site_id}
+                        adSiteDelete(para).then((res) => {
                             this.deleteLoading = false
-                            if (response.code) {
+                            if (res.errcode) {
                                 this.$message({
-                                    message: response.message,
+                                    message: res.errmsg,
                                     type: 'error'
                                 })
                             } else {
@@ -322,22 +316,29 @@
                         })
                     })
                 }
+            },
+            resourceSelect (list) {
+                if (!list || list.length <= 0) {
+                    return
+                }
+                var file = list[0]
+                this.formData.default_pic = file.path
+                this.formData.default_pic_url = file.url
+                this.uploadDialogVisible = false
             }
         },
         filters: {
             statusFilterType (status) {
                 const statusMap = {
                     0: 'gray',
-                    1: 'success',
-                    2: 'danger'
+                    1: 'success'
                 }
                 return statusMap[status]
             },
             statusFilterName (status) {
                 const statusMap = {
                     0: '禁用',
-                    1: '正常',
-                    2: '未验证'
+                    1: '正常'
                 }
                 return statusMap[status]
             }
@@ -356,6 +357,16 @@
 </script>
 
 <style lang="scss">
-
-
+    .transfer-footer {
+        margin-left: 20px;
+        padding: 6px 5px;
+    }
+    .el-transfer-panel {
+        width: 40%;
+    }
+    @media screen and (max-width: 768px) {
+        .el-transfer-panel {
+            width: 100%;
+        }
+    }
 </style>

@@ -21,7 +21,7 @@
 
 <script>
     import FileResource from '../../components/common/FileResource.vue'
-    import { baseUrl } from '../../../config/env'
+    import { baseUrl } from '../../config/env'
     export default {
         data () {
             return {

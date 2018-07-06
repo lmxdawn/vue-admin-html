@@ -83,7 +83,7 @@
 </template>
 
 <script>
-    import { authPermissionRuleList, authPermissionRuleSave, authPermissionRuleDelete } from '../../../api/authPermissionRule'
+    import { authPermissionRuleList, authPermissionRuleSave, authPermissionRuleDelete } from '../../../api/auth/authPermissionRule'
     const formJson = {
         id: '',
         pid: '2',

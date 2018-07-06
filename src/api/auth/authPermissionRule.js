@@ -1,7 +1,7 @@
 /**
  * Created by lk on 17/6/4.
  */
-import fetch from '../utils/fetch'
+import fetch from '../../utils/fetch'
 
 const API_SUFFIX = process.env.API_SUFFIX
 

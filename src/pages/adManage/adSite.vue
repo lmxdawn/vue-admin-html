@@ -40,7 +40,7 @@
                 prop="update_time">
                 <template slot-scope="scope">
                     <i class="el-icon-time"></i>
-                    <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+                    <span>{{ scope.row.update_time }}</span>
                 </template>
             </el-table-column>
             <el-table-column
@@ -227,6 +227,8 @@
                 this.formVisible = !this.formVisible
                 // 清空表单
                 this.$refs['dataForm'].resetFields()
+                // 清除选择了的广告
+                this.adList = []
                 return true
             },
             // 显示表单

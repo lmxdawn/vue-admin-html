@@ -227,14 +227,14 @@
                 this.formVisible = !this.formVisible
                 // 清空表单
                 this.$refs['dataForm'].resetFields()
-                // 清除选择了的广告
-                this.adList = []
                 return true
             },
             // 显示表单
             handleForm (index, row) {
                 this.formVisible = true
                 this.formData = Object.assign({}, formJson)
+                // 清除选择了的广告
+                this.formData.ad_ids = []
                 if (row !== null) {
                     this.formData = Object.assign({}, row)
                 }

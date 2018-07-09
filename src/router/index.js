@@ -94,7 +94,7 @@ export const asyncRouterMap = [
         path: '/adManage',
         redirect: '/adManage/adSite',
         component: home,
-        icon: 'gongyongquan1',
+        icon: 'guanggao',
         name: '广告相关',
         meta: {
             authRule: ['adManage']
@@ -105,7 +105,7 @@ export const asyncRouterMap = [
                 path: 'adSite',
                 component: resolve => require(['../pages/adManage/adSite.vue'], resolve),
                 name: '广告位管理',
-                icon: 'gongyongquan1',
+                icon: '',
                 meta: {
                     authRule: ['admin/ad_site/index']
                 }
@@ -114,7 +114,7 @@ export const asyncRouterMap = [
                 path: 'ad',
                 component: resolve => require(['../pages/adManage/ad.vue'], resolve),
                 name: '广告管理',
-                icon: 'gongyongquan1',
+                icon: '',
                 meta: {
                     authRule: ['admin/ad/index']
                 }

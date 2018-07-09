@@ -30,14 +30,18 @@
                 fixed>
             </el-table-column>
             <el-table-column
-                label="广告位名称"
-                prop="site_name"
-                fixed>
-            </el-table-column>
-            <el-table-column
                 label="广告位描述"
                 prop="describe"
-                fixed>
+                with="300"
+                :show-overflow-tooltip="true">
+            </el-table-column>
+            <el-table-column
+                label="最后更新时间"
+                prop="update_time">
+                <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span>{{ scope.row.update_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+                </template>
             </el-table-column>
             <el-table-column
                 label="操作"
@@ -326,20 +330,6 @@
             }
         },
         filters: {
-            statusFilterType (status) {
-                const statusMap = {
-                    0: 'gray',
-                    1: 'success'
-                }
-                return statusMap[status]
-            },
-            statusFilterName (status) {
-                const statusMap = {
-                    0: '禁用',
-                    1: '正常'
-                }
-                return statusMap[status]
-            }
         },
         mounted () {
         },

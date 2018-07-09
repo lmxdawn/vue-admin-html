@@ -41,7 +41,7 @@
                 label="封面"
                 prop="pic_url">
                 <template slot-scope="scope">
-                    <img :src="scope.row.pic_url"/>
+                    <img style="max-width: 100%;max-height: 100%;" :src="scope.row.pic_url"/>
                 </template>
             </el-table-column>
             <el-table-column

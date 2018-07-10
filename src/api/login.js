@@ -6,11 +6,10 @@ import fetch from '../utils/fetch'
 const API_SUFFIX = process.env.API_SUFFIX
 
 // 获取信息
-export function userInfo (id, token) {
+export function userInfo () {
     return fetch({
         url: '/admin/login/userInfo' + API_SUFFIX,
-        method: 'get',
-        params: {id, token}
+        method: 'get'
     })
 }
 
@@ -22,11 +21,10 @@ export function loginName (userName, pwd) {
     })
 }
 
-export function logout (uid, token) {
+export function logout () {
     return fetch({
         url: '/admin/login/out' + API_SUFFIX,
-        method: 'post',
-        data: { uid, token }
+        method: 'post'
     })
 }
 

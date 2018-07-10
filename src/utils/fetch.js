@@ -14,8 +14,8 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
     // Do something before request is sent
-    if (store.getters.id && store.getters.token) {
-        config.headers['X-Adminid'] = store.getters.id
+    if (store.getters.adminId && store.getters.token) {
+        config.headers['X-Adminid'] = store.getters.adminId
         config.headers['X-Token'] = store.getters.token
     }
     return config

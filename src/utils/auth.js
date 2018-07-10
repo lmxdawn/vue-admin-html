@@ -1,19 +1,34 @@
 import { getStore, setStore, removeStore } from './utils'
 
-const adminKey = 'adminUser'
+const adminId = 'ADMIN-ID'
+const adminToken = 'ADMIN-TOKEN'
 
- // 获取token
-export function getInfo () {
-    let info = getStore(adminKey)
-    return info || {}
+// 获取token
+export function getToken () {
+    return getStore(adminToken)
 }
 
- // 设置token
-export function setInfo (info) {
-    return setStore(adminKey, info)
+// 设置token
+export function setToken (sid) {
+    return setStore(adminToken, sid)
 }
 
- // 删除token
-export function removeInfo () {
-    return removeStore(adminKey)
+// 删除token
+export function removeToken () {
+    return removeStore(adminToken)
+}
+
+// 获取admin_id
+export function getAdminId () {
+    return getStore(adminId)
+}
+
+// 设置admin_id
+export function setAdminId (id) {
+    return setStore(adminId, id)
+}
+
+// 删除admin_id
+export function removeAdminId () {
+    return removeStore(adminId)
 }

@@ -3,7 +3,7 @@
     <div>
         <el-form :inline="true" :model="query" class="query-form" size="mini">
             <el-form-item class="query-form-item">
-                <el-input v-model="query.title" placeholder="广告标少时诵诗书所题"></el-input>
+                <el-input v-model="query.title" placeholder="广告标题"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" icon="el-icon-refresh" @click="getList"></el-button>

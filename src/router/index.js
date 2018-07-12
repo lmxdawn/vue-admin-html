@@ -161,7 +161,7 @@ export const asyncRouterMap = [
                         }
                     },
                     {
-                        path: 'authRule',
+                        path: 'authPermissionRule',
                         component: resolve => require(['../pages/user_manage/admin/authPermissionRule.vue'], resolve),
                         name: '权限管理',
                         icon: '0',

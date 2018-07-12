@@ -143,7 +143,7 @@ export const asyncRouterMap = [
                         }
                     },
                     {
-                        path: "authRule",
+                        path: "authPermissionRule",
                         component: authPermissionRule,
                         name: "权限管理",
                         icon: "0",

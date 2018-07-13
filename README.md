@@ -47,18 +47,31 @@
 
 欢迎大家的star
 
+
 ## 权限演示
+
 ![donate](https://lmxdawn.github.io/images/rule.gif)
+
 ## 路由规则图示
+
 >   路径: vue-admin-html/src/router/index.js
+
 ![donate](https://lmxdawn.github.io/images/router.png)
+
 ## env 配置说明
+
 >   路径: vue-admin-html/.env.development
+
 ![donate](https://lmxdawn.github.io/images/env.png)
+
 ## 手机版演示
+
 ![donate](https://lmxdawn.github.io/images/phone.gif)
+
 ## 上传插件演示
+
 ![donate](https://lmxdawn.github.io/images/upload.gif)
+
 
 
 ## 功能 ##

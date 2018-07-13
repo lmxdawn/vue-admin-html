@@ -51,6 +51,8 @@
 ![donate](https://lmxdawn.github.io/images/rule.gif)
 ## 路由规则图示
 ![donate](https://lmxdawn.github.io/images/router.png)
+## env 配置说明
+![donate](https://lmxdawn.github.io/images/env.png)
 ## 手机版演示
 ![donate](https://lmxdawn.github.io/images/phone.gif)
 ## 上传插件演示

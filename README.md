@@ -32,7 +32,7 @@
 
 # 一键操作包 <a href="https://pan.baidu.com/s/1gBPdt5IdDKhATNka1l1xOg" target="_blank">点击下载</a>
 
-1. 环境搭建用 windows 上面建议用 phpstudy ,其它环境自行百度
+1. 集成环境搭建: windows 上面建议用 phpstudy ,其它环境自行百度
 2. 把两个文件放到网站根目录
 3. 把MySQL的root密码改为 root, 再新建数据库 vue-admin ,再把vue-admin.sql 文件导入到MySQL
 4. 打开浏览器 输入 http://localhost/vue-admin-html/dist/index.html

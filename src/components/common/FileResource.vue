@@ -309,7 +309,7 @@ export default {
                     fileList.splice(i, 1);
                 }
             }
-            let data = response.data;
+            let data = response;
             if (data.path) {
                 this.lists.unshift(data);
             }

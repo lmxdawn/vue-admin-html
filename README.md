@@ -14,6 +14,14 @@
   </a>
 </p>
 
+# 前言
+
+**项目前端地址：** <a href="https://github.com/lmxdawn/vue-admin-html" target="_blank">https://github.com/lmxdawn/vue-admin-html</a>
+
+**项目后端地址：** <a href="https://github.com/lmxdawn/vue-admin-php" target="_blank">https://github.com/lmxdawn/vue-admin-php</a>
+
+# 觉得有用请 star
+
 # 目前 v3.0.0 版本 <a href="https://github.com/lmxdawn/vue-admin-html/tree/v1.0.0" target="_blank">点击前往 v1.0.0 版本</a>
 ## 更新日志
 - [x] 更新vue-cli为3.0版本 <a href="https://segmentfault.com/a/1190000015133974">这里有篇文章</a>
@@ -37,15 +45,7 @@
 
 # vue-admin-html
 
-> 基于Vue.js 2.x系列 + Element UI + RBAC/AUTH权限 的响应式后台管理系统
-
-## 前言
-
-**项目前端地址：** https://github.com/lmxdawn/vue-admin-html
-
-**项目后端地址：** https://github.com/lmxdawn/vue-admin-php
-
-欢迎大家的star
+> Vue-cli3.0 + Element UI + ThinkPHP5.1 + RBAC权限 + 响应式的后台管理系统
 
 
 ## 权限演示

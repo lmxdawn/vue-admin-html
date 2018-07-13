@@ -14,7 +14,7 @@
   </a>
 </p>
 
-# 目前 v3.0.0 版本 <a href="https://github.com/lmxdawn/vue-admin-html/tree/v1.0.0">点击前往 v1.0.0 版本</a>
+# 目前 v3.0.0 版本 <a href="https://github.com/lmxdawn/vue-admin-html/tree/v1.0.0" target="_blank">点击前往 v1.0.0 版本</a>
 ## 更新日志
 - [x] 更新vue-cli为3.0版本 <a href="https://segmentfault.com/a/1190000015133974">这里有篇文章</a>
 - [x] 增加广告管理
@@ -22,7 +22,7 @@
 - [x] 优化一些配置文件
 - [x] 登录用户信息存储改为 cookie
 
-# 一键操作包 <a href="https://pan.baidu.com/s/1og4fb7FePOQ1HIDOcBqmVw">点击下载</a>
+# 一键操作包 <a href="https://pan.baidu.com/s/1gBPdt5IdDKhATNka1l1xOg" target="_blank">点击下载</a>
 
 1. 环境搭建用 windows 上面建议用 phpstudy ,其它环境自行百度
 2. 把两个文件放到网站根目录
@@ -31,7 +31,7 @@
 
 
 # v3.0.0 踩过的坑
-1. 这次更新后 vuex 开启严格模式后，出现浅拷贝的问题，就是变量引用的问题 <a href="https://segmentfault.com/q/1010000010025289/a-1020000015605407">这里有篇文章</a>
+1. 这次更新后 vuex 开启严格模式后，出现浅拷贝的问题，就是变量引用的问题 <a href="https://segmentfault.com/q/1010000010025289/a-1020000015605407" target="_blank">这里有篇文章</a>
 2. 还有就是路由导入某个文件时要在文件头部引入具体的某个文件，不用 resolve => require(['xx.vue'], resolve) 或者  () => import('xx.vue') 这种方式
 
 
@@ -39,7 +39,7 @@
 
 > 基于Vue.js 2.x系列 + Element UI + RBAC/AUTH权限 的响应式后台管理系统
 
-## 前言 ##
+## 前言
 
 **项目前端地址：** https://github.com/lmxdawn/vue-admin-html
 

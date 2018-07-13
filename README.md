@@ -72,6 +72,19 @@
 
 ![donate](https://lmxdawn.github.io/images/upload.gif)
 
+## 添加 阿里巴巴矢量图演示
+
+>   路径: vue-admin-html/src/assets/icons 注意 vue-admin-html/src/assets/icons/iconfont.js 头部需要加 ```/* eslint-disable */``` 去掉 eslint 检查
+
+1.第一步
+
+![donate](https://lmxdawn.github.io/images/icon1.gif)
+
+2.第二步
+
+![donate](https://lmxdawn.github.io/images/icon2.gif)
+
+
 
 
 ## 功能 ##

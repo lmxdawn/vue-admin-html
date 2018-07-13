@@ -74,13 +74,13 @@
 
 ## 添加 阿里巴巴矢量图演示
 
->   路径: vue-admin-html/src/assets/icons 注意 vue-admin-html/src/assets/icons/iconfont.js 头部需要加 ```/* eslint-disable */``` 去掉 eslint 检查
+>   路径: vue-admin-html/src/assets/icons 注意 vue-admin-html/src/assets/icons/iconfont.js 头部需要加 ```/* eslint-disable */``` 去掉 eslint 检查 
 
-1.第一步
+1.第一步 选好一个图标加入到购物车 -> 把购物车的添加都项目 -> 下载项目到本地
 
 ![donate](https://lmxdawn.github.io/images/icon1.gif)
 
-2.第二步
+2.第二步 解压下载好的文件 -> 复制到 src/assets/icons , 覆盖掉 -> 增加 iconfont.js 的 eslint 注释
 
 ![donate](https://lmxdawn.github.io/images/icon2.gif)
 

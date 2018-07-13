@@ -110,7 +110,7 @@ export const asyncRouterMap = [
         icon: "guanliyuan1",
         name: "用户管理",
         meta: {
-            authRule: ["userManage"]
+            authRule: ["user_manage"]
         },
         // noDropdown: true,
         children: [
@@ -162,7 +162,7 @@ export const asyncRouterMap = [
         icon: "guanggao",
         name: "广告相关",
         meta: {
-            authRule: ["adManage"]
+            authRule: ["ad_manage"]
         },
         // noDropdown: true,
         children: [

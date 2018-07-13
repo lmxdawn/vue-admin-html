@@ -89,8 +89,7 @@
             </el-table-column>
             <el-table-column
                 prop="filename"
-                label="文件名"
-                width="400">
+                label="文件名">
                 <template slot-scope="scope">
                     <a class="file-type-icon fileicon-small-pic"
                        :href="scope.row.url"

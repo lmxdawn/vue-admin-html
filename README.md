@@ -47,11 +47,12 @@
 
 欢迎大家的star
 
-## PC版
-![donate](https://lmxdawn.github.io/images/pc.png)
-## 手机版
-![donate](https://lmxdawn.github.io/images/phone.png)
-![donate](https://lmxdawn.github.io/images/phone-1.png)
+## 权限演示
+![donate](https://lmxdawn.github.io/images/rule.gif)
+## 手机版演示
+![donate](https://lmxdawn.github.io/images/phone.gif)
+## 上传插件演示
+![donate](https://lmxdawn.github.io/images/upload.gif)
 
 
 ## 功能 ##

@@ -22,6 +22,14 @@
 - [x] 优化一些配置文件
 - [x] 登录用户信息存储改为 cookie
 
+# 一键操作包 <a href="https://pan.baidu.com/s/1og4fb7FePOQ1HIDOcBqmVw">点击下载</a>
+
+1. 环境搭建用 windows 上面建议用 phpstudy ,其它环境自行百度
+2. 把两个文件放到网站根目录
+3. 把MySQL的root密码改为 root, 再新建数据库 vue-admin ,再把vue-admin.sql 文件导入到MySQL
+4. 打开浏览器 输入 http://localhost/vue-admin-html/dist/index.html
+
+
 # v3.0.0 踩过的坑
 1. 这次更新后 vuex 开启严格模式后，出现浅拷贝的问题，就是变量引用的问题 <a href="https://segmentfault.com/q/1010000010025289/a-1020000015605407">这里有篇文章</a>
 2. 还有就是路由导入某个文件时要在文件头部引入具体的某个文件，不用 resolve => require(['xx.vue'], resolve) 或者  () => import('xx.vue') 这种方式

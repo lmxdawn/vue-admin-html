@@ -73,7 +73,8 @@
                 default-expand-all=""
                 node-key="id"
                 ref="tree"
-                :props="defaultProps">
+                :props="defaultProps"
+                :default-checked-keys="authDefaultCheckedKeys">
             </el-tree>
             <div slot="footer" class="dialog-footer">
                 <el-button @click.native="authFormVisible = !authFormVisible">取消</el-button>
@@ -150,7 +151,7 @@ export default {
                 role_id: "",
                 auth_rules: []
             },
-
+            authDefaultCheckedKeys: [],
             index: null,
             formName: null,
             formMap: {
@@ -227,7 +228,9 @@ export default {
                             tempCheckedKeys.push(id);
                         }
                     }
-                    this.$refs.tree.setCheckedKeys(tempCheckedKeys);
+                    this.authDefaultCheckedKeys = [];
+                    this.authDefaultCheckedKeys = tempCheckedKeys;
+                    // this.$refs.tree.setCheckedKeys(tempCheckedKeys);
                 })
                 .catch(() => {});
         },

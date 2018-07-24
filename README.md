@@ -63,12 +63,19 @@
 	git clone https://github.com/lmxdawn/vue-admin-html.git      // 把模板下载到本地
 	cd vue-admin-html    // 进入模板目录
 	npm install         // 安装项目依赖，等待安装完成之后
-
+	
+    构建时三种环境可选，解决不同环境来回切换配置的痛楚（serve：本地测试，stage：预上线，build：生产环境）
+    
 ## 本地开发 ##
 
 	// 开启服务器，浏览器访问 http://localhost:8080
 	npm run serve
 
+## 构建预上线 ##
+
+	// 执行构建命令，生成的stage文件夹放在服务器下即可访问
+	npm run stage
+	
 ## 构建生产 ##
 
 	// 执行构建命令，生成的dist文件夹放在服务器下即可访问

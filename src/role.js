@@ -58,7 +58,6 @@ router.beforeEach((to, from, next) => {
     let adminId = getAdminId();
     if (adminId !== "undefined" && adminId !== "" && adminId) {
         // 判断是否有token
-        // 判断是否有token
         if (to.path === "/login") {
             next({ path: "/" });
             NProgress.done(); // router在hash模式下 手动改变hash 重定向回来 不会触发afterEach 暂时hack方案 ps：history模式下无问题，可删除该行！

@@ -367,11 +367,14 @@ export default {
     padding: 6px 5px;
 }
 .el-transfer-panel {
-    width: 40%;
+    width: 40% !important;
 }
 @media screen and (max-width: 768px) {
     .el-transfer-panel {
-        width: 100%;
+        width: 100% !important;
     }
+}
+.el-transfer-panel__list.is-filterable {
+    height: 150px !important;
 }
 </style>

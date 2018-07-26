@@ -10,7 +10,7 @@ export function getToken() {
 
 // 设置token
 export function setToken(sid) {
-    return setStore(adminToken, sid);
+    return setStore(adminToken, sid, 365);
 }
 
 // 删除token
@@ -25,7 +25,7 @@ export function getAdminId() {
 
 // 设置admin_id
 export function setAdminId(id) {
-    return setStore(adminId, id);
+    return setStore(adminId, id, 365);
 }
 
 // 删除admin_id

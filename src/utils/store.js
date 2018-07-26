@@ -2,12 +2,12 @@ import Cookies from "js-cookie";
 /**
  * 存储localStorage
  */
-export const setStore = (name, content) => {
+export const setStore = (name, content, expireDay) => {
     if (!name) return;
     if (typeof content !== "string") {
         content = JSON.stringify(content);
     }
-    Cookies.set(name, content);
+    Cookies.set(name, content, { expires: expireDay });
 };
 
 /**

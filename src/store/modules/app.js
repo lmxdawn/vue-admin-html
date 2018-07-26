@@ -34,9 +34,9 @@ const actions = {
 const mutations = {
     [types.TOGGLE_SIDEBAR](state) {
         if (state.sidebar.opened) {
-            setStore("sidebarStatus", 1);
+            setStore("sidebarStatus", 1, 365);
         } else {
-            setStore("sidebarStatus", 0);
+            setStore("sidebarStatus", 0, 365);
         }
         state.sidebar.opened = !state.sidebar.opened;
     },

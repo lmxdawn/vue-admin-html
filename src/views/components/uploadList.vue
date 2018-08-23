@@ -11,6 +11,7 @@
                 :fileExt="fileExt"
                 :size="2000000"
                 :limit="15"
+                token="GRUuplbSg1DrFbLlx2__UPc0Qe0oIcIdqVRPgQ6i:nTs8zCOCiMdbB4_KB30A8b6WBgk=:eyJzY29wZSI6InRvbmduaWFuLWltZyIsImRlYWRsaW5lIjoxNTM1MDE1MDcyfQ=="
                 @resourceSelect="resourceSelect">
             </file-resource>
         </el-dialog>
@@ -25,7 +26,7 @@ import { BASE_URL } from "../../config/app";
 export default {
     data() {
         return {
-            uploadUrl: BASE_URL + "/admin/file/resource/add",
+            uploadUrl: BASE_URL + "/admin/file/resource/upload",
             fileExt: "jpg,png,gif",
             dialogVisible: false
         };
@@ -35,7 +36,7 @@ export default {
     },
     methods: {
         resourceSelect(item) {
-            alert(item);
+            alert(JSON.stringify(item));
         },
         handleClose(done) {
             this.$confirm("确认关闭？")

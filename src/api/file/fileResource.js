@@ -12,3 +12,11 @@ export function fileResourceList(query) {
         params: query
     });
 }
+// 添加
+export function fileResourceAdd(data) {
+    return axios({
+        url: "/admin/file/resource/add" + API_SUFFIX,
+        method: "POST",
+        data: data
+    });
+}

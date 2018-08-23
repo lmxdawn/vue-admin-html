@@ -135,7 +135,7 @@
 
 <!--上传资源-->
 <script>
-import { fileResourceList } from "../../api/file/fileResource";
+import { fileResourceList, fileResourceAdd } from "../../api/file/fileResource";
 import {
     fileResourceTagList,
     fileResourceTagAdd
@@ -154,6 +154,7 @@ export default {
                 type: 0, // 0 表示图片类型
                 tagId: "",
                 uploadName: "file",
+                token: "",
                 exts: "jpg,png,gif",
                 size: 0
             },
@@ -169,6 +170,7 @@ export default {
     props: {
         uploadUrl: String, // 上传的地址
         uploadName: String, // 上传的文件key名称
+        token: String, // 上传的授权码
         isAll: false, // 是否可多选
         size: Number, // 允许上传的文件大小
         fileExt: String, // 允许上传的文件后缀
@@ -303,6 +305,7 @@ export default {
                     message: response.message,
                     type: "error"
                 });
+                return;
             }
             for (let i = 0; i < fileList.length; i++) {
                 let tempFile = fileList[i];
@@ -310,16 +313,37 @@ export default {
                     fileList.splice(i, 1);
                 }
             }
-            let data = response;
-            if (data.path) {
-                this.lists.unshift(data);
-            }
             if (fileList.length <= 0) {
                 // 上传完成
                 this.uploadVisible = false;
             }
+            let data = response;
+            data.tag_id = this.uploadData.tagId;
+            data.type = this.uploadData.type;
+            data.size = this.uploadData.size;
+            let fileName = file.name;
+            data.filename = fileName;
+            data.size = file.size;
+            let extIndex = fileName.lastIndexOf(".") + 1;
+            data.ext = fileName.substr(extIndex, fileName.length);
+            fileResourceAdd(data)
+                .then(response => {
+                    if (response.code) {
+                        this.$message({
+                            message: response.message,
+                            type: "error"
+                        });
+                        return;
+                    }
+                    this.lists.unshift(response);
+                })
+                .catch(() => {});
         },
         handleError(err, file, fileList) {
+            this.$message({
+                message: err.message,
+                type: "error"
+            });
             for (let i = 0; i < fileList.length; i++) {
                 let tempFile = fileList[i];
                 if (file.uid === tempFile.uid) {
@@ -382,6 +406,13 @@ export default {
             this.uploadName !== "undefined"
         ) {
             this.uploadData.uploadName = this.uploadName;
+        }
+        if (
+            this.token &&
+            this.token !== "" &&
+            this.token !== "undefined"
+        ) {
+            this.uploadData.token = this.token;
         }
     },
     computed: {}

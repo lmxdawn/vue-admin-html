@@ -11,7 +11,6 @@
                 :fileExt="fileExt"
                 :size="2000000"
                 :limit="15"
-                token="GRUuplbSg1DrFbLlx2__UPc0Qe0oIcIdqVRPgQ6i:nTs8zCOCiMdbB4_KB30A8b6WBgk=:eyJzY29wZSI6InRvbmduaWFuLWltZyIsImRlYWRsaW5lIjoxNTM1MDE1MDcyfQ=="
                 @resourceSelect="resourceSelect">
             </file-resource>
         </el-dialog>

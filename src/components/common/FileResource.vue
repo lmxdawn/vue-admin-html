@@ -1,35 +1,36 @@
 <template>
     <div style="padding: 10px;">
-        <el-button type="primary" size="small" icon="el-icon-refresh" @click="refresh"></el-button>
-        <el-button type="primary" size="small" @click="isIcon = !isIcon">{{ isIcon ? '列表' : '图标' }}</el-button>
-        <span></span>
-        <el-button size="small" type="primary" icon="el-icon-plus" @click="addTag">新建分组</el-button>
-        <el-popover
-            placement="top"
-            title="上传"
-            width="100%"
-            v-model="uploadVisible"
-            trigger="click">
-            <el-upload
-                style="max-width: 300px;overflow-x: hidden;"
-                class="upload-demo"
-                ref="upload"
-                :action="uploadUrl"
-                :on-success="handleSuccess"
-                :on-error="handleError"
-                :data="uploadData"
-                :name="uploadData.uploadName"
-                :accept="uploadData.exts"
-                :on-change="beforeChange"
-                :auto-upload="false">
-                <el-button slot="trigger" size="small" type="primary" icon="el-icon-upload2">选取文件</el-button>
-                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器
-                </el-button>
-                <div slot="tip" class="el-upload__tip">只能上传{{ this.uploadData.exts }}文件，且不超过{{ this.uploadData.size | renderSize }}</div>
-            </el-upload>
-            <el-button slot="reference" size="small" type="primary" icon="el-icon-upload">上传文件</el-button>
-        </el-popover>
-
+        <el-button-group>
+            <el-button type="primary" size="small" icon="el-icon-refresh" @click="refresh"></el-button>
+            <el-button type="primary" size="small" @click="isIcon = !isIcon">{{ isIcon ? '列表' : '图标' }}</el-button>
+            <span></span>
+            <el-button size="small" type="primary" icon="el-icon-plus" @click="addTag">新建分组</el-button>
+            <el-popover
+                placement="top"
+                title="上传"
+                width="100%"
+                v-model="uploadVisible"
+                trigger="click">
+                <el-upload
+                    style="max-width: 300px;overflow-x: hidden;"
+                    class="upload-demo"
+                    ref="upload"
+                    :action="uploadUrl"
+                    :on-success="handleSuccess"
+                    :on-error="handleError"
+                    :data="uploadData"
+                    :name="uploadData.uploadName"
+                    :accept="uploadData.exts"
+                    :on-change="beforeChange"
+                    :auto-upload="false">
+                    <el-button slot="trigger" size="small" type="primary" icon="el-icon-upload2">选取文件</el-button>
+                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器
+                    </el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传{{ this.uploadData.exts }}文件，且不超过{{ this.uploadData.size | renderSize }}</div>
+                </el-upload>
+                <el-button slot="reference" size="small" type="primary" icon="el-icon-upload">上传文件</el-button>
+            </el-popover>
+        </el-button-group>
         <ul class="breadcrumb-list">
             <li>
                 <a v-if="query.tagId === ''" href="javascript:;" class="none-path" title="全部分组">全部分组</a>
@@ -134,11 +135,11 @@
 
 <!--上传资源-->
 <script>
-import { fileResourceList } from "../../api/fileResource";
+import { fileResourceList } from "../../api/file/fileResource";
 import {
     fileResourceTagList,
     fileResourceTagAdd
-} from "../../api/fileResourceTag";
+} from "../../api/file/fileResourceTag";
 import { renderSize } from "../../filtres/index";
 export default {
     name: "file-resource",

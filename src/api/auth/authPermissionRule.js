@@ -9,7 +9,7 @@ import { API_SUFFIX } from "../../config/app";
 // 获取列表
 export function authPermissionRuleList(query) {
     return axios({
-        url: "/admin/auth_permission_rule/index" + API_SUFFIX,
+        url: "/admin/auth/permission_rule/index" + API_SUFFIX,
         method: "get",
         params: query
     });
@@ -19,8 +19,8 @@ export function authPermissionRuleList(query) {
 export function authPermissionRuleSave(data, formName, method = "post") {
     var url =
         formName === "add"
-            ? "/admin/auth_permission_rule/save" + API_SUFFIX
-            : "/admin/auth_permission_rule/edit" + API_SUFFIX;
+            ? "/admin/auth/permission_rule/save" + API_SUFFIX
+            : "/admin/auth/permission_rule/edit" + API_SUFFIX;
     return axios({
         url: url,
         method: method,
@@ -31,7 +31,7 @@ export function authPermissionRuleSave(data, formName, method = "post") {
 // 删除
 export function authPermissionRuleDelete(data) {
     return axios({
-        url: "/admin/auth_permission_rule/delete" + API_SUFFIX,
+        url: "/admin/auth/permission_rule/delete" + API_SUFFIX,
         method: "post",
         data: data
     });

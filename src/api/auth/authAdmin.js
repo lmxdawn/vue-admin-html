@@ -7,7 +7,7 @@ import { API_SUFFIX } from "../../config/app";
 // 获取列表
 export function authAdminList(query) {
     return axios({
-        url: "/admin/auth_admin/index" + API_SUFFIX,
+        url: "/admin/auth/admin/index" + API_SUFFIX,
         method: "get",
         params: query
     });
@@ -17,8 +17,8 @@ export function authAdminList(query) {
 export function authAdminSave(data, formName, method = "post") {
     var url =
         formName === "add"
-            ? "/admin/auth_admin/save" + API_SUFFIX
-            : "/admin/auth_admin/edit" + API_SUFFIX;
+            ? "/admin/auth/admin/save" + API_SUFFIX
+            : "/admin/auth/admin/edit" + API_SUFFIX;
     return axios({
         url: url,
         method: method,
@@ -29,7 +29,7 @@ export function authAdminSave(data, formName, method = "post") {
 // 删除管理员
 export function authAdminDelete(data) {
     return axios({
-        url: "/admin/auth_admin/delete" + API_SUFFIX,
+        url: "/admin/auth/admin/delete" + API_SUFFIX,
         method: "post",
         data: data
     });

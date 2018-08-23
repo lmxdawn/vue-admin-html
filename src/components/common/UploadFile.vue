@@ -170,7 +170,7 @@
 
 <!--上传的文件资源-->
 <script>
-import { uploadList, uploadNewDir } from "../../api/upload";
+import { uploadList, uploadNewDir } from "../../api/file/upload";
 import { py } from "../../utils/haiZiToPinYin";
 import { renderSize } from "../../filtres/index";
 

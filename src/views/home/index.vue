@@ -102,7 +102,7 @@
 import { mapGetters } from "vuex";
 import SidebarItem from "./SidebarItem.vue";
 import TabsView from "./TabsView.vue";
-import { password } from "../../api/login";
+import { password } from "../../api/auth/login";
 export default {
     data() {
         let validatePass = (rule, value, callback) => {

@@ -1,4 +1,4 @@
-import { userInfo, loginName, logout } from "../../api/login";
+import { userInfo, loginName, logout } from "../../api/auth/login";
 import * as types from "../mutation-types";
 import { constantRouterMap } from "../../router";
 import {

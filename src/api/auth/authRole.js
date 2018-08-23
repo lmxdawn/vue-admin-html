@@ -7,7 +7,7 @@ import { API_SUFFIX } from "../../config/app";
 // 获取列表
 export function authRoleList(query) {
     return axios({
-        url: "/admin/auth_role/index" + API_SUFFIX,
+        url: "/admin/auth/role/index" + API_SUFFIX,
         method: "get",
         params: query
     });
@@ -16,7 +16,7 @@ export function authRoleList(query) {
 // 编辑
 export function authRoleAuthList(query) {
     return axios({
-        url: "/admin/auth_role/auth" + API_SUFFIX,
+        url: "/admin/auth/role/auth" + API_SUFFIX,
         method: "get",
         params: query
     });
@@ -25,7 +25,7 @@ export function authRoleAuthList(query) {
 // 添加
 export function authRoleAuth(data) {
     return axios({
-        url: "/admin/auth_role/auth" + API_SUFFIX,
+        url: "/admin/auth/role/auth" + API_SUFFIX,
         method: "post",
         data: data
     });
@@ -35,8 +35,8 @@ export function authRoleAuth(data) {
 export function authRoleSave(data, formName, method = "post") {
     var url =
         formName === "add"
-            ? "/admin/auth_role/save" + API_SUFFIX
-            : "/admin/auth_role/edit" + API_SUFFIX;
+            ? "/admin/auth/role/save" + API_SUFFIX
+            : "/admin/auth/role/edit" + API_SUFFIX;
     return axios({
         url: url,
         method: method,
@@ -47,7 +47,7 @@ export function authRoleSave(data, formName, method = "post") {
 // 删除
 export function authRoleDelete(data) {
     return axios({
-        url: "/admin/auth_role/delete" + API_SUFFIX,
+        url: "/admin/auth/role/delete" + API_SUFFIX,
         method: "post",
         data: data
     });

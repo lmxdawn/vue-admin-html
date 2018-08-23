@@ -8,7 +8,7 @@ import axios from "../../utils/axios";
 // 列表
 export function adList(query) {
     return axios({
-        url: "/admin/ad/index",
+        url: "/admin/ad/ad/index",
         method: "get",
         params: query
     });
@@ -16,7 +16,7 @@ export function adList(query) {
 
 // 保存
 export function adSave(data, formName, method = "post") {
-    var url = formName === "add" ? "/admin/ad/save" : "/admin/ad/edit";
+    var url = formName === "add" ? "/admin/ad/ad/save" : "/admin/ad/ad/edit";
     return axios({
         url: url,
         method: method,
@@ -27,7 +27,7 @@ export function adSave(data, formName, method = "post") {
 // 删除
 export function adDelete(data) {
     return axios({
-        url: "/admin/ad/delete",
+        url: "/admin/ad/ad/delete",
         method: "post",
         data: data
     });

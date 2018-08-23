@@ -12,67 +12,67 @@ import upload from "./upload";
 import fileResourceTag from "./fileResourceTag";
 import fileResource from "./fileResource";
 // 登录相关
-Mock.mock(/\/admin\/login\/out/, "post", login.out);
-Mock.mock(/\/admin\/login\/password/, "post", login.password);
+Mock.mock(/\/admin\/auth\/login\/out/, "post", login.out);
+Mock.mock(/\/admin\/auth\/login\/password/, "post", login.password);
 Mock.mock(/\/admin\/login\/index/, "post", login.index);
-Mock.mock(/\/admin\/login\/userInfo/, "get", login.userInfo);
+Mock.mock(/\/admin\/auth\/login\/userInfo/, "get", login.userInfo);
 // 管理员相关
-Mock.mock(/\/admin\/auth_admin\/index/, "get", authAdmin.index);
-Mock.mock(/\/admin\/auth_admin\/save/, "post", authAdmin.save);
-Mock.mock(/\/admin\/auth_admin\/edit/, "post", authAdmin.edit);
-Mock.mock(/\/admin\/auth_admin\/delete/, "post", authAdmin.del);
+Mock.mock(/\/admin\/auth\/admin\/index/, "get", authAdmin.index);
+Mock.mock(/\/admin\/auth\/admin\/save/, "post", authAdmin.save);
+Mock.mock(/\/admin\/auth\/admin\/edit/, "post", authAdmin.edit);
+Mock.mock(/\/admin\/auth\/admin\/delete/, "post", authAdmin.del);
 // 权限相关
 Mock.mock(
-    /\/admin\/auth_permission_rule\/index/,
+    /\/admin\/auth\/permission_rule\/index/,
     "get",
     authPermissionRule.index
 );
 Mock.mock(
-    /\/admin\/auth_permission_rule\/save/,
+    /\/admin\/auth\/permission_rule\/save/,
     "post",
     authPermissionRule.save
 );
 Mock.mock(
-    /\/admin\/auth_permission_rule\/edit/,
+    /\/admin\/auth\/permission_rule\/edit/,
     "post",
     authPermissionRule.edit
 );
 Mock.mock(
-    /\/admin\/auth_permission_rule\/delete/,
+    /\/admin\/auth\/permission_rule\/delete/,
     "post",
     authPermissionRule.del
 );
 // 角色相关
-Mock.mock(/\/admin\/auth_role\/index/, "get", authRole.index);
-Mock.mock(/\/admin\/auth_role\/save/, "post", authRole.save);
-Mock.mock(/\/admin\/auth_role\/edit/, "post", authRole.edit);
-Mock.mock(/\/admin\/auth_role\/delete/, "post", authRole.del);
-Mock.mock(/\/admin\/auth_role\/auth/, "get", authRole.getAuth);
-Mock.mock(/\/admin\/auth_role\/auth/, "post", authRole.postAuth);
+Mock.mock(/\/admin\/auth\/role\/index/, "get", authRole.index);
+Mock.mock(/\/admin\/auth\/role\/save/, "post", authRole.save);
+Mock.mock(/\/admin\/auth\/role\/edit/, "post", authRole.edit);
+Mock.mock(/\/admin\/auth\/role\/delete/, "post", authRole.del);
+Mock.mock(/\/admin\/auth\/role\/auth/, "get", authRole.getAuth);
+Mock.mock(/\/admin\/auth\/role\/auth/, "post", authRole.postAuth);
 
 /**
  * 上传相关
  */
 // 获取文件列表
-Mock.mock(/admin\/upload\/imageList/, "get", upload.index);
+Mock.mock(/admin\/file\/upload\/imageList/, "get", upload.index);
 // 上传文件
-Mock.mock(/admin\/upload\/newFile/, "post", upload.up);
+Mock.mock(/admin\/file\/upload\/newFile/, "post", upload.up);
 // 创建文件夹
-Mock.mock(/admin\/upload\/newDir/, "post", upload.newDir);
+Mock.mock(/admin\/file\/upload\/newDir/, "post", upload.newDir);
 
 /**
  * 资源分组相关
  */
 // 获取资源分组列表
-Mock.mock(/admin\/file_resource_tag\/index/, "get", fileResourceTag.index);
+Mock.mock(/admin\/file\/resource_tag\/index/, "get", fileResourceTag.index);
 // 新建资源分组
-Mock.mock(/admin\/file_resource_tag\/add/, "post", fileResourceTag.add);
+Mock.mock(/admin\/file\/resource_tag\/add/, "post", fileResourceTag.add);
 /**
  * 资源相关
  */
 // 获取资源列表
-Mock.mock(/admin\/file_resource\/index/, "get", fileResource.index);
+Mock.mock(/admin\/file\/resource\/index/, "get", fileResource.index);
 // 上传资源
-Mock.mock(/admin\/file_resource\/add/, "post", fileResource.add);
+Mock.mock(/admin\/file\/resource\/add/, "post", fileResource.add);
 
 export default Mock;

@@ -25,7 +25,7 @@ import { BASE_URL } from "../../config/app";
 export default {
     data() {
         return {
-            uploadUrl: BASE_URL + "/admin/file_resource/add",
+            uploadUrl: BASE_URL + "/admin/file/resource/add",
             fileExt: "jpg,png,gif",
             dialogVisible: false
         };

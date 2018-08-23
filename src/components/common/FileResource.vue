@@ -26,7 +26,7 @@
                     <el-button slot="trigger" size="small" type="primary" icon="el-icon-upload2">选取文件</el-button>
                     <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器
                     </el-button>
-                    <div slot="tip" class="el-upload__tip">只能上传{{ this.uploadData.exts }}文件，且不超过{{ this.uploadData.size | renderSize }}</div>
+                    <div slot="tip" class="el-upload__tip">只能上传{{ uploadData.exts }}文件，且不超过{{ uploadData.size | renderSize }}</div>
                 </el-upload>
                 <el-button slot="reference" size="small" type="primary" icon="el-icon-upload">上传文件</el-button>
             </el-popover>
@@ -168,6 +168,7 @@ export default {
     },
     props: {
         uploadUrl: String, // 上传的地址
+        uploadName: String, // 上传的文件key名称
         isAll: false, // 是否可多选
         size: Number, // 允许上传的文件大小
         fileExt: String, // 允许上传的文件后缀
@@ -374,6 +375,13 @@ export default {
             this.fileExt !== "undefined"
         ) {
             this.uploadData.exts = this.fileExt;
+        }
+        if (
+            this.uploadName &&
+            this.uploadName !== "" &&
+            this.uploadName !== "undefined"
+        ) {
+            this.uploadData.uploadName = this.uploadName;
         }
     },
     computed: {}

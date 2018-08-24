@@ -130,7 +130,7 @@ export const asyncRouterMap = [
                         name: "管理员管理",
                         icon: "0",
                         meta: {
-                            authRule: ["admin/auth_admin/index"]
+                            authRule: ["admin/auth.admin/index"]
                         }
                     },
                     {
@@ -139,7 +139,7 @@ export const asyncRouterMap = [
                         name: "角色管理",
                         icon: "0",
                         meta: {
-                            authRule: ["admin/auth_role/index"]
+                            authRule: ["admin/auth.role/index"]
                         }
                     },
                     {
@@ -148,7 +148,7 @@ export const asyncRouterMap = [
                         name: "权限管理",
                         icon: "0",
                         meta: {
-                            authRule: ["admin/auth_permission_rule/index"]
+                            authRule: ["admin/auth.permission_rule/index"]
                         }
                     }
                 ]
@@ -172,7 +172,7 @@ export const asyncRouterMap = [
                 name: "广告位管理",
                 icon: "0",
                 meta: {
-                    authRule: ["admin/ad_site/index"]
+                    authRule: ["admin/ad.site/index"]
                 }
             },
             {
@@ -181,7 +181,7 @@ export const asyncRouterMap = [
                 name: "广告管理",
                 icon: "0",
                 meta: {
-                    authRule: ["admin/ad/index"]
+                    authRule: ["admin/ad.ad/index"]
                 }
             }
         ]

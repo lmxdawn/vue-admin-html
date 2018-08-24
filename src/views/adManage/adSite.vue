@@ -273,9 +273,9 @@ export default {
                     let data = Object.assign({}, this.formData);
                     adSiteSave(data, this.formName).then(res => {
                         this.formLoading = false;
-                        if (res.errcode) {
+                        if (res.code) {
                             this.$message({
-                                message: res.errmsg,
+                                message: res.message,
                                 type: "error"
                             });
                         } else {
@@ -310,9 +310,9 @@ export default {
                         adSiteDelete(para)
                             .then(res => {
                                 this.deleteLoading = false;
-                                if (res.errcode) {
+                                if (res.code) {
                                     this.$message({
-                                        message: res.errmsg,
+                                        message: res.message,
                                         type: "error"
                                     });
                                 } else {

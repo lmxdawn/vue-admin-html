@@ -293,11 +293,11 @@ export default {
                 if (valid) {
                     this.formLoading = true;
                     let data = Object.assign({}, this.formData);
-                    adSave(data, this.formName).then(res => {
+                    adSave(data, this.formName).then(response => {
                         this.formLoading = false;
-                        if (res.errcode) {
+                        if (response.code) {
                             this.$message({
-                                message: res.errmsg,
+                                message: response.message,
                                 type: "error"
                             });
                         } else {
@@ -306,13 +306,13 @@ export default {
                                 type: "success"
                             });
                             // 向头部添加数据
-                            // this.list.unshift(res)
+                            // this.list.unshift(response)
                             // 刷新表单
                             this.$refs["dataForm"].resetFields();
                             this.formVisible = false;
                             if (this.formName === "add") {
                                 // 向头部添加数据
-                                this.list.unshift(res);
+                                this.list.unshift(response);
                             } else {
                                 this.list.splice(this.index, 1, data);
                             }
@@ -330,11 +330,11 @@ export default {
                     .then(() => {
                         let para = { ad_id: row.ad_id };
                         adDelete(para)
-                            .then(res => {
+                            .then(response => {
                                 this.deleteLoading = false;
-                                if (res.errcode) {
+                                if (response.code) {
                                     this.$message({
-                                        message: res.errmsg,
+                                        message: response.message,
                                         type: "error"
                                     });
                                 } else {

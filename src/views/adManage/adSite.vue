@@ -6,13 +6,11 @@
                 <el-input v-model="query.site_id" placeholder="广告位id"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" icon="el-icon-refresh" @click="getList();adList = []"></el-button>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click.native="handleForm(null,null)">新增</el-button>
+                <el-button-group>
+                    <el-button type="primary" icon="el-icon-refresh" @click="getList();adList = []"></el-button>
+                    <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
+                    <el-button type="primary" @click.native="handleForm(null,null)">新增</el-button>
+                </el-button-group>
             </el-form-item>
         </el-form>
         <el-table

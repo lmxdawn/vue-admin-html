@@ -180,7 +180,7 @@ export default {
         };
         return {
             uploadDialogVisible: false,
-            uploadUrl: BASE_URL + "/admin/file_resource/add",
+            uploadUrl: BASE_URL + "/admin/file/resource/upload",
             fileExt: "jpg,png,gif",
             query: {
                 title: "",

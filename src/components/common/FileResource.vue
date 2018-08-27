@@ -407,11 +407,7 @@ export default {
         ) {
             this.uploadData.uploadName = this.uploadName;
         }
-        if (
-            this.token &&
-            this.token !== "" &&
-            this.token !== "undefined"
-        ) {
+        if (this.token && this.token !== "" && this.token !== "undefined") {
             this.uploadData.token = this.token;
         }
     },

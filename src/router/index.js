@@ -4,17 +4,6 @@ import { ROUTER_MODE } from "../config/app";
 
 import Home from "../views/home/index.vue";
 
-// 静态路由
-import err401 from "../views/error/err401.vue";
-import err404 from "../views/error/err404.vue";
-import err500 from "../views/error/err404.vue";
-import login from "../views/login/index.vue";
-// 前言
-import main from "../views/home/main.vue";
-
-// 公共模块测试
-import uploadList from "../views/components/uploadList.vue";
-
 // 管理组相关
 import adminRouter from "../views/userManage/admin/router.vue";
 import authAdmin from "../views/userManage/admin/authAdmin.vue";
@@ -28,6 +17,15 @@ import ad from "../views/adManage/ad.vue";
 if (process.env.NODE_ENV === "development") {
     Vue.use(VueRouter);
 }
+
+const err401 = r =>
+    require.ensure([], () => r(require("../views/error/err401.vue")), "home");
+const err404 = r =>
+    require.ensure([], () => r(require("../views/error/err404.vue")), "home");
+const login = r =>
+    require.ensure([], () => r(require("../views/login/index.vue")), "home");
+const main = r =>
+    require.ensure([], () => r(require("../views/home/main.vue")), "home");
 
 // 注意 权限字段 authRule （严格区分大小写）
 export const constantRouterMap = [
@@ -50,7 +48,7 @@ export const constantRouterMap = [
     },
     {
         path: "/500",
-        component: err500,
+        component: err404,
         name: "500",
         hidden: true
     },
@@ -91,7 +89,12 @@ export const constantRouterMap = [
             {
                 path: "uploadList",
                 name: "上传图片的展示",
-                component: uploadList
+                component: r =>
+                    require.ensure(
+                        [],
+                        () => r(require("../views/components/uploadList.vue")),
+                        "home"
+                    )
             }
         ]
     }

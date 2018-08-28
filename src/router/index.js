@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Router from "vue-router";
+import VueRouter from "vue-router";
 import { ROUTER_MODE } from "../config/app";
 
 import Home from "../views/home/index.vue";
@@ -25,7 +25,9 @@ import authPermissionRule from "../views/userManage/admin/authPermissionRule.vue
 import adSite from "../views/adManage/adSite.vue";
 import ad from "../views/adManage/ad.vue";
 
-Vue.use(Router);
+if (process.env.NODE_ENV === "development") {
+    Vue.use(VueRouter);
+}
 
 // 注意 权限字段 authRule （严格区分大小写）
 export const constantRouterMap = [
@@ -95,7 +97,7 @@ export const constantRouterMap = [
     }
 ];
 
-export default new Router({
+export default new VueRouter({
     // mode: 'history', //后端支持可开
     mode: ROUTER_MODE,
     routes: constantRouterMap,

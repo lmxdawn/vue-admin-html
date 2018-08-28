@@ -1,7 +1,15 @@
 import Vue from "vue";
 import "element-ui/lib/theme-chalk/index.css";
-import ElementUI from "element-ui";
-Vue.use(ElementUI);
+if (process.env.NODE_ENV === "development") {
+    require("element-ui/lib/theme-chalk/index.css");
+}
+
+import ELEMENT from "element-ui";
+
+if (process.env.NODE_ENV === "development") {
+    Vue.use(ELEMENT);
+}
+
 // import {
 //     Pagination,
 //     Dialog,

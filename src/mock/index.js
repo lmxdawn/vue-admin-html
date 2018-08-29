@@ -14,7 +14,7 @@ import fileResource from "./fileResource";
 // 登录相关
 Mock.mock(/\/admin\/auth\/login\/out/, "post", login.out);
 Mock.mock(/\/admin\/auth\/login\/password/, "post", login.password);
-Mock.mock(/\/admin\/login\/index/, "post", login.index);
+Mock.mock(/\/admin\/auth\/login\/index/, "post", login.index);
 Mock.mock(/\/admin\/auth\/login\/userInfo/, "get", login.userInfo);
 // 管理员相关
 Mock.mock(/\/admin\/auth\/admin\/index/, "get", authAdmin.index);

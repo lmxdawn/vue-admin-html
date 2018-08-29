@@ -1,4 +1,4 @@
-import Vue from "vue";
+// import Vue from "vue";
 import VueRouter from "vue-router";
 import { ROUTER_MODE } from "../config/app";
 
@@ -14,9 +14,7 @@ import authPermissionRule from "../views/userManage/admin/authPermissionRule.vue
 import adSite from "../views/adManage/adSite.vue";
 import ad from "../views/adManage/ad.vue";
 
-if (process.env.NODE_ENV === "development") {
-    Vue.use(VueRouter);
-}
+// Vue.use(VueRouter);
 
 const err401 = r =>
     require.ensure([], () => r(require("../views/error/err401.vue")), "home");

@@ -19,6 +19,9 @@ const actions = {
     ToggleSideBar({ commit }) {
         commit(types.TOGGLE_SIDEBAR);
     },
+    ShowSideBar({ commit }) {
+        commit(types.SHOW_SIDEBAR);
+    },
     addVisitedViews({ commit }, view) {
         commit(types.ADD_VISITED_VIEWS, view);
     },
@@ -39,6 +42,12 @@ const mutations = {
             setStore("sidebarStatus", 0, 365);
         }
         state.sidebar.opened = !state.sidebar.opened;
+    },
+    [types.SHOW_SIDEBAR](state) {
+        if (state.sidebar.opened) {
+            setStore("sidebarStatus", 1, 365);
+        }
+        state.sidebar.opened = false;
     },
     [types.ADD_VISITED_VIEWS](state, view) {
         if (state.visitedViews.some(v => v.path === view.path)) return;

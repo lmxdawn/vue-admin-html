@@ -1,7 +1,7 @@
 <template>
 
-    <el-container class="wrapper" v-bind:class="{ 'slide-in-left': menuShow}">
-        <el-aside class="menu" width="" v-bind:class="{'slide-hide': isCollapse}">
+    <el-container class="wrapper">
+        <el-aside class="menu" width="" v-bind:class="{'slide-hide': isCollapse, 'slide-in-left': menuShow}">
 
             <div class="logo">
                 <!--<img alt="element-logo"-->
@@ -22,10 +22,10 @@
         </el-aside>
 
 
-        <el-container class="container-box" v-bind:class="{'slide-hide': isCollapse}">
+        <el-container class="container-box" v-bind:class="{'slide-hide': isCollapse, 'slide-in-left': menuShow}">
             <el-header class="header">
                 <div class="header-left">
-                    <div class="header-toggle" @click="menuShow = !menuShow">
+                    <div class="header-toggle" @click="menuShow = !menuShow; showSideBar()">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -183,6 +183,9 @@ export default {
         toggleSideBar() {
             this.$store.dispatch("ToggleSideBar");
         },
+        showSideBar() {
+            this.$store.dispatch("ShowSideBar");
+        },
         getBreadcrumb() {
             let matched = this.$route.matched.filter(item => item.name);
             const first = matched[0];
@@ -320,6 +323,7 @@ export default {
     overflow-y: auto;
     height: 100%;
     background-color: #545c64;
+    transition: all 0.3s;
 }
 /*.menu::-webkit-scrollbar{*/
 /*display: none;*/
@@ -425,27 +429,29 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
-    .slide-hide {
-        left: -64px !important;
-    }
     .slide-hide.slide-in-left {
         -webkit-transform: translate3d(64px, 0, 0) !important;
         transform: translate3d(64px, 0, 0) !important;
     }
 
+    .menu.slide-hide.slide-in-left {
+        left: -64px;
+    }
+    .menu.slide-in-left {
+        left: 0;
+    }
     .menu {
-        left: -60%;
         margin-right: 0;
         opacity: 1;
         position: absolute;
         top: 0;
-        transition: opacity 0.3s;
+        left: -225px;
         width: 60%;
         z-index: 10;
         padding: 0;
     }
 
-    .slide-in-left {
+    .container-box.slide-in-left {
         min-width: 0;
         opacity: 1;
         -webkit-transform: translate3d(60%, 0, 0);

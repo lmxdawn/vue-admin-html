@@ -282,8 +282,9 @@ export default {
 }
 
 .el-main {
-    padding: 0 25px 25px;
     position: relative;
+    padding: 0 25px 25px;
+    background-color: #f5f7f9;
 }
 .main-mask {
     position: absolute;
@@ -446,7 +447,6 @@ export default {
         position: absolute;
         top: 0;
         left: -225px;
-        width: 60%;
         z-index: 10;
         padding: 0;
     }
@@ -454,8 +454,8 @@ export default {
     .container-box.slide-in-left {
         min-width: 0;
         opacity: 1;
-        -webkit-transform: translate3d(60%, 0, 0);
-        transform: translate3d(60%, 0, 0);
+        -webkit-transform: translate3d(200px, 0, 0);
+        transform: translate3d(200px, 0, 0);
         overflow: initial;
     }
     .header-toggle {

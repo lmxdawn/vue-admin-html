@@ -283,8 +283,10 @@ export default {
 
 .el-main {
     position: relative;
-    padding: 0 25px 25px;
-    background-color: #f5f7f9;
+    padding: 0 10px 10px;
+    background-color: #fff;
+    margin-left: 7px;
+    margin-top: 5px;
 }
 .main-mask {
     position: absolute;
@@ -308,6 +310,7 @@ export default {
 .wrapper {
     height: 100%;
     overflow-y: hidden;
+    background-color: #f5f7f9;
 }
 
 .container-box {
@@ -336,6 +339,7 @@ export default {
     font-size: 12px;
     line-height: $header-height;
     border-bottom: 1px solid #d8dce5;
+    background-color: #fff;
 }
 
 .header .el-dropdown {

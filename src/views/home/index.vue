@@ -324,7 +324,7 @@ export default {
     overflow-y: auto;
     height: 100%;
     background-color: #545c64;
-    transition: all 0.3s;
+    transition: all 0.08s;
 }
 /*.menu::-webkit-scrollbar{*/
 /*display: none;*/

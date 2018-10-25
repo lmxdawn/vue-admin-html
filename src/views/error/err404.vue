@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style type="text/scss" lang="scss">
 @keyframes error404animation {
     0% {
         transform: rotateZ(0deg);

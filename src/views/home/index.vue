@@ -269,7 +269,7 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
+<style type="text/scss" lang="scss">
 @import "../../styles/mixin";
 .el-header {
     /*background-color: #eef1f6;*/

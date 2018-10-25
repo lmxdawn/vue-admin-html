@@ -50,5 +50,5 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style type="text/scss" lang="scss">
 </style>

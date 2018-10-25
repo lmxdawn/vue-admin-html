@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style type="text/scss" lang="scss">
 @import "./styles/base";
 html {
     height: 100%;

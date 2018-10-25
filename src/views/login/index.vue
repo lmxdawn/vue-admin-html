@@ -112,7 +112,7 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style type="text/scss" lang="scss">
 @import "../../styles/mixin";
 
 $bg: #2d3a4b;

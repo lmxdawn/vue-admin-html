@@ -359,7 +359,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style type="text/scss" lang="scss">
 .transfer-footer {
     margin-left: 20px;
     padding: 6px 5px;

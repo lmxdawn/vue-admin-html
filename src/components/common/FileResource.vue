@@ -415,7 +415,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style type="text/scss" lang="scss">
 .edit-input {
     margin-left: 10px;
     width: 200px;

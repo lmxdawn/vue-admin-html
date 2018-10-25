@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style type="text/scss" lang="scss">
 @keyframes error500animation {
     0% {
         transform: rotateZ(0deg);

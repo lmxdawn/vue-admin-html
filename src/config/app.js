@@ -7,8 +7,7 @@
  *
  */
 let BASE_URL = process.env.VUE_APP_API_BASE;
-let API_SUFFIX = process.env.VUE_APP_API_SUFFIX;
 // let ROUTER_MODE = "history";
 let ROUTER_MODE = "";
 let IMG_BASE_URL = BASE_URL;
-export { BASE_URL, API_SUFFIX, ROUTER_MODE, IMG_BASE_URL };
+export { BASE_URL, ROUTER_MODE, IMG_BASE_URL };

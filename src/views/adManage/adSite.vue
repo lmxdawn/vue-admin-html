@@ -175,8 +175,8 @@ export default {
             adSiteList(this.query)
                 .then(response => {
                     this.loading = false;
-                    this.list = response.data || [];
-                    this.total = response.total || 0;
+                    this.list = response.data.list || [];
+                    this.total = response.data.total || 0;
                 })
                 .catch(() => {
                     this.loading = false;
@@ -187,7 +187,7 @@ export default {
         getAdList() {
             adSiteAdList(this.query)
                 .then(response => {
-                    let adList = response || [];
+                    let adList = response.data || [];
                     for (let item of adList) {
                         let isPush = true;
                         for (let i in this.adList) {

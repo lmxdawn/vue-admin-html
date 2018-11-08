@@ -2,12 +2,20 @@
  * Created by lk on 17/6/4.
  */
 import axios from "../../utils/axios";
-import { API_SUFFIX } from "../../config/app";
 
 // 获取列表
 export function authAdminList(query) {
     return axios({
-        url: "/admin/auth/admin/index" + API_SUFFIX,
+        url: "/admin/auth/admin/index",
+        method: "get",
+        params: query
+    });
+}
+
+// 获取角色列表
+export function authAdminRoleList(query) {
+    return axios({
+        url: "/admin/auth/admin/roleList",
         method: "get",
         params: query
     });
@@ -15,10 +23,10 @@ export function authAdminList(query) {
 
 // 保存
 export function authAdminSave(data, formName, method = "post") {
-    var url =
+    let url =
         formName === "add"
-            ? "/admin/auth/admin/save" + API_SUFFIX
-            : "/admin/auth/admin/edit" + API_SUFFIX;
+            ? "/admin/auth/admin/save"
+            : "/admin/auth/admin/edit";
     return axios({
         url: url,
         method: method,
@@ -29,7 +37,7 @@ export function authAdminSave(data, formName, method = "post") {
 // 删除管理员
 export function authAdminDelete(data) {
     return axios({
-        url: "/admin/auth/admin/delete" + API_SUFFIX,
+        url: "/admin/auth/admin/delete",
         method: "post",
         data: data
     });

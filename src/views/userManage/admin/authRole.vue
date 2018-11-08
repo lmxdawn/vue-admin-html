@@ -58,6 +58,12 @@
             </el-table-column>
         </el-table>
 
+        <el-pagination
+            :page-size="query.limit"
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="total">
+        </el-pagination>
 
         <!--授权界面-->
         <el-dialog
@@ -135,9 +141,12 @@ export default {
         return {
             query: {
                 name: "",
-                status: ""
+                status: "",
+                page: 1,
+                limit: 20
             },
             list: [],
+            total: 0,
             loading: true,
             authList: [],
             defaultProps: {
@@ -175,16 +184,22 @@ export default {
         onSubmit() {
             this.getList();
         },
+        handleCurrentChange(val) {
+            this.query.page = val;
+            this.getList();
+        },
         getList() {
             this.loading = true;
             authRoleList(this.query)
                 .then(response => {
                     this.loading = false;
-                    this.list = response || [];
+                    this.list = response.data.list || [];
+                    this.total = response.data.total || 0;
                 })
                 .catch(() => {
                     this.loading = false;
                     this.list = [];
+                    this.total = 0;
                 });
         },
         // 显示授权界面
@@ -203,8 +218,8 @@ export default {
                         return;
                     }
                     this.authFormVisible = true;
-                    this.authList = response.auth_list || [];
-                    const checkedKeys = response.checked_keys || [];
+                    this.authList = response.data.auth_list || [];
+                    const checkedKeys = response.data.checked_keys || [];
                     let tempCheckedKeys = [];
                     let id = null;
                     let node = null;

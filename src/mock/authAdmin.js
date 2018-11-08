@@ -3,12 +3,9 @@
  */
 
 const index = {
-    admin_list: {
+    data: {
         total: 1,
-        per_page: 20,
-        current_page: "1",
-        last_page: 1,
-        data: [
+        list: [
             {
                 id: 1,
                 username: "admin",
@@ -22,29 +19,44 @@ const index = {
                 roles: []
             }
         ]
-    },
-    role_list: [
-        {
-            id: 1,
-            name: "超级管理员"
-        }
-    ]
+    }
+};
+
+const roleList = {
+    data: {
+        total: 1,
+        list: [
+            {
+                id: 1,
+                name: "超级管理员"
+            }
+        ]
+    }
 };
 
 const save = {
-    id: "2",
-    username: "test",
-    password: "",
-    status: "1",
-    roles: [1]
+    data: {
+        id: "2",
+        username: "test",
+        password: "",
+        status: "1",
+        roles: [1]
+    }
 };
 
-const edit = "success";
+const edit = {
+    code: 0,
+    message: "success"
+};
 
-const del = "success";
+const del = {
+    code: 0,
+    message: "success"
+};
 
 export default {
     index,
+    roleList,
     save,
     edit,
     del

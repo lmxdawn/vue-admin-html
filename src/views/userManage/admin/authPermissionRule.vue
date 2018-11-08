@@ -1,9 +1,6 @@
 <template>
     <div>
         <el-form :inline="true" :model="query" class="query-form" size="mini">
-            <div v-if="lastSql !== ''">
-                <el-input type="textarea" placeholder="请输入内容" v-model="lastSql"></el-input>
-            </div>
             <el-form-item class="query-form-item">
                 <el-input v-model="query.name" placeholder="角色名称"></el-input>
             </el-form-item>
@@ -98,7 +95,6 @@ const formJson = {
 export default {
     data() {
         return {
-            lastSql: "",
             query: {
                 // pid: '',
                 name: "",
@@ -159,8 +155,8 @@ export default {
             authPermissionRuleList(this.query)
                 .then(response => {
                     this.loading = false;
-                    this.mergeList = response.merge_list || [];
-                    this.treeList = response.tree_list || [];
+                    this.mergeList = response.data.merge_list || [];
+                    this.treeList = response.data.tree_list || [];
                 })
                 .catch(() => {
                     this.loading = false;
@@ -218,12 +214,8 @@ export default {
                                 // 刷新表单
                                 this.$refs["dataForm"].resetFields();
                                 this.formVisible = false;
-                                let lastSql = "";
-                                if (this.lastSql !== "") {
-                                    lastSql += "\n";
-                                }
                                 if (this.formName === "add") {
-                                    const newChild = response || {};
+                                    const newChild = response.data || {};
                                     if (this.pidData) {
                                         if (!this.pidData.children) {
                                             this.$set(
@@ -236,26 +228,6 @@ export default {
                                     } else {
                                         this.mergeList.push(newChild);
                                     }
-                                    lastSql +=
-                                        "INSERT INTO `auth_permission_rule` VALUES ('" +
-                                        response.id +
-                                        "', '" +
-                                        response.pid +
-                                        "', '" +
-                                        response.name +
-                                        "', '" +
-                                        response.title +
-                                        "', '" +
-                                        response.status +
-                                        "', '" +
-                                        response.condition +
-                                        "', '" +
-                                        response.listorder +
-                                        "', '" +
-                                        response.update_time +
-                                        "', '" +
-                                        response.create_time +
-                                        "');";
                                 } else {
                                     const parent = this.node.parent;
                                     const children =
@@ -264,26 +236,7 @@ export default {
                                         d => d.id === data.id
                                     );
                                     children.splice(index, 1, data);
-                                    lastSql +=
-                                        "UPDATE `auth_permission_rule` SET `name`='" +
-                                        data.name +
-                                        "', `title`='" +
-                                        data.title +
-                                        "', `status`='" +
-                                        data.status +
-                                        "', `condition`='" +
-                                        data.condition +
-                                        "', `listorder`='" +
-                                        data.listorder +
-                                        "', `create_time`='" +
-                                        data.create_time +
-                                        "', `update_time`='" +
-                                        data.update_time +
-                                        "' WHERE (`id`='" +
-                                        data.id +
-                                        "') LIMIT 1;";
                                 }
-                                this.lastSql += lastSql;
                             }
                         })
                         .catch(() => {

@@ -6,7 +6,7 @@
             </div>
             <p class="error500-body-con-message">Oops! the server is wrong</p>
             <div class="error500-btn-con">
-                <div class="error500-home-button" @click="goHome">返回首页</div>
+                <a href="/" class="error500-home-button">返回首页</a>
                 <div class="error500-block-button" @click="backPage">返回上一页</div>
             </div>
         </div>
@@ -19,12 +19,6 @@ export default {
     methods: {
         backPage() {
             this.$router.go(-1);
-        },
-        goHome() {
-            this.$router.push({
-                name: "/"
-            });
-            location.reload(); // 为了重新实例化vue-router对象 避免bug
         }
     }
 };

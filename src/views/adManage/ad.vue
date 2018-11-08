@@ -254,8 +254,8 @@ export default {
             adList(this.query)
                 .then(response => {
                     this.loading = false;
-                    this.list = response.data || [];
-                    this.total = response.total || 0;
+                    this.list = response.data.list || [];
+                    this.total = response.data.total || 0;
                 })
                 .catch(() => {
                     this.loading = false;
@@ -306,13 +306,13 @@ export default {
                                 type: "success"
                             });
                             // 向头部添加数据
-                            // this.list.unshift(response)
+                            // this.list.unshift(response.data)
                             // 刷新表单
                             this.$refs["dataForm"].resetFields();
                             this.formVisible = false;
                             if (this.formName === "add") {
                                 // 向头部添加数据
-                                this.list.unshift(response);
+                                this.list.unshift(response.data);
                             } else {
                                 this.list.splice(this.index, 1, data);
                             }

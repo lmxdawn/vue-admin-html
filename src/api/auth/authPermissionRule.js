@@ -2,14 +2,13 @@
  * Created by lk on 17/6/4.
  */
 import axios from "../../utils/axios";
-import { API_SUFFIX } from "../../config/app";
 
 // 权限管理
 
 // 获取列表
 export function authPermissionRuleList(query) {
     return axios({
-        url: "/admin/auth/permission_rule/index" + API_SUFFIX,
+        url: "/admin/auth/permission_rule/index",
         method: "get",
         params: query
     });
@@ -19,8 +18,8 @@ export function authPermissionRuleList(query) {
 export function authPermissionRuleSave(data, formName, method = "post") {
     var url =
         formName === "add"
-            ? "/admin/auth/permission_rule/save" + API_SUFFIX
-            : "/admin/auth/permission_rule/edit" + API_SUFFIX;
+            ? "/admin/auth/permission_rule/save"
+            : "/admin/auth/permission_rule/edit";
     return axios({
         url: url,
         method: method,
@@ -31,7 +30,7 @@ export function authPermissionRuleSave(data, formName, method = "post") {
 // 删除
 export function authPermissionRuleDelete(data) {
     return axios({
-        url: "/admin/auth/permission_rule/delete" + API_SUFFIX,
+        url: "/admin/auth/permission_rule/delete",
         method: "post",
         data: data
     });

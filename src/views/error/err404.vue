@@ -4,7 +4,7 @@
             <div class="error404-body-con-title">4<span>0</span>4</div>
             <p class="error404-body-con-message">YOU&nbsp;&nbsp;LOOK&nbsp;&nbsp;LOST</p>
             <div class="error404-btn-con">
-                <div class="error404-home-button" @click="goHome">返回首页</div>
+                <a href="/" class="error404-home-button">返回首页</a>
                 <div class="error404-block-button" @click="backPage">返回上一页</div>
             </div>
         </div>
@@ -17,12 +17,6 @@ export default {
     methods: {
         backPage() {
             this.$router.go(-1);
-        },
-        goHome() {
-            this.$router.push({
-                name: "/"
-            });
-            location.reload(); // 为了重新实例化vue-router对象 避免bug
         }
     }
 };

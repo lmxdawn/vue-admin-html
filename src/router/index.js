@@ -68,7 +68,7 @@ export const constantRouterMap = [
         component: Home,
         redirect: "/readme/main",
         icon: "shouye",
-        name: "前言",
+        name: "控制台",
         noDropdown: true,
         children: [
             {

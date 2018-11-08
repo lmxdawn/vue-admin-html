@@ -41,14 +41,14 @@ const actions = {
         return new Promise((resolve, reject) => {
             loginName(userName, pwd)
                 .then(response => {
-                    const data = response || {};
-                    if (data.errcode) {
+                    if (response.code) {
                         Message({
-                            message: response.errmsg,
+                            message: response.message,
                             type: "error",
                             duration: 5 * 1000
                         });
                     }
+                    let data = response.data;
                     data.roles = []; // 解决登录跳转过去，动态路由不添加的问题
                     commit(types.RECEIVE_ADMIN_ID, data.id);
                     commit(types.RECEIVE_ADMIN_TOKEN, data.token);
@@ -64,7 +64,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             userInfo()
                 .then(response => {
-                    const data = response || {};
+                    const data = response.data || {};
                     commit(types.RECEIVE_ADMIN_ID, data.id);
                     commit(types.RECEIVE_ADMIN_TOKEN, data.token);
                     commit(types.RECEIVE_ADMIN_NAME, data.username);

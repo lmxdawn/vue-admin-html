@@ -4,7 +4,7 @@
             <div class="error401-body-con-title">4<span class="error401-0-span">0</span><span class="error401-key-span">3</span></div>
             <p class="error401-body-con-message">You don't have permission</p>
             <div class="error401-btn-con">
-                <div class="error401-home-button" @click="goHome">返回首页</div>
+                <a class="error401-home-button" href="/">返回首页</a>
                 <div class="error401-block-button" @click="backPage">返回上一页</div>
             </div>
         </div>
@@ -17,12 +17,6 @@ export default {
     methods: {
         backPage() {
             this.$router.go(-1);
-        },
-        goHome() {
-            this.$router.push({
-                name: "/"
-            });
-            location.reload(); // 为了重新实例化vue-router对象 避免bug
         }
     }
 };

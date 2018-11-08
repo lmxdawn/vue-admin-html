@@ -22,9 +22,4 @@ body {
 #app {
     height: 100%;
 }
-
-.menu .svg-icon {
-    font-size: 20px;
-    margin-right: 5px;
-}
 </style>

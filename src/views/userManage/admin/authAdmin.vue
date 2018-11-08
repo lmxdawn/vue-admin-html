@@ -125,6 +125,7 @@
 <script>
 import {
     authAdminList,
+    authAdminRoleList,
     authAdminSave,
     authAdminDelete
 } from "../../../api/auth/authAdmin";
@@ -215,10 +216,6 @@ export default {
             });
             this.getList();
         },
-        handleSizeChange(val) {
-            this.query.limit = val;
-            this.getList();
-        },
         handleCurrentChange(val) {
             this.query.page = val;
             this.getList();
@@ -228,14 +225,22 @@ export default {
             authAdminList(this.query)
                 .then(response => {
                     this.loading = false;
-                    this.list = response.admin_list.data || [];
-                    this.total = response.admin_list.total || 0;
-                    this.roles = response.role_list || [];
+                    this.list = response.data.list || [];
+                    this.total = response.data.total || 0;
                 })
                 .catch(() => {
                     this.loading = false;
                     this.list = [];
                     this.total = 0;
+                    this.roles = [];
+                });
+        },
+        getRoleList() {
+            authAdminRoleList(this.query)
+                .then(response => {
+                    this.roles = response.data.list || [];
+                })
+                .catch(() => {
                     this.roles = [];
                 });
         },
@@ -291,7 +296,7 @@ export default {
                             this.formVisible = false;
                             if (this.formName === "add") {
                                 // 向头部添加数据
-                                let resData = response || {};
+                                let resData = response.data || {};
                                 this.list.unshift(resData);
                             } else {
                                 this.list.splice(this.index, 1, data);
@@ -365,6 +370,8 @@ export default {
         this.query.limit = parseInt(this.query.limit);
         // 加载表格数据
         this.getList();
+        // 加载角色列表
+        this.getRoleList();
     }
 };
 </script>

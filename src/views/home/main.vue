@@ -7,7 +7,8 @@
                 <p>基于Vue.js 2.x系列 + Element UI + RBAC/AUTH权限 的后台管理系统</p>
                 <h2>前言</h2>
                 <p><strong>项目前端地址：</strong><a href="https://github.com/lmxdawn/vue-admin-html" target="_blank">https://github.com/lmxdawn/vue-admin-html</a></p>
-                <p><strong>项目后端地址：</strong><a href="https://github.com/lmxdawn/vue-admin-php" target="_blank">https://github.com/lmxdawn/vue-admin-php</a></p>
+                <p><strong>项目JAVA后端地址：</strong><a href="https://github.com/lmxdawn/vue-admin-java" target="_blank">https://github.com/lmxdawn/vue-admin-java</a></p>
+                <p><strong>项目PHP后端地址：</strong><a href="https://github.com/lmxdawn/vue-admin-php" target="_blank">https://github.com/lmxdawn/vue-admin-php</a></p>
                 <p>欢迎大家的star</p>
                 <h2>功能</h2>
                 <el-checkbox disabled checked>管理员登录</el-checkbox>

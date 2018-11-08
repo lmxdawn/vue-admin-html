@@ -18,6 +18,7 @@ Mock.mock(/\/admin\/auth\/login\/index/, "post", login.index);
 Mock.mock(/\/admin\/auth\/login\/userInfo/, "get", login.userInfo);
 // 管理员相关
 Mock.mock(/\/admin\/auth\/admin\/index/, "get", authAdmin.index);
+Mock.mock(/\/admin\/auth\/admin\/roleList/, "get", authAdmin.roleList);
 Mock.mock(/\/admin\/auth\/admin\/save/, "post", authAdmin.save);
 Mock.mock(/\/admin\/auth\/admin\/edit/, "post", authAdmin.edit);
 Mock.mock(/\/admin\/auth\/admin\/delete/, "post", authAdmin.del);

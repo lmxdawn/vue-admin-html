@@ -7,7 +7,7 @@ import "./element";
 import * as filters from "./filtres/index"; // 全局过滤器
 import "./role"; // 权限
 
-// import "./mock"; // 模拟数据
+import "./mock"; // 模拟数据
 
 import "./assets/icons/iconfont";
 import IconSvg from "./components/common/IconSvg.vue"; // svg组件

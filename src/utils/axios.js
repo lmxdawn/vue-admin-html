@@ -31,7 +31,7 @@ service.interceptors.response.use(
     response => {
         const data = response.data;
         if (data.code) {
-            if (data.code === 20006) {
+            if (data.code === 2) {
                 store.dispatch("fedLogout").then(() => {
                     Message.error("验证失败,请重新登录");
                     router.push({

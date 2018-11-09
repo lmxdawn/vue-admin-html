@@ -22,7 +22,11 @@
 
 **项目PHP后端地址：** <a href="https://github.com/lmxdawn/vue-admin-php" target="_blank">https://github.com/lmxdawn/vue-admin-php</a>
 
-# 觉得有用请 star
+# 欢迎 star
+
+# 整体效果
+
+![donate](https://lmxdawn.github.io/images/show-how1.jpg)
 
 # 目前 v3.0.0 版本 <a href="https://github.com/lmxdawn/vue-admin-html/tree/v1.0.0" target="_blank">点击前往 v1.0.0 版本</a>
 ## 更新日志

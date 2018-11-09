@@ -80,6 +80,7 @@
 <script>
 import {
     authPermissionRuleList,
+    authPermissionRuleTree,
     authPermissionRuleSave,
     authPermissionRuleDelete
 } from "../../../api/auth/authPermissionRule";
@@ -155,12 +156,19 @@ export default {
             authPermissionRuleList(this.query)
                 .then(response => {
                     this.loading = false;
-                    this.mergeList = response.data.merge_list || [];
-                    this.treeList = response.data.tree_list || [];
+                    this.mergeList = response.data.list || [];
                 })
                 .catch(() => {
                     this.loading = false;
                     this.mergeList = [];
+                });
+        },
+        getTreeList() {
+            authPermissionRuleTree()
+                .then(response => {
+                    this.treeList = response.data.list || [];
+                })
+                .catch(() => {
                     this.treeList = [];
                 });
         },
@@ -315,6 +323,8 @@ export default {
     created() {
         // 加载表格数据
         this.getList();
+        // 加载树形结构
+        this.getTreeList();
     }
 };
 </script>

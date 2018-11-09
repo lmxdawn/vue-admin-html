@@ -31,7 +31,7 @@ const save = {
 const edit = { code: 0, message: "success" };
 
 const del = { code: 0, message: "success" };
-const getAuth = {
+const authList = {
     data: {
         auth_list: [
             {
@@ -226,13 +226,13 @@ const getAuth = {
     }
 };
 
-const postAuth = { code: 0, message: "success" };
+const auth = { code: 0, message: "success" };
 
 export default {
     index,
     save,
     edit,
     del,
-    getAuth,
-    postAuth
+    authList,
+    auth
 };

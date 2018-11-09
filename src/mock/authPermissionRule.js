@@ -4,7 +4,7 @@
 
 const index = {
     data: {
-        merge_list: [
+        list: [
             {
                 id: 1,
                 pid: 0,
@@ -238,8 +238,13 @@ const index = {
                 level: 1,
                 html: "&nbsp;"
             }
-        ],
-        tree_list: [
+        ]
+    }
+};
+
+const tree = {
+    data: {
+        list: [
             {
                 id: 1,
                 pid: 0,
@@ -988,6 +993,7 @@ const del = { code: 0, message: "success" };
 
 export default {
     index,
+    tree,
     save,
     edit,
     del

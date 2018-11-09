@@ -15,7 +15,7 @@ export function authRoleList(query) {
 // 编辑
 export function authRoleAuthList(query) {
     return axios({
-        url: "/admin/auth/role/auth",
+        url: "/admin/auth/role/authList",
         method: "get",
         params: query
     });

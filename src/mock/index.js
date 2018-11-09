@@ -29,6 +29,11 @@ Mock.mock(
     authPermissionRule.index
 );
 Mock.mock(
+    /\/admin\/auth\/permission_rule\/tree/,
+    "get",
+    authPermissionRule.tree
+);
+Mock.mock(
     /\/admin\/auth\/permission_rule\/save/,
     "post",
     authPermissionRule.save
@@ -48,8 +53,8 @@ Mock.mock(/\/admin\/auth\/role\/index/, "get", authRole.index);
 Mock.mock(/\/admin\/auth\/role\/save/, "post", authRole.save);
 Mock.mock(/\/admin\/auth\/role\/edit/, "post", authRole.edit);
 Mock.mock(/\/admin\/auth\/role\/delete/, "post", authRole.del);
-Mock.mock(/\/admin\/auth\/role\/auth/, "get", authRole.getAuth);
-Mock.mock(/\/admin\/auth\/role\/auth/, "post", authRole.postAuth);
+Mock.mock(/\/admin\/auth\/role\/authList/, "get", authRole.authList);
+Mock.mock(/\/admin\/auth\/role\/auth/, "post", authRole.auth);
 
 /**
  * 上传相关

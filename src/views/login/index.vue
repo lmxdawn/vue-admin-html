@@ -81,8 +81,12 @@ export default {
                     this.loading = true;
                     this.$store
                         .dispatch("loginName", this.ruleForm)
-                        .then(() => {
+                        .then(response => {
                             this.loading = false;
+                            if (response.code) {
+                                this.$message.error(response.message);
+                                return;
+                            }
                             let path = "/";
                             if (this.redirect) {
                                 path = this.redirect;

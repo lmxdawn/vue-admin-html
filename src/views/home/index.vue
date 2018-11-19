@@ -102,6 +102,7 @@
 import { mapGetters } from "vuex";
 import SidebarItem from "./SidebarItem.vue";
 import { password } from "../../api/auth/login";
+import { getAdminId } from "../../utils/auth";
 export default {
     data() {
         let validatePass = (rule, value, callback) => {
@@ -228,6 +229,7 @@ export default {
                 if (valid) {
                     this.passwordLoading = true;
                     let data = Object.assign({}, this.passwordFormData);
+                    data.adminId = getAdminId();
                     password(data)
                         .then(res => {
                             this.passwordLoading = false;

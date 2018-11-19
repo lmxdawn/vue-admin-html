@@ -47,13 +47,13 @@ const actions = {
                             type: "error",
                             duration: 5 * 1000
                         });
+                    } else {
+                        let data = response.data;
+                        commit(types.RECEIVE_ADMIN_ID, data.id);
+                        commit(types.RECEIVE_ADMIN_TOKEN, data.token);
+                        commit(types.RECEIVE_ADMIN_AUTH_RULES, []);
                     }
-                    let data = response.data;
-                    data.roles = []; // 解决登录跳转过去，动态路由不添加的问题
-                    commit(types.RECEIVE_ADMIN_ID, data.id);
-                    commit(types.RECEIVE_ADMIN_TOKEN, data.token);
-                    commit(types.RECEIVE_ADMIN_AUTH_RULES, []);
-                    resolve();
+                    resolve(response);
                 })
                 .catch(error => {
                     reject(error);
@@ -65,8 +65,6 @@ const actions = {
             userInfo()
                 .then(response => {
                     const data = response.data || {};
-                    commit(types.RECEIVE_ADMIN_ID, data.id);
-                    commit(types.RECEIVE_ADMIN_TOKEN, data.token);
                     commit(types.RECEIVE_ADMIN_NAME, data.username);
                     commit(types.RECEIVE_ADMIN_AVATAR, data.avatar);
                     commit(types.RECEIVE_ADMIN_AUTH_RULES, data.authRules);

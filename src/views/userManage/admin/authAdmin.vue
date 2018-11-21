@@ -55,7 +55,7 @@
                 :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <i class="el-icon-time"></i>
-                    <span>{{ scope.row.last_login_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+                    <span>{{ scope.row.last_login_time }}</span>
                 </template>
             </el-table-column>
             <el-table-column

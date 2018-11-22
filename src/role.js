@@ -83,11 +83,9 @@ router.beforeEach((to, from, next) => {
                         authRules.length === 0
                     ) {
                         Message.error("权限验证失败，请联系管理员~");
-                        store.dispatch("loginOut").then(() => {
-                            next({
-                                path: "/401",
-                                query: { noGoBack: true }
-                            });
+                        next({
+                            path: "/401",
+                            query: { noGoBack: true }
                         });
                         NProgress.done();
                         return;

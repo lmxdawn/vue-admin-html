@@ -222,7 +222,7 @@ export default {
                                 // 刷新表单
                                 this.$refs["dataForm"].resetFields();
                                 this.formVisible = false;
-                                if (this.formName === "add") {
+                                if (this.formName !== "edit") {
                                     const newChild = response.data || {};
                                     if (this.pidData) {
                                         if (!this.pidData.children) {

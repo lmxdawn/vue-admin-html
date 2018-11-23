@@ -335,7 +335,7 @@ export default {
                         });
                         return;
                     }
-                    this.lists.unshift(response);
+                    this.lists.unshift(response.data);
                 })
                 .catch(() => {});
         },

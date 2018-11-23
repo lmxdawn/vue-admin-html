@@ -345,7 +345,7 @@ export default {
                                 this.formVisible = false;
                                 if (this.formName === "add") {
                                     // 向头部添加数据
-                                    this.list.unshift(response);
+                                    this.list.unshift(response.data);
                                 } else {
                                     this.list.splice(this.index, 1, data);
                                 }

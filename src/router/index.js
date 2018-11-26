@@ -1,5 +1,10 @@
-// import Vue from "vue";
+import Vue from "vue";
 import VueRouter from "vue-router";
+
+if (process.env.NODE_ENV === "development") {
+    Vue.use(VueRouter);
+}
+
 import { ROUTER_MODE } from "../config/app";
 
 import Home from "../views/home/index.vue";

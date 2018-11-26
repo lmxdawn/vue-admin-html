@@ -426,7 +426,7 @@ export default {
 
 .app-levelbar {
     margin-left: 20px;
-    line-height: 57px;
+    line-height: 57px !important;
 }
 
 /*宽屏时出现*/

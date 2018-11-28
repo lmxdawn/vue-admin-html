@@ -3,20 +3,20 @@
  */
 import axios from "../../utils/axios";
 
-// 获取列表
-export function uploadList(query) {
+// 获取七牛上传 upToken
+export function qiuniuUpToken(query) {
     return axios({
-        url: "/admin/file/upload/imageList",
+        url: "/admin/file/qiniu/upToken",
         method: "get",
         params: query
     });
 }
 
-// 创建文件夹
-export function uploadNewDir(data) {
+// 上传文件
+export function uploadFile(url, formdata) {
     return axios({
-        url: "/admin/file/upload/newDir",
+        url: url,
         method: "post",
-        data: data
+        data: formdata
     });
 }

@@ -15,6 +15,9 @@ import authAdmin from "../views/userManage/admin/authAdmin.vue";
 import authRole from "../views/userManage/admin/authRole.vue";
 import authPermissionRule from "../views/userManage/admin/authPermissionRule.vue";
 
+// 上传相关
+import tinymce from "../views/components/tinymce-demo.vue";
+
 // 广告管理
 import adSite from "../views/adManage/adSite.vue";
 import ad from "../views/adManage/ad.vue";
@@ -98,6 +101,11 @@ export const constantRouterMap = [
                         () => r(require("../views/components/uploadList.vue")),
                         "home"
                     )
+            },
+            {
+                path: "tinymce",
+                name: "tinymce富文本编辑器",
+                component: tinymce
             }
         ]
     }

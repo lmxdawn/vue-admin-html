@@ -126,8 +126,8 @@ export function toThousandslsFilter(num) {
  * @returns {*}
  */
 export function renderSize(value) {
-    if (value === null || value === "") {
-        return "0B";
+    if (!value || value === null || value === "") {
+        return "";
     }
     let unitArr = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     let srcsize = parseFloat(value);

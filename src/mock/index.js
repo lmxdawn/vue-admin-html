@@ -60,11 +60,9 @@ Mock.mock(/\/admin\/auth\/role\/auth/, "post", authRole.auth);
  * 上传相关
  */
 // 获取文件列表
-Mock.mock(/admin\/file\/upload\/imageList/, "get", upload.index);
+Mock.mock(/admin\/file\/upload\/qiuniuUpToken/, "get", upload.qiuniuUpToken);
 // 上传文件
-Mock.mock(/admin\/file\/upload\/newFile/, "post", upload.up);
-// 创建文件夹
-Mock.mock(/admin\/file\/upload\/newDir/, "post", upload.newDir);
+Mock.mock(/admin\/file\/upload\/uploadFile/, "post", upload.uploadFile);
 
 /**
  * 资源分组相关

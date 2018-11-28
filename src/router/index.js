@@ -17,6 +17,7 @@ import authPermissionRule from "../views/userManage/admin/authPermissionRule.vue
 
 // 上传相关
 import tinymce from "../views/components/tinymce-demo.vue";
+import upload from "../views/components/upload-demo.vue";
 
 // 广告管理
 import adSite from "../views/adManage/adSite.vue";
@@ -106,6 +107,11 @@ export const constantRouterMap = [
                 path: "tinymce",
                 name: "tinymce富文本编辑器",
                 component: tinymce
+            },
+            {
+                path: "upload",
+                name: "上传的demo",
+                component: upload
             }
         ]
     }

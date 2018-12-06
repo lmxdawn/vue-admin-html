@@ -17,7 +17,7 @@
             <el-tabs v-model="activeName">
                 <el-tab-pane label="本地上传" name="localhost">
                     <div class="upload-content">
-                        <span class="text-muted">只能上传{{ cheekConfig.ext }}文件，且大小不超过{{ cheekConfig.size | renderSize }}，且宽高 {{ cheekConfig.width ? cheekConfig.width + 'px' : "不限" }} * {{ cheekConfig.height ? cheekConfig.height + 'px' : "不限" }}</span>
+                        <span class="text-muted">只能上传{{ ext }}文件，且大小不超过{{ size | renderSize }}，且宽高 {{ width ? width + 'px' : "不限" }} * {{ height ? height + 'px' : "不限" }}</span>
                         <br>
                         <div class="widget-upload" @dragenter="onDrag" @dragover="onDrag" @drop="onDrop">
                             <input type="file" ref="upload" name="file" class="widget-upload__file" @change="onChange">
@@ -33,7 +33,7 @@
                 </el-tab-pane>
                 <el-tab-pane label="远程地址获取" name="network">
                     <div class="upload-content">
-                        <span class="text-muted">只能上传{{ cheekConfig.ext }}文件，且大小不超过{{ cheekConfig.size | renderSize }}，且宽高 {{ cheekConfig.width ? cheekConfig.width + 'px' : "不限" }} * {{ cheekConfig.height ? cheekConfig.height + 'px' : "不限" }}</span>
+                        <span class="text-muted">只能上传{{ ext }}文件，且大小不超过{{ size | renderSize }}，且宽高 {{ width ? width + 'px' : "不限" }} * {{ height ? height + 'px' : "不限" }}</span>
                         <br>
                         <div class="widget-upload">
                             <el-input
@@ -63,16 +63,17 @@ import { renderSize } from "../../filtres/index";
 export default {
     name: "Upload",
     props: {
-        cheekConfig: {
-            type: Object,
-            default: function() {
-                return {
-                    size: 6000, // 文件大小
-                    ext: "jpg,png,gif", // 文件后缀
-                    width: "", // 限制宽度
-                    height: "" // 限制高度
-                };
-            }
+        height: {
+            type: Number
+        },
+        width: {
+            type: Number
+        },
+        ext: {
+            type: String
+        },
+        size: {
+            type: Number
         },
         color: {
             type: String,
@@ -192,23 +193,25 @@ export default {
         },
         beforeUpload(file) {
             const name = file.name ? file.name : "";
-            const ext = name
+            let ext = name
                 ? name.substr(name.lastIndexOf(".") + 1, name.length)
                 : true;
+            // 转成小写
+            ext = ext.toLowerCase();
             let isExt = false;
             // 如果有坚持文件后缀的配置
-            if (this.cheekConfig.ext) {
-                isExt = this.cheekConfig.ext.indexOf(ext) >= 0;
+            if (this.ext) {
+                isExt = this.ext.indexOf(ext) >= 0;
                 if (!isExt) {
                     this.$message.error(
-                        "文件只能为 " + this.cheekConfig.ext + " 格式!"
+                        "文件只能为 " + this.ext + " 格式!"
                     );
                     return false;
                 }
             }
             let isSize = false;
-            if (this.cheekConfig.size) {
-                let sizeStr = this.cheekConfig.size;
+            if (this.size) {
+                let sizeStr = this.size;
                 isSize = sizeStr > 0 && file.size > sizeStr;
                 if (!isSize) {
                     this.$message.error(
@@ -218,10 +221,10 @@ export default {
                 }
             }
             const _this = this;
-            if (_this.cheekConfig.width || _this.cheekConfig.height) {
+            if (_this.width || _this.height) {
                 return new Promise(function(resolve, reject) {
-                    let width = _this.cheekConfig.width;
-                    let height = _this.cheekConfig.height;
+                    let width = _this.width;
+                    let height = _this.height;
                     let _URL = window.URL || window.webkitURL;
                     let img = new Image();
                     img.src = _URL.createObjectURL(file);
@@ -261,39 +264,39 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss">
-.upload-dialog__body {
-    .el-dialog__header {
-        background-color: #f3f3f3;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-    }
-    .el-dialog__body {
-        padding: 12px 20px !important;
-    }
-}
-.upload-content {
-    padding-top: 15px;
-    .widget-upload {
-        position: relative;
-    }
-    .widget-upload__text {
-        width: 66.66%;
-        padding-right: 15px;
-        .el-input__inner {
-            border: 1px solid #ccc;
-            background-color: #eee;
+    .upload-dialog__body {
+        .el-dialog__header {
+            background-color: #f3f3f3;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        .el-dialog__body {
+            padding: 12px 20px !important;
         }
     }
-    .widget-upload {
-        padding-top: 5px;
-        .widget-upload__file {
-            position: absolute;
-            opacity: 0;
-            width: 85%;
-            height: 100%;
-            z-index: 10;
-            cursor: pointer;
+    .upload-content {
+        padding-top: 15px;
+        .widget-upload {
+            position: relative;
+        }
+        .widget-upload__text {
+            width: 66.66%;
+            padding-right: 15px;
+            .el-input__inner {
+                border: 1px solid #ccc;
+                background-color: #eee;
+            }
+        }
+        .widget-upload {
+            padding-top: 5px;
+            .widget-upload__file {
+                position: absolute;
+                opacity: 0;
+                width: 85%;
+                height: 100%;
+                z-index: 10;
+                cursor: pointer;
+            }
         }
     }
-}
 </style>

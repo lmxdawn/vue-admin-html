@@ -6,7 +6,7 @@
                 <el-card class="box-card w100" v-if="filePathUrl1">
                     <img :src="filePathUrl1" style="width: 100%;" alt="">
                 </el-card>
-                <upload :cheekConfig="{ext: 'jpg', width: 100}" @on-select="onSelect1"></upload>
+                <upload ext="jpg" :width="100" @on-select="onSelect1"></upload>
             </el-card>
         </div>
         <div class="page">
@@ -15,7 +15,7 @@
                 <el-card class="box-card w100" v-if="filePathUrl2">
                     <video :src="filePathUrl2" controls="controls" style="width: 100%;"></video>
                 </el-card>
-                <upload :cheekConfig="{ext: 'mp4'}" @on-select="onSelect2"></upload>
+                <upload ext="mp4" @on-select="onSelect2"></upload>
             </el-card>
         </div>
         <div class="page">
@@ -24,7 +24,7 @@
                 <el-card class="box-card w100" v-if="filePathUrl3">
                     <audio :src="filePathUrl3" controls="controls" style="width: 100%;"></audio>
                 </el-card>
-                <upload :cheekConfig="{ext: 'mp3'}" @on-select="onSelect3"></upload>
+                <upload ext="mp3" @on-select="onSelect3"></upload>
             </el-card>
         </div>
         <div class="page">
@@ -33,7 +33,7 @@
                 <el-card class="box-card" v-if="filePathUrl4">
                     文件地址：{{ filePathUrl4 }}
                 </el-card>
-                <upload :cheekConfig="{size: 60000}" @on-select="onSelect4"></upload>
+                <upload :size="60000" @on-select="onSelect4"></upload>
             </el-card>
         </div>
     </div>

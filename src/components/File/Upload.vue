@@ -116,6 +116,7 @@ export default {
             }
             this.file = data[0];
             this.fileName = data[0].name;
+            e.target.value = "";
         },
         onRest() {
             this.activeName = "localhost";

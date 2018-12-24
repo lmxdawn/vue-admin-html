@@ -204,9 +204,7 @@ export default {
             if (this.ext) {
                 isExt = this.ext.indexOf(ext) >= 0;
                 if (!isExt) {
-                    this.$message.error(
-                        "文件只能为 " + this.ext + " 格式!"
-                    );
+                    this.$message.error("文件只能为 " + this.ext + " 格式!");
                     return false;
                 }
             }
@@ -265,39 +263,39 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss">
-    .upload-dialog__body {
-        .el-dialog__header {
-            background-color: #f3f3f3;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-        }
-        .el-dialog__body {
-            padding: 12px 20px !important;
+.upload-dialog__body {
+    .el-dialog__header {
+        background-color: #f3f3f3;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+    .el-dialog__body {
+        padding: 12px 20px !important;
+    }
+}
+.upload-content {
+    padding-top: 15px;
+    .widget-upload {
+        position: relative;
+    }
+    .widget-upload__text {
+        width: 66.66%;
+        padding-right: 15px;
+        .el-input__inner {
+            border: 1px solid #ccc;
+            background-color: #eee;
         }
     }
-    .upload-content {
-        padding-top: 15px;
-        .widget-upload {
-            position: relative;
-        }
-        .widget-upload__text {
-            width: 66.66%;
-            padding-right: 15px;
-            .el-input__inner {
-                border: 1px solid #ccc;
-                background-color: #eee;
-            }
-        }
-        .widget-upload {
-            padding-top: 5px;
-            .widget-upload__file {
-                position: absolute;
-                opacity: 0;
-                width: 85%;
-                height: 100%;
-                z-index: 10;
-                cursor: pointer;
-            }
+    .widget-upload {
+        padding-top: 5px;
+        .widget-upload__file {
+            position: absolute;
+            opacity: 0;
+            width: 85%;
+            height: 100%;
+            z-index: 10;
+            cursor: pointer;
         }
     }
+}
 </style>

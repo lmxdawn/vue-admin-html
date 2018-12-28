@@ -481,7 +481,7 @@ export default {
     .container-left {
         margin-right: 0;
         opacity: 1;
-        position: absolute;
+        position: absolute !important;
         top: 0;
         left: -225px;
         z-index: 10;

@@ -102,9 +102,9 @@
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="formData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
-                        <el-radio label="2">未验证</el-radio>
+                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="1">正常</el-radio>
+                        <el-radio :label="2">未验证</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="角色">
@@ -134,7 +134,7 @@ const formJson = {
     password: "",
     username: "",
     checkPassword: "",
-    status: "1",
+    status: 1,
     roles: []
 };
 export default {
@@ -244,6 +244,15 @@ export default {
                     this.roles = [];
                 });
         },
+        // 刷新表单
+        resetForm() {
+            if (this.$refs["dataForm"]) {
+                // 清空验证信息表单
+                this.$refs["dataForm"].clearValidate();
+                // 刷新表单
+                this.$refs["dataForm"].resetFields();
+            }
+        },
         // 隐藏表单
         hideForm() {
             // 更改值
@@ -255,21 +264,16 @@ export default {
         // 显示表单
         handleForm(index, row) {
             this.formVisible = true;
-            this.formData = Object.assign({}, formJson);
+            this.formData = JSON.parse(JSON.stringify(formJson));
             if (row !== null) {
                 this.formData = Object.assign({}, row);
             }
-            this.formData.status += ""; // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
             this.formName = "add";
             this.formRules = this.addRules;
             if (index !== null) {
                 this.index = index;
                 this.formName = "edit";
                 this.formRules = this.editRules;
-            }
-            // 清空验证信息表单
-            if (this.$refs["dataForm"]) {
-                this.$refs["dataForm"].clearValidate();
             }
         },
         formSubmit() {
@@ -280,28 +284,22 @@ export default {
                     authAdminSave(data, this.formName).then(response => {
                         this.formLoading = false;
                         if (response.code) {
-                            this.$message({
-                                message: response.message,
-                                type: "error"
-                            });
-                        } else {
-                            this.$message({
-                                message: "操作成功",
-                                type: "success"
-                            });
-                            // 向头部添加数据
-                            // this.list.unshift(res)
-                            // 刷新表单
-                            this.$refs["dataForm"].resetFields();
-                            this.formVisible = false;
-                            if (this.formName === "add") {
-                                // 向头部添加数据
-                                let resData = response.data || {};
-                                this.list.unshift(resData);
-                            } else {
-                                this.list.splice(this.index, 1, data);
-                            }
+                            this.$message.error(response.message);
+                            return false;
                         }
+                        this.$message.success("操作成功");
+                        this.formVisible = false;
+                        if (this.formName === "add") {
+                            // 向头部添加数据
+                            if (response.data && response.data.id) {
+                                data.id = response.data.id;
+                                this.list.unshift(data);
+                            }
+                        } else {
+                            this.list.splice(this.index, 1, data);
+                        }
+                        // 刷新表单
+                        this.resetForm();
                     });
                 }
             });
@@ -314,32 +312,24 @@ export default {
                 })
                     .then(() => {
                         let para = { id: row.id };
+                        this.deleteLoading = true;
                         authAdminDelete(para)
                             .then(response => {
                                 this.deleteLoading = false;
                                 if (response.code) {
-                                    this.$message({
-                                        message: response.message,
-                                        type: "error"
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: "删除成功",
-                                        type: "success"
-                                    });
-                                    // 刷新数据
-                                    this.list.splice(index, 1);
+                                    this.$message.error(response.message);
+                                    return false;
                                 }
+                                this.$message.success("操作成功");
+                                // 刷新数据
+                                this.list.splice(index, 1);
                             })
                             .catch(() => {
                                 this.deleteLoading = false;
                             });
                     })
                     .catch(() => {
-                        this.$message({
-                            type: "info",
-                            message: "取消删除"
-                        });
+                        this.$message.info("取消删除");
                     });
             }
         }

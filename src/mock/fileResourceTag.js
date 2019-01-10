@@ -18,9 +18,7 @@ const index = {
 // 新建资源分组
 const add = {
     data: {
-        id: 2,
-        tag: "ss",
-        create_time: 1527603722
+        id: 2
     }
 };
 

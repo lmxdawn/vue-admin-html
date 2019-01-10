@@ -11,6 +11,9 @@ import authRole from "./authRole";
 import upload from "./upload";
 import fileResourceTag from "./fileResourceTag";
 import fileResource from "./fileResource";
+import adSite from "./adSite";
+import ad from "./ad";
+
 // 登录相关
 Mock.mock(/\/admin\/auth\/login\/out/, "post", login.out);
 Mock.mock(/\/admin\/auth\/login\/password/, "post", login.password);
@@ -59,10 +62,10 @@ Mock.mock(/\/admin\/auth\/role\/auth/, "post", authRole.auth);
 /**
  * 上传相关
  */
-// 获取文件列表
-Mock.mock(/admin\/file\/upload\/qiuniuUpToken/, "get", upload.qiuniuUpToken);
+// 获取上传token
+Mock.mock(/admin\/file\/upload\/qiuNiuUpToken/, "get", upload.qiuNiuUpToken);
 // 上传文件
-Mock.mock(/admin\/file\/upload\/uploadFile/, "post", upload.uploadFile);
+Mock.mock(/admin\/file\/upload\/create/, "post", upload.create);
 
 /**
  * 资源分组相关
@@ -78,5 +81,17 @@ Mock.mock(/admin\/file\/resource_tag\/add/, "post", fileResourceTag.add);
 Mock.mock(/admin\/file\/resource\/index/, "get", fileResource.index);
 // 上传资源
 Mock.mock(/admin\/file\/resource\/add/, "post", fileResource.add);
+
+// 广告位相关
+Mock.mock(/\/admin\/ad\/site\/index/, "get", adSite.index);
+Mock.mock(/\/admin\/ad\/site\/adList/, "get", adSite.adList);
+Mock.mock(/\/admin\/ad\/site\/save/, "post", adSite.save);
+Mock.mock(/\/admin\/ad\/site\/edit/, "post", adSite.edit);
+Mock.mock(/\/admin\/ad\/site\/delete/, "post", adSite.del);
+// 广告相关
+Mock.mock(/\/admin\/ad\/ad\/index/, "get", ad.index);
+Mock.mock(/\/admin\/ad\/ad\/save/, "post", ad.save);
+Mock.mock(/\/admin\/ad\/ad\/edit/, "post", ad.edit);
+Mock.mock(/\/admin\/ad\/ad\/delete/, "post", ad.del);
 
 export default Mock;

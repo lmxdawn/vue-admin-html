@@ -134,16 +134,7 @@ const index = {
 // 上传资源
 const add = {
     data: {
-        tag_id: 0,
-        type: 0,
-        filename: "home_many.png",
-        path: "resources/image/20180529/1ca4805644043762d0ca72ca2bf2d8bb.png",
-        size: 9705,
-        ext: "png",
-        create_time: 1527603582,
-        id: 11,
-        url:
-            "http://www.test.com/uploads/resources/image/20180529/1ca4805644043762d0ca72ca2bf2d8bb.png"
+        id: 11
     }
 };
 

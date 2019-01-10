@@ -36,11 +36,7 @@ const roleList = {
 
 const save = {
     data: {
-        id: "2",
-        username: "test",
-        password: "",
-        status: "1",
-        roles: [1]
+        id: 2
     }
 };
 

@@ -57,8 +57,8 @@
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="formData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
+                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="1">正常</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="额外的规则表达式">
@@ -89,7 +89,7 @@ const formJson = {
     pid: "2",
     name: "",
     title: "",
-    status: "1",
+    status: 1,
     condition: "",
     listorder: 999
 };
@@ -172,12 +172,19 @@ export default {
                     this.treeList = [];
                 });
         },
+        // 刷新表单
+        resetForm() {
+            if (this.$refs["dataForm"]) {
+                // 清空验证信息表单
+                this.$refs["dataForm"].clearValidate();
+                // 刷新表单
+                this.$refs["dataForm"].resetFields();
+            }
+        },
         // 隐藏表单
         hideForm() {
             // 更改值
             this.formVisible = !this.formVisible;
-            // 清空表单
-            this.$refs["dataForm"].resetFields();
             return true;
         },
         // 显示表单
@@ -185,18 +192,13 @@ export default {
             this.formVisible = true;
             this.pidData = data || null;
             formJson.pid = (data && parseInt(data.id)) || "";
-            this.formData = Object.assign({}, formJson);
+            this.formData = JSON.parse(JSON.stringify(formJson));
             if (formName === "edit") {
                 this.formData = Object.assign({}, data);
                 this.node = node;
             }
             this.formData.pid = !this.formData.pid ? "" : this.formData.pid;
-            this.formData.status += ""; // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
             this.formName = formName;
-            // 清空验证信息表单
-            if (this.$refs["dataForm"]) {
-                this.$refs["dataForm"].clearValidate();
-            }
             if (data && data.id) {
                 this.index = this.mergeList.findIndex(d => d.id === data.id);
             }
@@ -210,20 +212,14 @@ export default {
                         .then(response => {
                             this.formLoading = false;
                             if (response.code) {
-                                this.$message({
-                                    message: response.message,
-                                    type: "error"
-                                });
-                            } else {
-                                this.$message({
-                                    message: "操作成功",
-                                    type: "success"
-                                });
-                                // 刷新表单
-                                this.$refs["dataForm"].resetFields();
-                                this.formVisible = false;
-                                if (this.formName !== "edit") {
-                                    const newChild = response.data || {};
+                                this.$message.error(response.message);
+                                return false;
+                            }
+                            this.$message.success("操作成功");
+                            this.formVisible = false;
+                            if (this.formName !== "edit") {
+                                if (response.data && response.data.id) {
+                                    data.id = response.data.id;
                                     if (this.pidData) {
                                         if (!this.pidData.children) {
                                             this.$set(
@@ -232,20 +228,22 @@ export default {
                                                 []
                                             );
                                         }
-                                        this.pidData.children.push(newChild);
+                                        this.pidData.children.push(data);
                                     } else {
-                                        this.mergeList.push(newChild);
+                                        this.mergeList.push(data);
                                     }
-                                } else {
-                                    const parent = this.node.parent;
-                                    const children =
-                                        parent.data.children || parent.data;
-                                    const index = children.findIndex(
-                                        d => d.id === data.id
-                                    );
-                                    children.splice(index, 1, data);
                                 }
+                            } else {
+                                const parent = this.node.parent;
+                                const children =
+                                    parent.data.children || parent.data;
+                                const index = children.findIndex(
+                                    d => d.id === data.id
+                                );
+                                children.splice(index, 1, data);
                             }
+                            // 刷新表单
+                            this.resetForm();
                         })
                         .catch(() => {
                             this.formLoading = false;
@@ -272,33 +270,24 @@ export default {
                             .then(response => {
                                 this.deleteLoading = false;
                                 if (response.code) {
-                                    this.$message({
-                                        message: response.message,
-                                        type: "error"
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: "删除成功",
-                                        type: "success"
-                                    });
-                                    const parent = node.parent;
-                                    const children =
-                                        parent.data.children || parent.data;
-                                    const index = children.findIndex(
-                                        d => d.id === data.id
-                                    );
-                                    children.splice(index, 1);
+                                    this.$message.error(response.message);
+                                    return false;
                                 }
+                                this.$message.success("删除成功");
+                                const parent = node.parent;
+                                const children =
+                                    parent.data.children || parent.data;
+                                const index = children.findIndex(
+                                    d => d.id === data.id
+                                );
+                                children.splice(index, 1);
                             })
                             .catch(() => {
                                 this.deleteLoading = false;
                             });
                     })
                     .catch(() => {
-                        this.$message({
-                            type: "info",
-                            message: "取消删除"
-                        });
+                        this.$message.info("取消删除");
                     });
             }
         }

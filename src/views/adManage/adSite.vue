@@ -69,30 +69,44 @@
                 <el-form-item label="广告位名称" prop="site_name">
                     <el-input v-model="formData.site_name" auto-complete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="包含广告（拖动更改排序）" prop="describe">
+                    <span style="color: red;">注意：广告列表中红色背景为已禁用</span>
+                    <div class="remove-list-box">
+                        <div class="remove-list">
+
+                            <draggable element="ul" v-model="formData.ads">
+                                <li class="remove-list-item" style="cursor: move;" :style="{backgroundColor: item.status === 1 ? '#fff' : '#fef0f0', color: item.status === 1 ? '#606266' : '#f56c6c'}" v-for="(item, index) in formData.ads" :key="index">
+                                    {{item.title}} - {{item.describe}}（ID：{{item.ad_id}}）
+                                    <i class="el-icon-close remove-list-close" @click="handleAdClose(index)"></i>
+                                </li>
+                            </draggable>
+
+                        </div>
+                        添加广告（填写广告ID，批量添加以英文逗号隔开，按顺序排列）
+                        <el-select
+                            size="mini"
+                            v-model="adId"
+                            multiple
+                            filterable
+                            remote
+                            reserve-keyword
+                            placeholder="输入广告ID查找"
+                            :no-data-text="adListNoDataText"
+                            :remote-method="queryAdIdAsync"
+                            @change="handleAdChange"
+                            :loading="queryAdIdAsyncLoading">
+                            <el-option
+                                v-for="item in adList"
+                                :key="item.ad_id"
+                                :label="item.title"
+                                :value="item.ad_id">
+                            </el-option>
+                        </el-select>
+                        <el-button type="primary" size="mini" @click.native="handleAdSubmit()" style="margin-left: 5px;">插入</el-button>
+                    </div>
+                </el-form-item>
                 <el-form-item label="描述" prop="describe">
                     <el-input v-model="formData.describe" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="描述" prop="ad_ids">
-                    <el-transfer
-                        style="text-align: left;display: inline-block;width: 100%;"
-                        v-model="formData.ad_ids"
-                        filterable
-                        :left-default-checked="[2, 3]"
-                        :right-default-checked="[1]"
-                        :titles="['备选', '已选']"
-                        :button-texts="['到左边', '到右边']"
-                        :format="{
-                            noChecked: '${total}',
-                            hasChecked: '${checked}/${total}'
-                         }"
-                        @left-check-change="handleAdListLeftChange"
-                        @right-check-change="handleAdListRightChange"
-                        :data="adList">
-                        <span slot-scope="{ option }" :title="option.label">{{ option.key }} - {{ option.label }}</span>
-                        <el-button class="transfer-footer" slot="left-footer" size="small" @click.native="leftMore()">加载更多</el-button>
-                        <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button>
-                    </el-transfer>
-
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -112,25 +126,27 @@ import {
     adSiteSave,
     adSiteDelete
 } from "../../api/ad/adSite";
+import draggable from "vuedraggable";
 const formJson = {
     site_id: "",
     site_name: "",
     describe: "",
-    ad_ids: []
+    ads: []
 };
 export default {
     data() {
         return {
-            adList: [],
             query: {
                 site_id: "",
-                ad_ids: "",
-                adPage: 1,
-                adLimit: 100,
                 page: 1,
                 limit: 20
             },
             list: [],
+            adId: [],
+            adSelectList: [],
+            adList: {},
+            adListNoDataText: "无数据",
+            queryAdIdAsyncLoading: false,
             total: 0,
             loading: true,
             index: null,
@@ -153,6 +169,9 @@ export default {
             },
             deleteLoading: false
         };
+    },
+    components: {
+        draggable
     },
     methods: {
         onSubmit() {
@@ -184,86 +203,99 @@ export default {
                     this.total = 0;
                 });
         },
-        getAdList() {
-            adSiteAdList(this.query)
+        // 异步查找广告
+        queryAdIdAsync(adIdStr) {
+            this.adListNoDataText = "请确认广告状态是否正常";
+            if (!adIdStr || adIdStr.charAt(adIdStr.length - 1) === ",") {
+                this.adList = {};
+                return false;
+            }
+            let adIds = adIdStr.split(",");
+            this.formData.ads.forEach(item => {
+                adIds.forEach((obj, index) => {
+                    if (item.ad_id === parseInt(obj)) {
+                        adIds.splice(index, 1);
+                    }
+                });
+            });
+            if (adIds.length === 0) {
+                this.adListNoDataText = "当前所有广告已存在列表中";
+                return false;
+            }
+            this.queryAdIdAsyncLoading = true;
+            adSiteAdList({ ad_ids: adIds })
                 .then(response => {
-                    let adList = response.data || [];
-                    for (let item of adList) {
-                        let isPush = true;
-                        for (let i in this.adList) {
-                            if (this.adList[i].key === item.key) {
-                                isPush = false;
+                    this.queryAdIdAsyncLoading = false;
+                    let list = response.data.list;
+                    if (list) {
+                        list.forEach(value => {
+                            let has = false;
+                            if (this.adList.length > 0) {
+                                has = this.adList.some(item => {
+                                    return item.ad_id === value.ad_id;
+                                });
                             }
-                        }
-                        if (isPush) {
-                            this.adList.push(item);
-                        }
+                            if (!has) {
+                                if (!this.adList.hasOwnProperty(value.ad_id)) {
+                                    this.adList[value.ad_id] = value;
+                                }
+                            }
+                        });
+                    } else {
+                        this.adList = {};
                     }
                 })
                 .catch(() => {
-                    this.adList = [];
+                    this.adList = {};
+                    this.queryAdIdAsyncLoading = false;
                 });
         },
-        leftMore() {
-            this.query.adPage += 1;
-            this.getAdList();
-        },
-        handleAdListLeftChange(keys) {
-            let adIds = this.formData.ad_ids;
-            for (let item of keys) {
-                let isPush = true;
-                for (let i in adIds) {
-                    if (adIds[i] === item) {
-                        isPush = false;
-                    }
-                }
-                if (isPush) {
-                    this.formData.ad_ids.push(item);
-                }
+        handleAdSubmit() {
+            if (this.adSelectList.length === 0) {
+                return false;
             }
-        },
-        handleAdListRightChange(keys) {
-            let adIds = this.formData.ad_ids;
-            for (let i in adIds) {
-                for (let item of keys) {
-                    if (adIds[i] === item) {
-                        this.formData.ad_ids.splice(i, 1);
-                    }
+            let ads = [];
+            this.adSelectList.map(item => {
+                if (this.adList.hasOwnProperty(item)) {
+                    ads.push(this.adList[item]);
                 }
+            });
+            this.formData.ads = this.formData.ads.concat(ads);
+            this.adList = {};
+            this.adId = [];
+        },
+        handleAdClose(index) {
+            this.formData.ads.splice(index, 1);
+        },
+        handleAdChange(item) {
+            this.adSelectList = item;
+        },
+        // 刷新表单
+        resetForm() {
+            if (this.$refs["dataForm"]) {
+                // 清空验证信息表单
+                this.$refs["dataForm"].clearValidate();
+                // 刷新表单
+                this.$refs["dataForm"].resetFields();
             }
         },
         // 隐藏表单
         hideForm() {
             // 更改值
             this.formVisible = !this.formVisible;
-            // 清空表单
-            this.$refs["dataForm"].resetFields();
             return true;
         },
         // 显示表单
         handleForm(index, row) {
             this.formVisible = true;
-            this.formData = Object.assign({}, formJson);
-            // 清除选择了的广告
-            this.formData.ad_ids = [];
+            this.formData = JSON.parse(JSON.stringify(formJson));
             if (row !== null) {
                 this.formData = Object.assign({}, row);
-            }
-            let adIds = this.formData.ad_ids;
-            this.query.ad_ids = adIds.join(",");
-            this.query.adPage = 1;
-            // 加载广告列表
-            if (this.adList.length === 0) {
-                this.getAdList();
             }
             this.formName = "add";
             if (index !== null) {
                 this.index = index;
                 this.formName = "edit";
-            }
-            // 清空验证信息表单
-            if (this.$refs["dataForm"]) {
-                this.$refs["dataForm"].clearValidate();
             }
         },
         formSubmit() {
@@ -271,31 +303,36 @@ export default {
                 if (valid) {
                     this.formLoading = true;
                     let data = Object.assign({}, this.formData);
-                    adSiteSave(data, this.formName).then(res => {
-                        this.formLoading = false;
-                        if (res.code) {
-                            this.$message({
-                                message: res.message,
-                                type: "error"
-                            });
-                        } else {
-                            this.$message({
-                                message: "操作成功",
-                                type: "success"
-                            });
-                            // 向头部添加数据
-                            // this.list.unshift(res)
-                            // 刷新表单
-                            this.$refs["dataForm"].resetFields();
+                    let ad_ids = [];
+                    let ads = data.ads;
+                    ads.forEach(function(value) {
+                        ad_ids.push(value.ad_id);
+                    });
+                    data.ads = [];
+                    data.ad_ids = ad_ids;
+                    let addData = Object.assign({}, this.formData);
+                    adSiteSave(data, this.formName)
+                        .then(response => {
+                            this.formLoading = false;
+                            if (response.code) {
+                                this.$message.error(response.message);
+                                return false;
+                            }
+                            this.$message.success("操作成功");
                             this.formVisible = false;
                             if (this.formName === "add") {
                                 // 向头部添加数据
-                                this.list.unshift(res);
+                                addData.site_id = response.data.site_id;
+                                this.list.unshift(addData);
                             } else {
-                                this.list.splice(this.index, 1, data);
+                                this.list.splice(this.index, 1, addData);
                             }
-                        }
-                    });
+                            // 刷新表单
+                            this.resetForm();
+                        })
+                        .catch(() => {
+                            this.formLoading = false;
+                        });
                 }
             });
         },
@@ -307,47 +344,35 @@ export default {
                 })
                     .then(() => {
                         let para = { site_id: row.site_id };
+                        this.deleteLoading = false;
                         adSiteDelete(para)
                             .then(res => {
                                 this.deleteLoading = false;
                                 if (res.code) {
-                                    this.$message({
-                                        message: res.message,
-                                        type: "error"
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: "删除成功",
-                                        type: "success"
-                                    });
-                                    // 刷新数据
-                                    this.list.splice(index, 1);
+                                    this.$message.error(res.message);
+                                    return false;
                                 }
+                                this.$message.success("删除成功");
+                                // 刷新数据
+                                this.list.splice(index, 1);
                             })
                             .catch(() => {
                                 this.deleteLoading = false;
                             });
                     })
                     .catch(() => {
-                        this.$message({
-                            type: "info",
-                            message: "取消删除"
-                        });
+                        this.$message.info("取消删除");
                     });
             }
-        },
-        resourceSelect(list) {
-            if (!list || list.length <= 0) {
-                return;
-            }
-            let file = list[0];
-            this.formData.default_pic = file.path;
-            this.formData.default_pic_url = file.url;
-            this.uploadDialogVisible = false;
         }
     },
     filters: {},
-    mounted() {},
+    mounted() {
+        document.body.ondrop = function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+    },
     created() {
         // 将参数拷贝进查询对象
         let query = this.$route.query;

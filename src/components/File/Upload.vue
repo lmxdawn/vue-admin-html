@@ -163,8 +163,9 @@ export default {
                             uploadFile(url, formData)
                                 .then(response => {
                                     this.uploadLoading = false;
-                                    if (response.key) {
-                                        const filePath = response.key;
+                                    if (response.key || response.data.key) {
+                                        const filePath =
+                                            response.key || response.data.key;
                                         let _URL =
                                             window.URL || window.webkitURL;
                                         const filePathUrl = _URL.createObjectURL(
@@ -212,7 +213,7 @@ export default {
             if (this.size) {
                 let sizeStr = this.size;
                 isSize = sizeStr > 0 && file.size > sizeStr;
-                if (!isSize) {
+                if (isSize) {
                     this.$message.error(
                         "上传文件不能超过 " + renderSize(sizeStr) + "!"
                     );

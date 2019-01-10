@@ -6,7 +6,7 @@ import axios from "../../utils/axios";
 // 获取七牛上传 upToken
 export function qiuniuUpToken(query) {
     return axios({
-        url: "/admin/file/upload/qiuniuUpToken",
+        url: "/admin/file/upload/qiuNiuUpToken",
         method: "get",
         params: query
     });

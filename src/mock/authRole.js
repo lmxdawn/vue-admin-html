@@ -20,11 +20,7 @@ const index = {
 
 const save = {
     data: {
-        id: "2",
-        name: "test",
-        status: "1",
-        remark: "测试",
-        create_time: 1524812649
+        id: 2
     }
 };
 

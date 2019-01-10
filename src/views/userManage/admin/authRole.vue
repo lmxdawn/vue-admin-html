@@ -104,8 +104,8 @@
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="formData.status">
-                        <el-radio label="0">禁用</el-radio>
-                        <el-radio label="1">正常</el-radio>
+                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="1">正常</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="描述">
@@ -132,7 +132,7 @@ import {
 const formJson = {
     id: "",
     name: "",
-    status: "1",
+    status: 1,
     remark: "",
     listorder: 999
 };
@@ -276,32 +276,33 @@ export default {
                 return false;
             }
             authRoleAuth(this.authFormData)
-                .then(res => {
+                .then(response => {
                     this.authLoading = false;
-                    if (res.code) {
-                        this.$message({
-                            message: res.message,
-                            type: "error"
-                        });
-                    } else {
-                        this.$message({
-                            message: "授权成功",
-                            type: "success"
-                        });
-                        // 刷新表单
-                        this.authFormVisible = false;
+                    if (response.code) {
+                        this.$message.error(response.message);
+                        return false;
                     }
+                    this.$message.success("授权成功");
+                    // 刷新表单
+                    this.authFormVisible = false;
                 })
                 .catch(() => {
-                    this.editLoading = false;
+                    this.authLoading = false;
                 });
+        },
+        // 刷新表单
+        resetForm() {
+            if (this.$refs["dataForm"]) {
+                // 清空验证信息表单
+                this.$refs["dataForm"].clearValidate();
+                // 刷新表单
+                this.$refs["dataForm"].resetFields();
+            }
         },
         // 隐藏表单
         hideForm() {
             // 更改值
             this.formVisible = !this.formVisible;
-            // 清空表单
-            this.$refs["dataForm"].resetFields();
             return true;
         },
         // 显示表单
@@ -311,15 +312,10 @@ export default {
             if (row !== null) {
                 this.formData = Object.assign({}, row);
             }
-            this.formData.status += ""; // 转为字符串（解决默认选中的时候字符串和数字不能比较的问题）
             this.formName = "add";
             if (index !== null) {
                 this.index = index;
                 this.formName = "edit";
-            }
-            // 清空验证信息表单
-            if (this.$refs["dataForm"]) {
-                this.$refs["dataForm"].clearValidate();
             }
         },
         formSubmit() {
@@ -331,25 +327,19 @@ export default {
                         .then(response => {
                             this.formLoading = false;
                             if (response.code) {
-                                this.$message({
-                                    message: response.message,
-                                    type: "error"
-                                });
-                            } else {
-                                this.$message({
-                                    message: "操作成功",
-                                    type: "success"
-                                });
-                                // 刷新表单
-                                this.$refs["dataForm"].resetFields();
-                                this.formVisible = false;
-                                if (this.formName === "add") {
-                                    // 向头部添加数据
-                                    this.list.unshift(response.data);
-                                } else {
-                                    this.list.splice(this.index, 1, data);
-                                }
+                                this.$message.error(response.message);
+                                return false;
                             }
+                            this.$message.success("操作成功");
+                            this.formVisible = false;
+                            if (this.formName === "add") {
+                                // 向头部添加数据
+                                this.list.unshift(response.data);
+                            } else {
+                                this.list.splice(this.index, 1, data);
+                            }
+                            // 刷新表单
+                            this.resetForm();
                         })
                         .catch(() => {
                             this.formLoading = false;
@@ -370,28 +360,19 @@ export default {
                             .then(response => {
                                 this.deleteLoading = false;
                                 if (response.code) {
-                                    this.$message({
-                                        message: response.message,
-                                        type: "error"
-                                    });
-                                } else {
-                                    this.$message({
-                                        message: "删除成功",
-                                        type: "success"
-                                    });
-                                    // 刷新数据
-                                    this.list.splice(index, 1);
+                                    this.$message.error(response.message);
+                                    return false;
                                 }
+                                this.$message.success("删除成功");
+                                // 刷新数据
+                                this.list.splice(index, 1);
                             })
                             .catch(() => {
                                 this.deleteLoading = false;
                             });
                     })
                     .catch(() => {
-                        this.$message({
-                            type: "info",
-                            message: "取消删除"
-                        });
+                        this.$message.info("取消删除");
                     });
             }
         }

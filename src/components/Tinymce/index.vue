@@ -7,7 +7,7 @@
 <script>
 import plugins from "./plugins";
 import toolbar from "./toolbar";
-import { qiuniuUpToken, uploadFile } from "../../api/file/upload";
+import { qiuNiuUpToken, uploadFile } from "../../api/file/upload";
 
 export default {
     name: "Tinymce",
@@ -127,7 +127,7 @@ export default {
                 // },
                 images_upload_handler(blobInfo, success, failure, progress) {
                     progress(0);
-                    qiuniuUpToken()
+                    qiuNiuUpToken()
                         .then(response => {
                             if (response.code > 0) {
                                 failure("出现未知问题，刷新页面");

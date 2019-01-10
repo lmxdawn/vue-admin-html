@@ -445,6 +445,17 @@ export default {
         Upload
     },
     methods: {
+        onReset() {
+            this.$router.push({
+                path: ""
+            });
+            this.query = {
+                title: "",
+                page: 1,
+                limit: 20
+            };
+            this.getList();
+        },
         onSubmit() {
             this.$router.push({
                 path: "",
@@ -515,7 +526,7 @@ export default {
             ) {
                 let arr = this.androidVersionListInput.split(",");
                 for (let i in arr) {
-                    let avList = this.formData.android_version_list.length;
+                    let avList = this.formData.android_version_list;
                     if (
                         arr[i] !== "" &&
                         (avList.length === 0 || avList.indexOf(arr[i]) < 0)

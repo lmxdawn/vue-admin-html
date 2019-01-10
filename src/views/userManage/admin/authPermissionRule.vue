@@ -14,7 +14,7 @@
 
             <el-form-item>
                 <el-button-group>
-                    <el-button type="primary" icon="el-icon-refresh" @click="getList"></el-button>
+                    <el-button type="primary" icon="el-icon-refresh" @click="onReset"></el-button>
                     <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
                     <el-button type="primary" @click.native="handleForm(null,null)">新增</el-button>
                 </el-button-group>
@@ -97,7 +97,6 @@ export default {
     data() {
         return {
             query: {
-                // pid: '',
                 name: "",
                 status: ""
             },
@@ -147,6 +146,16 @@ export default {
             <el-button style="font-size: 12px;" type="text" on-click={ () => this.handleDel(node, data) }>删除</el-button>
             </span>
             </span>)
+        },
+        onReset() {
+            this.$router.push({
+                path: ""
+            });
+            this.query = {
+                name: "",
+                status: ""
+            };
+            this.getList();
         },
         onSubmit() {
             this.getList();

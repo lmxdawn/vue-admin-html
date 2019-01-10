@@ -7,7 +7,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button-group>
-                    <el-button type="primary" icon="el-icon-refresh" @click="getList();adList = []"></el-button>
+                    <el-button type="primary" icon="el-icon-refresh" @click="onReset"></el-button>
                     <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
                     <el-button type="primary" @click.native="handleForm(null,null)">新增</el-button>
                 </el-button-group>
@@ -38,7 +38,7 @@
                 prop="update_time">
                 <template slot-scope="scope">
                     <i class="el-icon-time"></i>
-                    <span>{{ scope.row.update_time }}</span>
+                    <span>{{ scope.row.modified_time }}</span>
                 </template>
             </el-table-column>
             <el-table-column
@@ -174,6 +174,17 @@ export default {
         draggable
     },
     methods: {
+        onReset() {
+            this.$router.push({
+                path: ""
+            });
+            this.query = {
+                site_id: "",
+                page: 1,
+                limit: 20
+            };
+            this.getList();
+        },
         onSubmit() {
             this.$router.push({
                 path: "",
@@ -385,19 +396,4 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss">
-.transfer-footer {
-    margin-left: 20px;
-    padding: 6px 5px;
-}
-.el-transfer-panel {
-    width: 40% !important;
-}
-@media screen and (max-width: 768px) {
-    .el-transfer-panel {
-        width: 100% !important;
-    }
-}
-.el-transfer-panel__list.is-filterable {
-    height: 150px !important;
-}
 </style>

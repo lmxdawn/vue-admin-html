@@ -14,7 +14,7 @@
 
             <el-form-item>
                 <el-button-group>
-                    <el-button type="primary" icon="el-icon-refresh" @click="getList"></el-button>
+                    <el-button type="primary" icon="el-icon-refresh" @click="onReset"></el-button>
                     <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
                     <el-button type="primary" @click.native="handleForm(null,null)">新增</el-button>
                 </el-button-group>
@@ -181,6 +181,18 @@ export default {
         };
     },
     methods: {
+        onReset() {
+            this.$router.push({
+                path: ""
+            });
+            this.query = {
+                name: "",
+                status: "",
+                page: 1,
+                limit: 20
+            };
+            this.getList();
+        },
         onSubmit() {
             this.getList();
         },
@@ -308,7 +320,7 @@ export default {
         // 显示表单
         handleForm(index, row) {
             this.formVisible = true;
-            this.formData = Object.assign({}, formJson);
+            this.formData = JSON.parse(JSON.stringify(formJson));
             if (row !== null) {
                 this.formData = Object.assign({}, row);
             }
@@ -334,7 +346,10 @@ export default {
                             this.formVisible = false;
                             if (this.formName === "add") {
                                 // 向头部添加数据
-                                this.list.unshift(response.data);
+                                if (response.data && response.data.id) {
+                                    data.id = response.data.id;
+                                    this.list.unshift(data);
+                                }
                             } else {
                                 this.list.splice(this.index, 1, data);
                             }

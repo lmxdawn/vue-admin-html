@@ -22,7 +22,7 @@
 
             <el-form-item>
                 <el-button-group>
-                    <el-button type="primary" icon="el-icon-refresh" @click="getList"></el-button>
+                    <el-button type="primary" icon="el-icon-refresh" @click="onReset"></el-button>
                     <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
                     <el-button type="primary" @click.native="handleForm(null,null)">新增</el-button>
                 </el-button-group>
@@ -209,6 +209,19 @@ export default {
         };
     },
     methods: {
+        onReset() {
+            this.$router.push({
+                path: ""
+            });
+            this.query = {
+                username: "",
+                status: "",
+                page: 1,
+                limit: 20,
+                role_id: ""
+            };
+            this.getList();
+        },
         onSubmit() {
             this.$router.push({
                 path: "",

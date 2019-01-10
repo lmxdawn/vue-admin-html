@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { qiuniuUpToken, uploadFile } from "../../api/file/upload";
+import { qiuNiuUpToken, uploadFile } from "../../api/file/upload";
 import { renderSize } from "../../filtres/index";
 
 export default {
@@ -118,7 +118,7 @@ export default {
             this.fileName = data[0].name;
             e.target.value = "";
         },
-        onRest() {
+        onReset() {
             this.activeName = "localhost";
             this.file = null;
             this.fileName = "";
@@ -135,7 +135,7 @@ export default {
                     return;
                 }
                 this.$emit("on-select", this.fileUrl, this.fileUrl);
-                this.onRest();
+                this.onReset();
                 return;
             }
             if (this.file === null) {
@@ -150,7 +150,7 @@ export default {
             isVerify
                 .then(() => {
                     this.uploadLoading = true;
-                    qiuniuUpToken()
+                    qiuNiuUpToken()
                         .then(response => {
                             if (response.code > 0) {
                                 this.$message.error("出现未知问题，刷新页面");
@@ -176,7 +176,7 @@ export default {
                                             filePath,
                                             filePathUrl
                                         );
-                                        this.onRest();
+                                        this.onReset();
                                         return;
                                     }
                                     this.$message.error("上传出错");

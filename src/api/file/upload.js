@@ -13,7 +13,7 @@ export function qiuNiuUpToken(query) {
 }
 
 // 上传文件
-export function uploadFile(url, formdata) {
+export function createFile(url, formdata) {
     return axios({
         url: url,
         method: "post",

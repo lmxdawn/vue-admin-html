@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { qiuNiuUpToken, uploadFile } from "../../api/file/upload";
+import { qiuNiuUpToken, createFile } from "../../api/file/upload";
 import { renderSize } from "../../filtres/index";
 
 export default {
@@ -160,7 +160,7 @@ export default {
                             const formData = new FormData();
                             formData.append("token", response.data.up_token);
                             formData.append("file", this.file);
-                            uploadFile(url, formData)
+                            createFile(url, formData)
                                 .then(response => {
                                     this.uploadLoading = false;
                                     if (response.key || response.data.key) {

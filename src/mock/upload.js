@@ -9,16 +9,16 @@ const qiuNiuUpToken = {
         expires_in: 86400,
         up_token:
             "GRUuplbSg1DrFbLlx2__UPc0Qe0oIcIdqVRPgQ6i:nPJdU3WUHFcu5MSc4EOY8RSThGE=:eyJzY29wZSI6InNoaWd1YW5namkiLCJkZWFkbGluZSI6MTU0MzQ2NzcyN30=",
-        upload_url: "/admin/file/upload/create"
+        upload_url: "/admin/file/upload/createFile"
     }
 };
 
 // 上传文件
-const create = {
+const createFile = {
     key: "TIMjie_tu_20180516105525-fu_ben_.png"
 };
 
 export default {
     qiuNiuUpToken,
-    create
+    createFile
 };

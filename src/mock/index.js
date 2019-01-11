@@ -65,7 +65,7 @@ Mock.mock(/\/admin\/auth\/role\/auth/, "post", authRole.auth);
 // 获取上传token
 Mock.mock(/admin\/file\/upload\/qiuNiuUpToken/, "get", upload.qiuNiuUpToken);
 // 上传文件
-Mock.mock(/admin\/file\/upload\/create/, "post", upload.create);
+Mock.mock(/admin\/file\/upload\/createFile/, "post", upload.createFile);
 
 /**
  * 资源分组相关

@@ -7,7 +7,7 @@
 <script>
 import plugins from "./plugins";
 import toolbar from "./toolbar";
-import { qiuNiuUpToken, uploadFile } from "../../api/file/upload";
+import { qiuNiuUpToken, createFile } from "../../api/file/upload";
 
 export default {
     name: "Tinymce",
@@ -138,7 +138,7 @@ export default {
                             formData.append("token", response.up_token);
                             formData.append("file", blobInfo.blob());
                             const domain = response.domain;
-                            uploadFile(url, formData)
+                            createFile(url, formData)
                                 .then(response => {
                                     if (response.key) {
                                         success(domain + "/" + response.key);

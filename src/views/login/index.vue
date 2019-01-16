@@ -91,10 +91,10 @@ export default {
                             if (this.redirect) {
                                 path = this.redirect;
                             }
-                            // this.$router.push({
-                            //     path: path
-                            // });
-                            window.location.replace(path);
+                            this.$router.push({
+                                path: path
+                            });
+                            // window.location.replace(path);
                             // this.showDialog = true
                         })
                         .catch(() => {

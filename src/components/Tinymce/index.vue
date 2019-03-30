@@ -79,6 +79,7 @@ export default {
             window.tinymce.init({
                 language: "zh_CN",
                 selector: `#${this.tinymceId}`,
+                convert_urls: false, // 让图片不自动设置成相对路径
                 height: this.height,
                 body_class: "panel-body ",
                 object_resizing: false,

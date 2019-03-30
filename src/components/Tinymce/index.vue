@@ -141,7 +141,9 @@ export default {
                             createFile(url, formData)
                                 .then(response => {
                                     if (response.data.key) {
-                                        success(domain + "/" + response.data.key);
+                                        let path_url =
+                                            domain + "/" + response.data.key;
+                                        success(path_url);
                                         progress(100);
                                         return;
                                     }

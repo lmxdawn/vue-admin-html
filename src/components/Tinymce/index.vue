@@ -133,15 +133,15 @@ export default {
                                 failure("出现未知问题，刷新页面");
                                 return;
                             }
-                            const url = response.upload_url;
+                            const url = response.data.upload_url;
                             const formData = new FormData();
-                            formData.append("token", response.up_token);
+                            formData.append("token", response.data.up_token);
                             formData.append("file", blobInfo.blob());
-                            const domain = response.domain;
+                            const domain = response.data.domain;
                             createFile(url, formData)
                                 .then(response => {
-                                    if (response.key) {
-                                        success(domain + "/" + response.key);
+                                    if (response.data.key) {
+                                        success(domain + "/" + response.data.key);
                                         progress(100);
                                         return;
                                     }

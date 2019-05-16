@@ -73,13 +73,13 @@
 <template>
     <div v-if="!item.hidden&&item.children">
         <router-link v-if="!item.hidden&&item.noDropdown&&!item.children[0].children" :to="item.path+'/'+item.children[0].path">
-            <el-menu-item :index="item.path+'/'+item.children[0].path">
+            <el-menu-item class="submenu-title-noDropdown" :index="item.path+'/'+item.children[0].path">
                 <icon-svg v-if='item.icon' :icon-class="item.icon"></icon-svg>
                 <span slot="title">{{item.name}}</span>
             </el-menu-item>
         </router-link>
 
-        <el-submenu :index="item.path" v-else-if="!item.noDropdown&&!item.hidden">
+        <el-submenu class="nest-menu" :index="item.path" v-else-if="!item.noDropdown&&!item.hidden">
             <template slot="title">
                 <icon-svg v-if='item.icon' :icon-class="item.icon"></icon-svg>
                 <span v-if='item.name' slot="title">{{item.name}}</span>

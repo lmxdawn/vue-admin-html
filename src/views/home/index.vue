@@ -14,9 +14,9 @@
                 :default-active="onRoutes"
                 :collapse="isCollapse"
                 style="border: none;"
-                background-color="#545c64"
-                text-color="#fff"
-                active-text-color="#ffd04b"
+                text-color="rgb(191, 203, 217)"
+                background-color="rgb(48, 65, 86)"
+                active-text-color="rgb(64, 158, 255)"
                 unique-opened
                 router>
                 <sidebar-item v-for="item in routers" :key="item.path" :item='item' ></sidebar-item>
@@ -327,7 +327,7 @@ export default {
 }
 
 .container-left {
-    background-color: #545c64;
+    background-color: rgb(48, 65, 86);
     transition: left 0.23s ease-in-out;
     height: 100%;
     flex: 0 0 auto;

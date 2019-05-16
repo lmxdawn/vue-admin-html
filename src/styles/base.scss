@@ -95,6 +95,22 @@ input {
     }
 }
 
+.container-left {
+    .submenu-title-noDropdown,
+    .el-submenu__title {
+        &:hover {
+            background-color: #263445 !important;
+        }
+    }
+
+    .nest-menu .el-submenu>.el-submenu__title,
+    .el-submenu .el-menu-item {
+        background-color: #1f2d3d !important;
+        &:hover {
+            background-color: #001528 !important;
+        }
+    }
+}
 // 左侧导航栏的折叠后的样式
 .el-menu--collapse {
     .el-submenu {
@@ -122,6 +138,19 @@ input {
             }
         }
     }
+}
+.el-menu--vertical {
+
+    .nest-menu.el-submenu>.el-submenu__title,
+    .el-menu-item {
+        &:hover {
+            // you can use $subMenuHover
+            background-color: #263455 !important;
+        }
+    }
+
+    // the scroll bar appears when the subMenu is too long
+
 }
 
 // 能删除的列表

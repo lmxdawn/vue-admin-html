@@ -141,7 +141,7 @@ export const asyncRouterMap = [
                 component: adminRouter,
                 redirect: "/userManage/authAdmin/index",
                 name: "管理组",
-                icon: "0",
+                icon: "",
                 meta: {
                     authRule: ["user_manage/admin_manage"]
                 },
@@ -150,7 +150,7 @@ export const asyncRouterMap = [
                         path: "authAdmin",
                         component: authAdmin,
                         name: "管理员管理",
-                        icon: "0",
+                        icon: "",
                         meta: {
                             authRule: ["admin/auth.admin/index"]
                         }
@@ -159,7 +159,7 @@ export const asyncRouterMap = [
                         path: "authRole",
                         component: authRole,
                         name: "角色管理",
-                        icon: "0",
+                        icon: "",
                         meta: {
                             authRule: ["admin/auth.role/index"]
                         }
@@ -168,7 +168,7 @@ export const asyncRouterMap = [
                         path: "authPermissionRule",
                         component: authPermissionRule,
                         name: "权限管理",
-                        icon: "0",
+                        icon: "",
                         meta: {
                             authRule: ["admin/auth.permission_rule/index"]
                         }
@@ -192,7 +192,7 @@ export const asyncRouterMap = [
                 path: "adSite",
                 component: adSite,
                 name: "广告位管理",
-                icon: "0",
+                icon: "",
                 meta: {
                     authRule: ["admin/ad.site/index"]
                 }
@@ -201,7 +201,7 @@ export const asyncRouterMap = [
                 path: "ad",
                 component: ad,
                 name: "广告管理",
-                icon: "0",
+                icon: "",
                 meta: {
                     authRule: ["admin/ad.ad/index"]
                 }

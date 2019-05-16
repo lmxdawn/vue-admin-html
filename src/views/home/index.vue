@@ -330,6 +330,7 @@ export default {
     background-color: #545c64;
     transition: left 0.23s ease-in-out;
     height: 100%;
+    flex: 0 0 auto;
 }
 .container-left-wrap {
     overflow-x: hidden !important;

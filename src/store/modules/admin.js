@@ -64,6 +64,9 @@ const actions = {
         return new Promise((resolve, reject) => {
             userInfo()
                 .then(response => {
+                    if (response.code === 2) {
+                        reject("登录失效");
+                    }
                     const data = response.data || {};
                     commit(types.RECEIVE_ADMIN_NAME, data.username);
                     commit(types.RECEIVE_ADMIN_AVATAR, data.avatar);

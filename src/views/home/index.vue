@@ -468,6 +468,11 @@ export default {
 /*}*/
 
 @media screen and (max-width: 768px) {
+    .main {
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .slide-hide.slide-in-left {
         -webkit-transform: translate3d(64px, 0, 0) !important;
         transform: translate3d(64px, 0, 0) !important;

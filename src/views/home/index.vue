@@ -371,10 +371,6 @@ export default {
     background-color: #fff;
 }
 
-.header .el-dropdown {
-    @include fxied-center;
-}
-
 .logo {
     display: block;
     width: 100%;
@@ -404,13 +400,10 @@ export default {
 }
 
 .header-right {
-    position: absolute;
-    top: 0;
-    right: 5px;
     display: flex;
-    width: 80px;
     height: 100%;
     margin-left: 10px;
+    float: right;
     .el-dropdown {
         display: flex;
         cursor: pointer;

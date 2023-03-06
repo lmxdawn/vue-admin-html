@@ -16,13 +16,11 @@
 
 # 前言
 
-**项目PHP前端地址：** <a href="https://github.com/lmxdawn/vue-admin-html" target="_blank">https://github.com/lmxdawn/vue-admin-html</a>
 
 **项目JAVA前端地址：** <a href="https://github.com/lmxdawn/vue-admin-html-java/tree/java-api" target="_blank">https://github.com/lmxdawn/vue-admin-html-java</a>
 
 **项目JAVA后端地址：** <a href="https://github.com/lmxdawn/vue-admin-java" target="_blank">https://github.com/lmxdawn/vue-admin-java</a>
 
-**项目PHP后端地址：** <a href="https://github.com/lmxdawn/vue-admin-php" target="_blank">https://github.com/lmxdawn/vue-admin-php</a>
 
 # 欢迎 star
 
